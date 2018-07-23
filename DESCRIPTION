@@ -1,0 +1,13 @@
+Package: Jmisc
+Title: Miscellaneous Functions
+Version: 0.0.0.9000
+Authors@R: person("Jouni", "Vatanen", email = "jounipvatanen@gmail.com", role = c("aut", "cre"))
+Description: Miscellaneous functions mainly for CX and questionnaire based data. Intended for own use.
+Depends: R (>= 3.4.0)
+License: MIT Licence
+Encoding: UTF-8
+LazyData: true
+Imports:
+  dplyr,
+  ggplot2
+RoxygenNote: 6.0.1
