@@ -31,3 +31,5 @@ by default.}
 \examples{
 create_project()
 }
+\keyword{project}
+\keyword{skeleton}

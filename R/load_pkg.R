@@ -1,23 +1,23 @@
 #' load_pkg
 #'
 #' This function installs and loads your favourite packages.
-#' @param packages
+#' @param packages "full" loads the full list of favourite packages and "basic" loads tidyverse, data.table and a few other packages.
 #' @keywords packages
 #' @export
 #' @examples
 #' load_pkg(packages = "long")
 #' @export
 
-load_pkg <- function(packages = "long") {
+load_pkg <- function(packages = "full") {
 
   #select favourite packages
-  if (length(packages) == 1L && packages == "long") {
+  if (length(packages) == 1L && packages == "full") {
     packages <- c("readxl", "tidyverse", "tidyr", "modelr", "broom",
       "data.table", "magrittr", "lubridate", "desctable", "Hmisc", "GGally",
       "knitr", "kableExtra", "formattable","gridExtra", "FactoMineR",
       "factoextra", "ClustOfVar", "caret", "psych", "ggrepel", "pROC", "DT",
       "webshot")
-  } else if (length(packages) == 1L && packages == "short") {
+  } else if (length(packages) == 1L && packages == "basic") {
     packages <- c("readxl", "tidyverse", "tidyr", "data.table", "magrittr",
       "lubridate", "knitr")
   }

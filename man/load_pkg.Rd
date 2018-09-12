@@ -4,7 +4,10 @@
 \alias{load_pkg}
 \title{load_pkg}
 \usage{
-load_pkg(packages = "long")
+load_pkg(packages = "full")
+}
+\arguments{
+\item{packages}{"full" loads the full list of favourite packages and "basic" loads tidyverse, data.table and a few other packages.}
 }
 \description{
 This function installs and loads your favourite packages.
