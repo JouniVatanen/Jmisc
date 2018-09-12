@@ -1,4 +1,10 @@
-.Rproj.user
+# History files
 .Rhistory
+.Rapp.history
+
+# Session Data files
 .RData
-Jmisc.R
+
+# RStudio files
+.Rproj.user/
+.Rproj.user

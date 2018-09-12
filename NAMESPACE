@@ -3,6 +3,8 @@
 export(create_notebook)
 export(create_proj)
 export(create_project)
+export(df_to_txt)
 export(ggplot_missing)
 export(list_to_email)
 export(load_pkg)
+export(my_ratio)
