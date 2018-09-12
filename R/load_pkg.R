@@ -16,7 +16,7 @@ load_pkg <- function(packages = "full") {
       "data.table", "magrittr", "lubridate", "desctable", "Hmisc", "GGally",
       "knitr", "kableExtra", "formattable","gridExtra", "FactoMineR",
       "factoextra", "ClustOfVar", "caret", "psych", "ggrepel", "pROC", "DT",
-      "webshot")
+      "webshot", "roxygen2", "devtools")
   } else if (length(packages) == 1L && packages == "basic") {
     packages <- c("readxl", "tidyverse", "tidyr", "data.table", "magrittr",
       "lubridate", "knitr")
