@@ -27,7 +27,7 @@ load_pkg <- function(packages = "full") {
   packagestoinstall <- packages[is.na(packagecheck)]
 
   if(length(packagestoinstall) > 0L ) {
-    utils::install.packages(packagestoinstall, repos = "http://cran.wu.ac.at/")
+    utils::install.packages(packagestoinstall)
   } else {
     print("All requested packages already installed")
   }
