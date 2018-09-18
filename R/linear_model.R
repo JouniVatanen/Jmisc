@@ -5,47 +5,42 @@
 #' @param form Model in the format c("variable ~ ."). Default: Predict variable y with all other variables.
 #' @param k Number of kfolds. Default: 10.
 #' @keywords linear model
-#' @export[]
 #' @examples
 #' linear_model(data, c("y ~ x + z"))
 #' @export
 
 linear_model <- function(data, form = c("y ~ ."), k = 10) {
 
-  require(tidyverse)
-  require(modelr)
-  require(broom)
-
   # Create test and train set and n folds
-  models <- crossv_kfold(df, k = k) %>%
-    mutate(model = map(train, ~ lm(form, data = .)),
-           tidy = map(model, tidy),
-           glance = map(model, glance),
-           test.rmse = map2_dbl(model, test, rmse),
-           train.rmse = map2_dbl(model, train, rmse))
+  models <- modelr::crossv_kfold(df, k = k) %>%
+    dplyr::mutate(model = purrr::map(train, ~ lm(form, data = .)),
+           tidy = purrr::map(model, tidy),
+           glance = purrr::map(model, glance),
+           test.rmse = purrr::map2_dbl(model, test, rmse),
+           train.rmse = purrr::map2_dbl(model, train, rmse))
 
   # Calculate coefficients
   coeffs <- models %>%
-    unnest(tidy) %>%
-    select(.id, term, estimate, p.value) %>%
-    group_by(term) %>%
-    summarise(estimate = mean(estimate), p.value = mean(p.value)) %>%
-    arrange(p.value)
+    tidyr::unnest(tidy) %>%
+    dplyr::select(.id, term, estimate, p.value) %>%
+    dplyr::group_by(term) %>%
+    dplyr::summarise(estimate = mean(estimate), p.value = mean(p.value)) %>%
+    dplyr::arrange(p.value)
 
   # Calculate R^2
-  r2 <- models %>% unnest(glance) %>% pull(adj.r.squared) %>% mean
+  r2 <- models %>% tidyr::unnest(glance) %>% dplyr::pull(adj.r.squared) %>% mean
 
   # Calculate model accuracy test set
   test.preds <- models %>%
-    unnest(fitted = map2(model, test, ~ augment(.x, newdata = .y))) %>%
+    tidyr::unnest(fitted = purrr::map2(model, test, ~ augment(.x, newdata = .y))) %>%
     mutate(.fitted = pmax(3, pmin(12, .fitted)),
            .resid = .fitted - y)
 
-  test.acc <- models %>% select(test.rmse) %>% pull %>% mean
+  test.acc <- models %>% dplyr::select(test.rmse) %>% dplyr::pull %>% mean
 
   # Plot residuals
   test.res.plot <- test.preds %>%
-    ggplot(aes(y, .resid)) +
+    ggplot2::ggplot(aes(y, .resid)) +
     geom_hline(yintercept = 0) +
     geom_point() +
     stat_smooth(method = "loess") +
@@ -55,15 +50,15 @@ linear_model <- function(data, form = c("y ~ ."), k = 10) {
 
   # Calculate model accuracy train set
   train.preds <- models %>%
-    unnest(fitted = map2(model, train, ~ augment(.x, newdata = .y))) %>%
-    mutate(.fitted = pmax(3, pmin(12, .fitted)),
+    tidyr::unnest(fitted = purrr::map2(model, train, ~ augment(.x, newdata = .y))) %>%
+    dplyr::mutate(.fitted = pmax(3, pmin(12, .fitted)),
            .resid = .fitted - y)
 
-  train.acc <- models %>% select(train.rmse) %>% pull %>% mean
+  train.acc <- models %>% dplyr::select(train.rmse) %>% dplyr::pull %>% mean
 
   # Plot residuals
   train.res.plot <- train.preds %>%
-    ggplot(aes(y, .resid)) +
+    ggplot2::ggplot(aes(y, .resid)) +
     geom_hline(yintercept = 0) +
     geom_point() +
     stat_smooth(method = "loess") +

@@ -7,7 +7,7 @@
 list_to_email(source = readClipboard())
 }
 \arguments{
-\item{my.input.df}{Enter your data frame.}
+\item{source}{From where to read the data. Default: clipboard.}
 }
 \description{
 This function helps you to save O365 type email addresses from list

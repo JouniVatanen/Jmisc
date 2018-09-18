@@ -4,16 +4,16 @@
 \alias{ggplot_missing}
 \title{ggplot_missing}
 \usage{
-ggplot_missing(my.input.df)
+ggplot_missing(data, file = "plot_missmap.png")
 }
 \arguments{
-\item{my.input.df}{Enter your data frame.}
+\item{data}{Enter your data frame.}
 }
 \description{
 This function helps you to ggplot missing values of a data frame.
 }
 \examples{
-ggplot_missing()
+ggplot_missing(data, "output/plot_missmap.png")
 }
 \keyword{ggplot2}
 \keyword{missing}

@@ -21,7 +21,7 @@ by default.}
   \item R (folder)
   \item data (folder)
   \item doc (folder)
-  \item report (folder)
+  \item output (folder)
   \item posted (folder)
   \item work (folder)
   \item .Rprofile

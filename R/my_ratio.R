@@ -3,7 +3,6 @@
 #' GGally custom my_ratio plot for a large ... plot.
 #' @param
 #' @keywords GGally ggplot
-#' @export
 #' @examples
 #' @export
 

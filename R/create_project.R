@@ -17,7 +17,6 @@
 #' @param notebook logical: Create notebook file.
 #' @param project logical: Create Rproject file.
 #' @keywords project skeleton
-#' @export
 #' @examples
 #' create_project()
 #' @export

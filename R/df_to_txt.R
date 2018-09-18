@@ -4,7 +4,6 @@
 #' @param data Choose the dataframe.
 #' @param filename Choose the file name to save the dataframe.
 #' @keywords save txt
-#' @export
 #' @examples
 #' df_to_txt(data, filename = "example.txt")
 #' @export

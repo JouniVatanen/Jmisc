@@ -1,6 +1,8 @@
 # Load required packages
-library(roxygen2)
-library(devtools)
+if (!require("pacman")) install.packages("pacman") #pacman loads and installs packages
+pacman::p_load("checkpoint")
+checkpoint("2018-08-01") # use the same date when R Open 3.5.1. was released
+pacman::p_load("roxygen2", "devtools")
 
 # Create package documentation
 document()

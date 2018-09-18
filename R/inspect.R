@@ -4,10 +4,9 @@
 #' @param data Choose the dataframe.
 #' @param filename Choose the output filename. Default: output/temp-results.txt
 #' @keywords dataframe
-#' @export
 #' @examples
 #' inspect(data)
-#' #' @export
+#' @export
 
 inspect <- function(data, filename = "output/temp-results.txt") {
 

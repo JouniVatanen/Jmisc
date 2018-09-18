@@ -3,7 +3,6 @@
 #' This function installs and loads your favourite packages.
 #' @param packages "full" loads the full list of favourite packages and "basic" loads tidyverse, data.table and a few other packages.
 #' @keywords packages
-#' @export
 #' @examples
 #' load_pkg(packages = "long")
 #' @export
