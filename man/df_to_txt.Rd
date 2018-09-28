@@ -4,10 +4,12 @@
 \alias{df_to_txt}
 \title{df_to_txt}
 \usage{
-df_to_txt(data, filename = "temp.txt")
+df_to_txt(data, file = "temp.txt", overwrite = FALSE)
 }
 \arguments{
 \item{data}{Choose the dataframe.}
+
+\item{overwrite}{Do you want to overwrite}
 
 \item{filename}{Choose the file name to save the dataframe.}
 }
