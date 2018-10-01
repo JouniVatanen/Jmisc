@@ -4,10 +4,12 @@
 \alias{list_to_email}
 \title{list_to_email}
 \usage{
-list_to_email(source = readClipboard())
+list_to_email(source = readClipboard(), reverse = FALSE)
 }
 \arguments{
 \item{source}{From where to read the data. Default: clipboard.}
+
+\item{reverse}{Reverse the order of the first and the last name. Default: FALSE.}
 }
 \description{
 This function helps you to save O365 type email addresses from list
