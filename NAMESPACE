@@ -2,6 +2,8 @@
 
 export(anonymize)
 export(basic_plot)
+export(calc_birth)
+export(calc_gender)
 export(corr_plot)
 export(create_notebook)
 export(create_proj)
