@@ -1,6 +1,6 @@
 #' calc_birth
 #'
-#' Calculate birth date from social security number
+#' Calculate birth date from social security number and return POSIXct
 #' @param string Choose string from which to calculate.
 #' @keywords social security, birth, date
 #' @examples
@@ -12,6 +12,8 @@ calc_birth <- function(string) {
     ifelse(stringr::str_sub(string, 7, 7) == "-",
       paste0(stringr::str_sub(string, 1, 4), "19", stringr::str_sub(string, 5, 6)),
       paste0(stringr::str_sub(string, 1, 4), "20", stringr::str_sub(string, 5, 6))))
+
+  output <- lubridate::dmy(output)
 
   return(output)
 }

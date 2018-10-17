@@ -10,7 +10,7 @@ calc_birth(string)
 \item{string}{Choose string from which to calculate.}
 }
 \description{
-Calculate birth date from social security number
+Calculate birth date from social security number and return POSIXct
 }
 \examples{
 calc_birth("123456-123S")
