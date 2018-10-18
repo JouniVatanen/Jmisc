@@ -1,6 +1,6 @@
 Package: Jmisc
 Title: Miscellaneous functions
-Version: 0.1
+Version: 0.2
 Authors@R: person("Jouni", "Vatanen", email = "jounipvatanen@gmail.com", role = c("aut", "cre"))
 Description: Miscellaneous functions mainly for CX and questionnaire based data. Intended for own use.
 Depends: R (>= 3.4.3)
