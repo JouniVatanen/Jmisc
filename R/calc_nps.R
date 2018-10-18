@@ -11,9 +11,9 @@ calc_nps <- function(var = NA) {
 
   val <- as.numeric(var)
 
-  if (max(val) > 11 | min(val) < 0) {
+  if (max(val, na.rm = TRUE) > 11 | min(val, na.rm = TRUE) < 0) {
     stop("Check the data. The scale should be 0-10.")
-  } else if (max(val) == 11) {
+  } else if (max(val, na.rm = TRUE) == 11) {
     warning("The scale will be converted from 1-11 to 0-10.")
     val <- val - 1
   }
