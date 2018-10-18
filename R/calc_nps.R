@@ -11,19 +11,21 @@ calc_nps <- function(var = NA) {
 
   val <- as.numeric(var)
 
-  if (is.na(val)) {
-    return(NA)
-  } else if (max(val) > 11 | min(val) < 0) {
+  if (max(val) > 11 | min(val) < 0) {
     stop("Check the data. The scale should be 0-10.")
   } else if (max(val) == 11) {
     warning("The scale will be converted from 1-11 to 0-10.")
-    val = val - 1
+    val <- val - 1
   }
-  if (dplyr::between(val, 0, 6)) {
-    return(-100)
-  } else if (dplyr::between(val, 7, 8)) {
-    return(0)
-  } else {
-    return(100)
-  }
+
+  output <- dplyr::case_when(
+    val %in% c(9:10) ~ 100,
+    val %in% c(7:8)  ~ 0,
+    val %in% c(0:6)  ~ -100,
+    TRUE ~ NA_real_)
+
+  # factor.levels <- c(100, 0, -100)
+  # output <- factor(output, levels = factor.levels)
+
+  return(output)
 }
