@@ -4,17 +4,20 @@
 \alias{inspect}
 \title{inspect}
 \usage{
-inspect(data, filename = "output/temp-results.txt")
+inspect(data, filename = "./output/temp-results.txt", view = FALSE)
 }
 \arguments{
 \item{data}{Choose the dataframe.}
 
-\item{filename}{Choose the output filename. Default: output/temp-results.txt}
+\item{filename}{Choose the output filename. Default: ./output/temp-results.txt}
+
+\item{view}{View the data inside R. Default: FALSE.}
 }
 \description{
-NOT FINISHED!!! Inspect the dataframe with str, names, summary, describe and View.
+Inspect the dataframe with str, names, summary, describe and View.
 }
 \examples{
-inspect(data)
+inspect(data, "./output/temp-results.txt")
 }
 \keyword{dataframe}
+\keyword{inspect}
