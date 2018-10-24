@@ -13,10 +13,12 @@ inspect <- function(data, filename = "./output/temp-results.txt", view = FALSE) 
 
    # Save basic statistics to a file
   sink(filename)
-  str(data)
-  names(data)
-  summary(data)
-  Hmisc::describe(data)
+  list(
+    str(data),
+    names(data),
+    summary(data),
+    Hmisc::describe(data)
+    )
   sink()
 
   # View the data inside R
