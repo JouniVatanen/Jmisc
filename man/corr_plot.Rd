@@ -4,19 +4,17 @@
 \alias{corr_plot}
 \title{Custom correlation plot}
 \usage{
-corr_plot(data, select = 1:ncol(data))
+corr_plot(data, polychoric = FALSE)
 }
 \arguments{
 \item{data}{Choose the dataframe.}
 
-\item{select}{Choose the columns you want. Default: all.}
-
 \item{polychoric}{Not yet implemented. TRUE = use polychoric correlations.}
 }
 \description{
-Make a custom correlation  plot.
+Make a custom correlation plot.
 }
 \examples{
-hclust_var(data, select = c(1:10, 13), polychoric = TRUE)
+corr_plot(data, polychoric = FALSE)
 }
 \keyword{plot}
