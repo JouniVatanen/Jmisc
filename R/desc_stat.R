@@ -10,7 +10,7 @@
 #' desc_stat(data, .select = c(1:10))
 #' @export
 
-desc_stat <- function(data, .select, .labels = c(total = "N"), group.by.cols = NULL){
+desc_stat <- function(data, .select, group.by.cols = NULL, .labels = c(total = "N")){
 
   library(magrittr)
 

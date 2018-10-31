@@ -4,17 +4,17 @@
 \alias{desc_stat}
 \title{Create descriptive statistics table}
 \usage{
-desc_stat(data, .select, .labels = c(total = "N"),
-  group.by.cols = NULL)
+desc_stat(data, .select, group.by.cols = NULL, .labels = c(total =
+  "N"))
 }
 \arguments{
 \item{data}{Choose dataframe.}
 
 \item{.select}{Choose which columns you want to calculate distribution.}
 
-\item{.labels}{Choose labels for table. Default: total = "N"}
-
 \item{group.by.cols}{Group by chosen columns. Defaul: NULL}
+
+\item{.labels}{Choose labels for table. Default: total = "N"}
 }
 \description{
 Create descriptive statistics table
