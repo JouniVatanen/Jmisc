@@ -21,7 +21,7 @@ hclust_plot <- function(data, cut.num = 5, clust.var = TRUE, horiz = FALSE, ...)
   }
 
   # Choose custom colors, where rep_len matches number of clusters
-  colors <- rep_len(Ilmarinen_cols(), cut.num)
+  colors <- rep_len(Jmisc::Ilmarinen_cols(), cut.num)
 
   # Plot the clustering
   plot <- factoextra::fviz_dend(
