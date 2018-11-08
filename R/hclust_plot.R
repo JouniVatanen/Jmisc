@@ -20,7 +20,7 @@ hclust_plot <- function(data, cut.num = 5, clust.var = TRUE, horiz = FALSE, ...)
       select_if(is.numeric)
     # Select non-numeric variables and convert them to factors
     var.quali <- data %>%
-      select_if(!is.numeric) %>%
+      select_if(Negate(is.numeric)) %>%
       mutate_all(as.factor)
 
     # Variable hierarchical cluster
