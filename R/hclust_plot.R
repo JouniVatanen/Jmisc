@@ -14,14 +14,25 @@ hclust_plot <- function(data, cut.num = 5, clust.var = TRUE, horiz = FALSE, ...)
 
   # ClustofVar if clust.var = TRUE
   if (clust.var) {
-    hc <- ClustOfVar::hclustvar(X.quali = data, ...)
+
+    # Select numeric variables
+    var.quanti <- data %>%
+      select_if(is.numeric)
+    # Select non-numeric variables and convert them to factors
+    var.quali <- data %>%
+      select_if(!is.numeric) %>%
+      mutate_all(as.factor)
+
+    # Variable hierarchical cluster
+    hc <- ClustOfVar::hclustvar(X.quanti = var.quanti, X.quali = var.quali)
+
   } else {
     # Else normal hierarchical cluster
     hc <- hclust(dist(data))
   }
 
   # Choose custom colors, where rep_len matches number of clusters
-  colors <- rep_len(Jmisc::Ilmarinen_cols(), cut.num)
+  colors <- rep_len(ilmarinen_cols(), cut.num)
 
   # Plot the clustering
   plot <- factoextra::fviz_dend(
