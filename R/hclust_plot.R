@@ -18,13 +18,15 @@ hclust_plot <- function(data, cut.num = 5, clust.var = TRUE, horiz = FALSE, ...)
     # Select numeric variables and NULL if no variables
     var.quanti <- data %>%
       select_if(is.numeric)
-    if (is.null(dim(var.quanti))) {var.quanti <- NULL}
+
 
     # Select non-numeric variables and convert them to factors and NULL if no variables
     var.quali <- data %>%
       select_if(Negate(is.numeric)) %>%
       mutate_all(as.factor)
-    if (is.null(dim(var.quali))) {var.quali <- NULL}
+
+    if (is.null(dim(var.quanti)) | dim(var.quanti)[2] == 0) {var.quanti <- NULL}
+    if (is.null(dim(var.quali)) | dim(var.quali)[2] == 0) {var.quali <- NULL}
 
     # Variable hierarchical cluster
     hc <- ClustOfVar::hclustvar(X.quanti = var.quanti, X.quali = var.quali)
