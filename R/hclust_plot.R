@@ -19,7 +19,6 @@ hclust_plot <- function(data, cut.num = 5, clust.var = TRUE, horiz = FALSE, ...)
     var.quanti <- data %>%
       select_if(is.numeric)
 
-
     # Select non-numeric variables and convert them to factors and NULL if no variables
     var.quali <- data %>%
       select_if(Negate(is.numeric)) %>%
@@ -33,7 +32,8 @@ hclust_plot <- function(data, cut.num = 5, clust.var = TRUE, horiz = FALSE, ...)
 
   } else {
     # Else normal hierarchical cluster
-    hc <- hclust(dist(data))
+    hc <- hclust(dist(data)) %>%
+      cutree(k = cut.num)
   }
 
   # Choose custom colors, where rep_len matches number of clusters
