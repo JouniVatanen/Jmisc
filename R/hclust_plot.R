@@ -10,7 +10,8 @@
 #' hclust_plot(data, cut.num = 5)
 #' @export
 
-hclust_plot <- function(data, cut.num = 5, clust.var = TRUE, horiz = FALSE, ...) {
+hclust_plot <- function(data, cut.num = 5, clust.var = TRUE, horiz = FALSE,
+                        labels_track_height = 120, main = "", ...) {
 
   # ClustofVar if clust.var = TRUE
   if (clust.var) {
@@ -42,8 +43,7 @@ hclust_plot <- function(data, cut.num = 5, clust.var = TRUE, horiz = FALSE, ...)
   plot <- factoextra::fviz_dend(
       hc, k = cut.num, cex = 0.5, horiz = horiz, k_colors = colors,
       color_labels_by_k = TRUE, rect = TRUE, rect_border = colors,
-      rect_fill = TRUE, labels_track_height = 6) +
-    ggtitle("Hierarkinen ryhmittely") +
+      rect_fill = TRUE, labels_track_height = labels_track_height, main = main, ...) +
     theme_void()
 
   return(plot)
