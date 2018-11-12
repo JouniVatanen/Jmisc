@@ -32,8 +32,7 @@ hclust_plot <- function(data, cut.num = 5, clust.var = TRUE, horiz = FALSE, ...)
 
   } else {
     # Else normal hierarchical cluster
-    hc <- hclust(dist(data)) %>%
-      cutree(k = cut.num)
+    hc <- hclust(dist(data))
   }
 
   # Choose custom colors, where rep_len matches number of clusters
