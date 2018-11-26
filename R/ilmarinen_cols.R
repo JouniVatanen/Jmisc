@@ -34,7 +34,7 @@ ilmarinen_pal <- function(palette = "main", reverse = FALSE, ...) {
 
   # Ilmarinen palettes
   ilmarinen_palettes <- list(
-    `main`  = ilmarinen_cols("dark blue", "pink", "light blue", "yellow"),
+    `main`  = ilmarinen_cols("dark blue", "yellow", "pink", "light blue"),
     `cool`  = ilmarinen_cols("dark blue", "blue", "light blue"),
     `hot`   = ilmarinen_cols("orange", "pink", "yellow"),
     `mixed` = ilmarinen_cols("light blue", "yellow", "pink"),
@@ -45,7 +45,7 @@ ilmarinen_pal <- function(palette = "main", reverse = FALSE, ...) {
   pal <- ilmarinen_palettes[[palette]]
 
   if (reverse) pal <- rev(pal)
-
+  colorRampPalette()
   colorRampPalette(pal, ...)
 }
 
