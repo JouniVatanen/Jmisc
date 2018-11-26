@@ -45,7 +45,6 @@ ilmarinen_pal <- function(palette = "main", reverse = FALSE, ...) {
   pal <- ilmarinen_palettes[[palette]]
 
   if (reverse) pal <- rev(pal)
-  colorRampPalette()
   colorRampPalette(pal, ...)
 }
 
