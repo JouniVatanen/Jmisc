@@ -4,12 +4,13 @@
 #' @param data Choose the dataframe.
 #' @param filename Choose the file name to save the dataframe.
 #' @param overwrite Do you want to overwrite
+#' @param sep Choose separator. Default: "\t"
 #' @keywords save txt
 #' @examples
 #' df_to_txt(data, filename = "example.txt")
 #' @export
 
-df_to_txt <- function(data, file = "temp.txt", overwrite = FALSE) {
+df_to_txt <- function(data, file = "temp.txt", overwrite = FALSE, sep = "\t") {
   if (overwrite) {
     if (file.exists(file)) {
       print("File exists, do not write.")
