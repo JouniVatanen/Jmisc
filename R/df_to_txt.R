@@ -22,7 +22,7 @@ df_to_txt <- function(data, file = "temp.txt", overwrite = FALSE, sep = "\t") {
       data,
       file,
       quote = FALSE,
-      sep = "\t",
+      sep = sep,
       na = "",
       dec = ",",
       row.names = FALSE,
