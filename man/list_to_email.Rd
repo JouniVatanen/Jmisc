@@ -4,10 +4,12 @@
 \alias{list_to_email}
 \title{list_to_email}
 \usage{
-list_to_email(source = readClipboard(), reverse = FALSE)
+list_to_email(source = readClipboard(), sep = "\\t", reverse = FALSE)
 }
 \arguments{
 \item{source}{From where to read the data. Default: clipboard.}
+
+\item{sep}{Separator, if data is not from clipboard. Default: tab.}
 
 \item{reverse}{Reverse the order of the first and the last name. Default: FALSE.}
 }
