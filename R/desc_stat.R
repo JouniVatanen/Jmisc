@@ -4,13 +4,14 @@
 #' @param data Choose dataframe.
 #' @param .select Choose which columns you want to calculate distribution.
 #' @param .labels Choose labels for table. Default: total = "N"
+#' @param with.idk Data includes I don't know values. You want to compute them in distributions but not in means. Default: 99.
 #' @param group.by.cols Group by chosen columns. Defaul: NULL
 #' @keywords social security, birth, date
 #' @examples
 #' desc_stat(data, .select = c(1:10))
 #' @export
 
-desc_stat <- function(data, .select, group.by.cols = NULL, .labels = c(total = "N")){
+desc_stat <- function(data, .select, group.by.cols = NULL, with.idk = 99, .labels = c(total = "N")){
 
   library(magrittr)
 
@@ -27,6 +28,12 @@ desc_stat <- function(data, .select, group.by.cols = NULL, .labels = c(total = "
       dplyr::mutate(total = "total") %>%
       dplyr::group_by_(group.by.cols[i]) %>%
       dplyr::select(which(lapply(data, class) == "numeric"))
+
+    # If you want to include
+    if (is.numeric(with.idk)) {
+      data.num <- data.num %>%
+        dplyr::mutate_at(if_else(. == with.idk, NA_real_, .))
+    }
 
     data.fct <- data %>%
       dplyr::mutate_at(.select, as.factor) %>%
@@ -46,18 +53,18 @@ desc_stat <- function(data, .select, group.by.cols = NULL, .labels = c(total = "
       # Factor data
       desc.fct <- data.fct %>%
         dplyr::group_indices(.) %in% j %>%
-        data.fct[.,] %>%
+        data.fct[., ] %>%
         dplyr::ungroup() %>%
         desctable::desctable(stats = list("Mean/ %" = is.factor ~ percent | (is.numeric ~ mean)), labels = .labels)
 
-      names(desc.fct[[2]]) <- attr(data.fct, "labels")[j,]
+      names(desc.fct[[2]]) <- attr(data.fct, "labels")[j, ]
       desc.fct <- dplyr::bind_cols(lapply(desc.fct, as.data.frame)) %>%
         dplyr::mutate(Variables = gsub("\\*","",Variables))
 
       # Numeric data
       desc.num <- data.num %>%
         dplyr::group_indices(.) %in% j %>%
-        data.num[.,] %>%
+        data.num[., ] %>%
         dplyr::ungroup() %>%
         desctable::desctable(stats = list("Mean/ %" = is.factor ~ percent | (is.numeric ~ mean)), labels = .labels)
 
