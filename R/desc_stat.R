@@ -32,7 +32,7 @@ desc_stat <- function(data, .select, group.by.cols = NULL, with.idk = 99, .label
     # If you want to include
     if (is.numeric(with.idk)) {
       data.num <- data.num %>%
-        dplyr::mutate_at(if_else(. == with.idk, NA_real_, .))
+        dplyr::mutate_all(funs(if_else(. == with.idk, NA_real_, .)))
     }
 
     data.fct <- data %>%
