@@ -1,7 +1,10 @@
 # Load required packages
-if (!require("pacman")) install.packages("pacman") #pacman loads and installs packages
+#pacman loads and installs packages
+if (!require("pacman")) install.packages("pacman")
 pacman::p_load("checkpoint")
-checkpoint("2018-08-01") # use the same date when R Open 3.5.1. was released
+
+# Use the date few weeks after R-3.5.3. was released
+checkpoint("2019-04-01", checkpointLocation = Sys.getenv("USERPROFILE"))
 pacman::p_load("roxygen2", "devtools")
 
 # Create package documentation

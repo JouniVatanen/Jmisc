@@ -4,22 +4,28 @@
 \alias{df_to_txt}
 \title{df_to_txt}
 \usage{
-df_to_txt(data, file = "temp.txt", overwrite = FALSE, sep = "\\t")
+df_to_txt(x, file = "", sep = "\\t", dec = ",", overwrite = FALSE,
+  ...)
 }
 \arguments{
-\item{data}{Choose the dataframe.}
+\item{x}{Any list like element e.g. data.frame and data.table.}
 
-\item{overwrite}{Do you want to overwrite}
+\item{file}{Output file name. Default: to the console.}
 
-\item{sep}{Choose separator. Default: "\t"}
+\item{sep}{Separator. Default: "\t"}
 
-\item{filename}{Choose the file name to save the dataframe.}
+\item{dec}{Decimal limiter. Default: ","}
+
+\item{overwrite}{Overwrites the file, it it exists. Default: FALSE.}
 }
 \description{
-Saves a dataframe to a txt-file.
+Save any list like data.frame, data.table or matrix to a txt-file. Based on fwrite from data.table package.
 }
 \examples{
-df_to_txt(data, filename = "example.txt")
+n <- c(1.1, 2.2, 3.3)
+s <- c("a", "b", "c")
+x <- data.frame(n, s)
+df_to_txt(x, file = "example.txt")
 }
 \keyword{save}
 \keyword{txt}

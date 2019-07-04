@@ -1,32 +1,26 @@
 #' df_to_txt
 #'
-#' Saves a dataframe to a txt-file.
-#' @param data Choose the dataframe.
-#' @param filename Choose the file name to save the dataframe.
-#' @param overwrite Do you want to overwrite
-#' @param sep Choose separator. Default: "\t"
+#' Save any list like data.frame, data.table or matrix to a txt-file. Based on fwrite from data.table package.
+#' @param x Any list like element e.g. data.frame and data.table.
+#' @param file Output file name. Default: to the console.
+#' @param dec Decimal limiter. Default: ","
+#' @param overwrite Overwrites the file, it it exists. Default: FALSE.
+#' @param sep Separator. Default: "\t"
 #' @keywords save txt
 #' @examples
-#' df_to_txt(data, filename = "example.txt")
+#' n <- c(1.1, 2.2, 3.3)
+#' s <- c("a", "b", "c")
+#' x <- data.frame(n, s)
+#' df_to_txt(x, file = "example.txt")
 #' @export
 
-df_to_txt <- function(data, file = "temp.txt", overwrite = FALSE, sep = "\t") {
-  if (overwrite) {
-    if (file.exists(file)) {
-      print("File exists, do not write.")
-      }
-    } else {
+df_to_txt <- function(x, file = "", sep = "\t", dec = ",",
+                      overwrite = FALSE, ...) {
+  if (all(!overwrite, file.exists(file))) {
+    stop("File exists already. If you want to overwrite, then change overwrite to TRUE.")
+  } else {
 
     # Write to the file with custom settings like sep, dec and encoding
-    write.table(
-      data,
-      file,
-      quote = FALSE,
-      sep = sep,
-      na = "",
-      dec = ",",
-      row.names = FALSE,
-      fileEncoding = "UTF-8")
-
-    }
+    data.table::fwrite(x = x, file = file, sep = sep, dec = dec)
+  }
 }
