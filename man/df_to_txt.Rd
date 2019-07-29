@@ -12,7 +12,7 @@ df_to_txt(x, file = "", sep = "\\t", dec = ",", overwrite = FALSE,
 
 \item{file}{Output file name. Default: to the console.}
 
-\item{sep}{Separator. Default: "\t"}
+\item{sep}{Separator. Default: TAB}
 
 \item{dec}{Decimal limiter. Default: ","}
 

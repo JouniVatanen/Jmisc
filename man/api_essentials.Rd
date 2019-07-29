@@ -4,7 +4,8 @@
 \alias{api_essentials}
 \title{api_essentials}
 \usage{
-api_essentials(soap_action, username, password, quest_id, security_lock, x)
+api_essentials(soap_action, username, password, quest_id, security_lock, x,
+  send_duplicate = TRUE)
 }
 \arguments{
 \item{username}{Username for Questback Essentials.}

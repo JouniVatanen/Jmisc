@@ -5,7 +5,7 @@
 #' @param file Output file name. Default: to the console.
 #' @param dec Decimal limiter. Default: ","
 #' @param overwrite Overwrites the file, it it exists. Default: FALSE.
-#' @param sep Separator. Default: "\t"
+#' @param sep Separator. Default: TAB
 #' @keywords save txt
 #' @examples
 #' n <- c(1.1, 2.2, 3.3)
