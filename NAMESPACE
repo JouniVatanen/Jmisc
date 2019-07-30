@@ -2,6 +2,7 @@
 
 export(anonymize)
 export(api_essentials)
+export(calc_area)
 export(calc_birth)
 export(calc_dummy)
 export(calc_gender)

@@ -19,5 +19,3 @@ setwd("./Jmisc")
 # 1. Commit changes either shell or Rstudio UI
 # 2. Push to the github from shell "git push" and insert username and password
 # 3. You can install from github using devtools::install_github(JouniVatanen/Jmisc)
-
-
