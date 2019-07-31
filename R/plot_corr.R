@@ -5,10 +5,10 @@
 #' @param polychoric Not yet implemented. TRUE = use polychoric correlations.
 #' @keywords plot
 #' @examples
-#' corr_plot(data, polychoric = FALSE)
+#' plot_corr(data, polychoric = FALSE)
 #' @export
 
-corr_plot <- function(data, polychoric = FALSE) {
+plot_corr <- function(data, polychoric = FALSE) {
 
   data <- data %>%
 

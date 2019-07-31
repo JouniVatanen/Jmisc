@@ -1,4 +1,4 @@
-#' my_ratio
+#' plot_ratio
 #'
 #' GGally custom my_ratio plot for a large ... plot.
 #' @param

@@ -7,10 +7,10 @@
 #' @param horiz Plot horizontal (TRUE) or vertical (FALSE). Default: FALSE.
 #' @keywords dataframe
 #' @examples
-#' hclust_plot(data, cut.num = 5)
+#' plot_hclust(data, cut.num = 5)
 #' @export
 
-hclust_plot <- function(data, cut.num = 5, clust.var = TRUE, horiz = FALSE,
+plot_hclust <- function(data, cut.num = 5, clust.var = TRUE, horiz = FALSE,
                         labels_track_height = 120, main = "", ...) {
 
   # ClustofVar if clust.var = TRUE

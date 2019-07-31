@@ -1,13 +1,13 @@
-#' ggplot_missing
+#' plot_missing
 #'
 #' This function helps you to ggplot missing values of a data frame.
 #' @param data Enter your data frame.
 #' @keywords ggplot2 missing
 #' @examples
-#' ggplot_missing(data, "output/plot_missmap.png")
+#' ggplot_missing(data, "./output/plot_missmap.png")
 #' @export
 
-ggplot_missing <- function(data, file = "plot_missmap.png") {
+plot_missing <- function(data, file = "plot_missmap.png") {
 
   # Shorten variable names to 30 characters
   names(data) <- substring(names(data), 1, 30)

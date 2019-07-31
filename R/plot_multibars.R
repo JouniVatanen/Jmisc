@@ -11,10 +11,10 @@
 #' {map(list(1, 2, c(3:5)), function(x) multiplot_bars(., x, labels))}
 #' do.call("grid.arrange", c(plot.basic, ncol = 2))
 #'
-#' multiplot_bars(data, row = 3)
+#' plot_multibars(data, row = 3)
 #' @export
 
-multiplot_bars <- function(data, row = 1:nrow(.), labels = waiver()) {
+plot_multibars <- function(data, row = 1:nrow(.), labels = waiver()) {
 
   data %>%
 
