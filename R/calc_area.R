@@ -10,10 +10,17 @@
 
 calc_area <- function(x, select = "Alue") {
 
+  library(magrittr)
+
   # Stop if value is not character
   if (!is.character(x)) stop("Area class has to be char of type 000-999")
 
-  output <- Jmisc:::df.postno[.(x), ..select, nomatch = 0L]
+  # Match with data.tables fast indexing
+  output <- Jmisc:::df.postno[.(x), ..select, nomatch = 0L] %>%
+
+    # Return a tibble in order to map the results to a dataframe
+    tibble::as_tibble()
+
 
   return(output)
 }
