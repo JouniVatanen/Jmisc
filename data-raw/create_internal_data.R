@@ -4,8 +4,8 @@ library(vroom)
 library(devtools)
 library(data.table)
 
-# Load postinumero data
-df.postno <- vroom::vroom(
+# Load postinumbers data
+postnumbers <- vroom::vroom(
   "./data-raw/postnumber_2016.txt", skip = 4,
   col_types = cols(.default = col_character())
   ) %>% {
@@ -37,5 +37,5 @@ df.postno <- vroom::vroom(
   data.table() %>%
   setkey(Postinumero)
 
-# Save to use in package: Jmisc:::df.postno
-use_data(df.postno, internal = TRUE, overwrite = TRUE)
+# Save data to use in package: Jmisc
+use_data(postnumbers, internal = TRUE, overwrite = TRUE)

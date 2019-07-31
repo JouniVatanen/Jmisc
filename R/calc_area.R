@@ -6,17 +6,19 @@
 #' @keywords area, calculation, classification
 #' @examples
 #' calc_area("001")
+#' @import data.table
 #' @export
 
 calc_area <- function(x, select = "Alue") {
 
   library(magrittr)
+  library(data.table)
 
   # Stop if value is not character
   if (!is.character(x)) stop("Area class has to be char of type 000-999")
 
   # Match with data.tables fast indexing
-  output <- Jmisc:::df.postno[.(x), ..select, nomatch = 0L] %>%
+  output <- Jmisc:::postnumbers[.(x), ..select, nomatch = 0L] %>%
 
     # Return a tibble in order to map the results to a dataframe
     tibble::as_tibble()
