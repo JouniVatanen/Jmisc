@@ -1,5 +1,13 @@
+# Load required packages
+if (!require("checkpoint")) install.packages("checkpoint"); library(checkpoint)
+
+# Use the date few weeks after R-3.6.1. was released
+checkpoint("2019-07-28", R.version = "3.6.1",
+           checkpointLocation = Sys.getenv("USERPROFILE"))
+
 # Load libraries
 library(dplyr)
+library(tidyr)
 library(vroom)
 library(stringr)
 library(janitor)
@@ -7,7 +15,7 @@ library(devtools)
 
 # Load postinumbers data
 fi_postnumbers_2016 <- vroom(
-  "./data-raw/postnumber_2016.txt", skip = 4,
+  "./data-raw/postnumbers_2016.txt", skip = 4,
   col_types = cols(.default = col_character()),
   .name_repair = janitor::make_clean_names
   ) %>% {
@@ -32,6 +40,24 @@ fi_postnumbers_2016 <- vroom(
     ) %>%
   distinct(postinumero, .keep_all = TRUE)
 
+# Load industries data
+fi_industries_2008 <- vroom(
+  "./data-raw/industries_2008.txt", skip = 3,
+  .name_repair = janitor::make_clean_names) %>%
+  filter(taso %in% c(1, 2)) %>%
+  mutate(
+    class_1 = if_else(taso == 1, koodi, NA_character_),
+    class_1_name = if_else(taso == 1, nimike, NA_character_)) %>%
+  fill(class_1, class_1_name) %>%
+  filter(taso == 2) %>%
+  rename(class_2 = koodi, class_2_name = nimike) %>%
+  mutate(class_0 = case_when(
+      class_1 %in% c("A", "B") ~ "A+B",
+      class_1 %in% c("D", "E") ~ "D+E",
+      class_1 %in% c("J", "L", "M", "N") ~ "J+L+M+N",
+      TRUE ~ class_1)) %>%
+  select(class_0, class_1, class_1_name, class_2, class_2_name)
+
 # Load people names data
 fi_people_names <- vroom(
   "./data-raw/people_names.txt",
@@ -43,3 +69,4 @@ fi_people_names <- vroom(
 # Save data to use in package: Jmisc
 use_data(fi_postnumbers_2016, overwrite = TRUE)
 use_data(fi_people_names, overwrite = TRUE)
+use_data(fi_industries_2008, overwrite = TRUE)
