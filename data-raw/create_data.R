@@ -6,7 +6,7 @@ library(janitor)
 library(devtools)
 
 # Load postinumbers data
-fi.postnumbers.2016 <- vroom(
+fi_postnumbers_2016 <- vroom(
   "./data-raw/postnumber_2016.txt", skip = 4,
   col_types = cols(.default = col_character()),
   .name_repair = janitor::make_clean_names
@@ -33,7 +33,7 @@ fi.postnumbers.2016 <- vroom(
   distinct(postinumero, .keep_all = TRUE)
 
 # Load people names data
-fi.people.names <- vroom(
+fi_people_names <- vroom(
   "./data-raw/people_names.txt",
   .name_repair = janitor::make_clean_names
     ) %>%
@@ -41,5 +41,5 @@ fi.people.names <- vroom(
   mutate_at(vars(n), ~(str_replace_all(., " ", "") %>% as.integer))
 
 # Save data to use in package: Jmisc
-use_data(fi.postnumbers.2016, overwrite = TRUE)
-use_data(fi.people.names, overwrite = TRUE)
+use_data(fi_postnumbers_2016, overwrite = TRUE)
+use_data(fi_people_names, overwrite = TRUE)

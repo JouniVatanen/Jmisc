@@ -17,7 +17,7 @@
 #'   \item{suuralueen_nimi}{Area names divided by NUTS2}
 #'   \item{alue}{Area names divided by compass point}
 #' }
-"fi.postnumbers.2016"
+"fi_postnumbers_2016"
 
 #' Finnish names
 #'
@@ -32,4 +32,4 @@
 #'   \item{gender}{Male = M, Female = F, NA in lastnames}
 #'   \item{type}{Firstname = F, lastname = L}
 #' }
-"fi.people.names"
+"fi_people_names"

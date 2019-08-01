@@ -23,5 +23,6 @@ Imports:
   glue,
   httr,
   data.table,
-  XML
+  XML,
+  janitor
 RoxygenNote: 6.1.1
