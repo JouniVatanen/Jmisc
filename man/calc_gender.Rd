@@ -15,5 +15,6 @@ Calculate gender from social security number
 \examples{
 calc_gender("123456-123S")
 }
+\keyword{gender}
 \keyword{security,}
 \keyword{social}
