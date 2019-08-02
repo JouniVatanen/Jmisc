@@ -1,4 +1,4 @@
-#' clean_street names
+#' clean_street_names
 #'
 #' Clean string from Finnish street names
 #' @param x Choose string which to clean.

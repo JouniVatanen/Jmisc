@@ -45,7 +45,7 @@
 #'   \item{tol_0}{Combined some upper level classes (A-X)}
 #'   \item{tol_1}{Upper level classes (A-X)}
 #'   \item{tol_1_name}{Upper level classes names}
-#'   \item{tol_2{Lower level classes (00-99)}
+#'   \item{tol_2}{Lower level classes (00-99)}
 #'   \item{tol_2_name}{Lower level classes names}
 #' }
 "fi_industries_2008"

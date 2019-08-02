@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean_street_names.R
 \name{clean_street_names}
 \alias{clean_street_names}
-\title{clean_street names}
+\title{clean_street_names}
 \usage{
 clean_street_names(x)
 }
