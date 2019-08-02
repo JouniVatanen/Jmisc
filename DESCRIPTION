@@ -1,4 +1,4 @@
-Package: Jmisc
+Package: jmisc
 Title: Miscellaneous functions
 Version: 0.6
 Authors@R: person("Jouni", "Vatanen", email = "jounipvatanen@gmail.com", role = c("aut", "cre"))
@@ -13,7 +13,6 @@ Imports:
   modelr,
   broom,
   tidyr,
-  dplyr,
   purrr,
   ClustOfVar,
   factoextra,
@@ -24,5 +23,6 @@ Imports:
   httr,
   data.table,
   XML,
-  janitor
+  janitor,
+  stringi
 RoxygenNote: 6.1.1

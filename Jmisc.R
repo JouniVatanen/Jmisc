@@ -12,8 +12,8 @@ document()
 
 # Install package
 setwd("..")
-install("Jmisc")
-setwd("./Jmisc")
+install("jmisc")
+setwd("./jmisc")
 
 # Commit changes and push the files to the github
 # 1. Commit changes shell "git add .;git commit -m 'comment'" OR Rstudio UI
