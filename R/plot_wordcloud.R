@@ -15,17 +15,14 @@
 
 plot_wordcloud <- function(x, output = "./output/wordcloud.png") {
 
-  library(tm)
-  library(wordcloud)
-
   # Create remove words
   remove_words <- c(
     "että", "kiitos", "moite", "ikä", "sitä", "sitä", "sen", "palaute",
     "fffd", "hei", "myös", "moi")
 
   # Stem and remove stopwords for further analyses
-  corpus <- Corpus(VectorSource(x))
-  dtm <- TermDocumentMatrix(corpus, control = list(
+  corpus <- tm::Corpus(tm::VectorSource(x))
+  dtm <- tm::TermDocumentMatrix(corpus, control = list(
     removePunctuation = TRUE,
     removeNumbers = TRUE,
     tolower = TRUE,

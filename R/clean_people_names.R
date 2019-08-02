@@ -1,9 +1,6 @@
 #' clean_people_names
 #'
 #' Clean string from Finnish people
-#' @importFrom magrittr %>%
-#' @name %>%
-#' @rdname pipe
 #' @param x Choose string which to clean.
 #' @keywords clean, string, strees
 #' @examples
@@ -12,7 +9,8 @@
 
 clean_people_names <- function(x) {
 
-  library(magrittr)
+  #library(magrittr)
+  #use_pipe()
 
   # Load people names data
   data("fi_people_names", package = "jmisc")
@@ -36,7 +34,7 @@ clean_people_names <- function(x) {
   # Create people names pattern
   names <- fi_people_names %>%
     dplyr::filter(!(name %in% leave_names)) %>%
-    pull(name) %>%
+    dplyr::pull(name) %>%
     append(remove_names)
   remove_pattern <- paste0("\\b(?:", paste(names, collapse = "|"), ")\\b ?")
 
