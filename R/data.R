@@ -42,10 +42,10 @@
 #'
 #' @format A data frame with 89 rows and 5 variables:
 #' \describe{
-#'   \item{class_0}{Combined some upper level classes (A-X)}
-#'   \item{class_1}{Upper level classes (A-X)}
-#'   \item{class_1_name}{Upper level classes names}
-#'   \item{class_2{Lower level classes (00-99)}
-#'   \item{class_2_name}{Lower level classes names}
+#'   \item{tol_0}{Combined some upper level classes (A-X)}
+#'   \item{tol_1}{Upper level classes (A-X)}
+#'   \item{tol_1_name}{Upper level classes names}
+#'   \item{tol_2{Lower level classes (00-99)}
+#'   \item{tol_2_name}{Lower level classes names}
 #' }
 "fi_industries_2008"

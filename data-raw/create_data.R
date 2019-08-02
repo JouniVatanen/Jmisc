@@ -46,17 +46,17 @@ fi_industries_2008 <- vroom(
   .name_repair = janitor::make_clean_names) %>%
   filter(taso %in% c(1, 2)) %>%
   mutate(
-    class_1 = if_else(taso == 1, koodi, NA_character_),
-    class_1_name = if_else(taso == 1, nimike, NA_character_)) %>%
-  fill(class_1, class_1_name) %>%
+    tol_1 = if_else(taso == 1, koodi, NA_character_),
+    tol_1_name = if_else(taso == 1, nimike, NA_character_)) %>%
+  fill(tol_1, tol_1_name) %>%
   filter(taso == 2) %>%
-  rename(class_2 = koodi, class_2_name = nimike) %>%
-  mutate(class_0 = case_when(
-      class_1 %in% c("A", "B") ~ "A+B",
-      class_1 %in% c("D", "E") ~ "D+E",
-      class_1 %in% c("J", "L", "M", "N") ~ "J+L+M+N",
-      TRUE ~ class_1)) %>%
-  select(class_0, class_1, class_1_name, class_2, class_2_name)
+  rename(tol_2 = koodi, tol_2_name = nimike) %>%
+  mutate(tol_0 = case_when(
+      tol_1 %in% c("A", "B") ~ "A+B",
+      tol_1 %in% c("D", "E") ~ "D+E",
+      tol_1 %in% c("J", "L", "M", "N") ~ "J+L+M+N",
+      TRUE ~ tol_1)) %>%
+  select(tol_0, tol_1, tol_1_name, tol_2, tol_2_name)
 
 # Load people names data
 fi_people_names <- vroom(
