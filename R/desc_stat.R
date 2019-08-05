@@ -11,85 +11,83 @@
 #' desc_stat(data, .select = c(1:10))
 #' @export
 
-desc_stat <- function(data, .select, group.by.cols = NULL, with.idk = 99, .labels = c(total = "N")){
-
-  library(magrittr)
+desc_stat <- function(data, .select, group_by_cols = NULL, with_idk = 99, .labels = c(total = "N")){
 
   # Add total to the first of the vector
-  group.by.cols <- append(group.by.cols, "total", after = 0)
+  group_by_cols <- append(group_by_cols, "total", after = 0)
 
   # Create a list for the 1st loop and vector for N-values
-  desc.list <- list()
+  desc_list <- list()
   N <- c()
 
-  # Loop to create a data grouped by my.group.by.cols variable
-  for (i in 1:length(group.by.cols)) {
-    data.num <- data %>%
+  # Loop to create a data grouped by my_group_by_cols variable
+  for (i in 1:length(group_by_cols)) {
+    data_num <- data %>%
       dplyr::mutate(total = "total") %>%
-      dplyr::group_by_(group.by.cols[i]) %>%
+      dplyr::group_by_(group_by_cols[i]) %>%
       dplyr::select(which(lapply(data, class) == "numeric"))
 
     # If you want to include
-    if (is.numeric(with.idk)) {
-      data.num <- data.num %>%
-        dplyr::mutate_all(funs(if_else(. == with.idk, NA_real_, .)))
+    if (is.numeric(with_idk)) {
+      data_num <- data_num %>%
+        dplyr::mutate_all(funs(if_else(. == with_idk, NA_real_, .)))
     }
 
-    data.fct <- data %>%
-      dplyr::mutate_at(.select, as.factor) %>%
+    data_fct <- data %>%
+      dplyr::mutate_at(.select, as_factor) %>%
       dplyr::mutate(total = "total") %>%
-      dplyr::group_by_(group.by.cols[i]) %>%
+      dplyr::group_by_(group_by_cols[i]) %>%
       dplyr::select(.select)
 
     # Add N-values to a vector
-    N <- append(N, attr(data.num, "group_sizes"))
+    N <- append(N, attr(data_num, "group_sizes"))
 
     # Create a list for the 2nd loop
-    desc.list.grouped <- list()
+    desc_list_grouped <- list()
 
     # Loop to get percentage and means for each group
-    for (j in 1:length(unique(group_indices(data.num)))) {
+    for (j in 1:length(unique(group_indices(data_num)))) {
 
       # Factor data
-      desc.fct <- data.fct %>%
+      desc_fct <- data_fct %>%
         dplyr::group_indices(.) %in% j %>%
-        data.fct[., ] %>%
+        data_fct[., ] %>%
         dplyr::ungroup() %>%
         desctable::desctable(stats = list("Mean/ %" = is.factor ~ percent | (is.numeric ~ mean)), labels = .labels)
 
-      names(desc.fct[[2]]) <- attr(data.fct, "labels")[j, ]
-      desc.fct <- dplyr::bind_cols(lapply(desc.fct, as.data.frame)) %>%
+      names(desc_fct[[2]]) <- attr(data_fct, "labels")[j, ]
+      desc_fct <- dplyr::bind_cols(lapply(desc_fct, as.data.frame)) %>%
         dplyr::mutate(Variables = gsub("\\*","",Variables))
 
       # Numeric data
-      desc.num <- data.num %>%
+      desc_num <- data_num %>%
         dplyr::group_indices(.) %in% j %>%
-        data.num[., ] %>%
+        data_num[., ] %>%
         dplyr::ungroup() %>%
         desctable::desctable(stats = list("Mean/ %" = is.factor ~ percent | (is.numeric ~ mean)), labels = .labels)
 
-      names(desc.num[[2]]) <- attr(data.num, "labels")[j,]
-      desc.num <- bind_cols(lapply(desc.num, as.data.frame))
-      desc.comb <- full_join(desc.fct, desc.num, by = "Variables", suffix = c("",".y"))
-      desc.comb[2] <- ifelse(is.na(desc.comb[[2]]), desc.comb[[3]], desc.comb[[2]])
-      desc.comb <- desc.comb[1:2]
+      names(desc_num[[2]]) <- attr(data_num, "labels")[j,]
+      desc_num <- bind_cols(lapply(desc_num, as.data.frame))
+      desc_comb <- dplyr::full_join(desc_fct, desc_num, by = "Variables", suffix = c("",".y"))
+      desc_comb[2] <- dplyr::if_else(is.na(desc_comb[[2]]), desc_comb[[3]], desc_comb[[2]])
+      desc_comb <- desc_comb[1:2]
 
-      desc.list.grouped[j] <- list(desc.comb)
+      desc_list_grouped[j] <- list(desc_comb)
     }
 
     # Reduce lists as a dataframe by joining with Variable names
-    desc.list.grouped.df <- desc.list.grouped %>% reduce(full_join, by = "Variables")
+    desc_list_grouped_df <- desc_list_grouped %>% reduce(full_join, by = "Variables")
 
 
     # Create list for grouped descriptive stat dataframes
-    desc.list[i] <- list(desc.list.grouped.df)
+    desc_list[i] <- list(desc_list_grouped_df)
   }
 
   # Reduce lists as a dataframe by joining with Variable names
-  output <- desc.list %>% reduce(left_join, by = "Variables")
+  output <- desc_list %>% reduce(left_join, by = "Variables")
 
   # Make final mutations to output like remove unnecessary characters and add N values to top
-  output %<>%
+  output <- output %>%
     dplyr::mutate(Variables = stringr::str_replace_all(Variables, ".*:\\s", "")) %>%
     dplyr::mutate(Variables = stringr::str_replace_all(Variables, "\\.", " "))
 

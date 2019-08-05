@@ -9,12 +9,6 @@
 
 clean_people_names <- function(x) {
 
-  #library(magrittr)
-  #use_pipe()
-
-  # Load people names data
-  data("fi_people_names", package = "jmisc")
-
   # Warn if value is not character
   if (!is.character(x)) warning("Input is not character type")
 
@@ -32,7 +26,7 @@ clean_people_names <- function(x) {
     "Vanha", "Esti", "Kesti", "Svensk", "kai")
 
   # Create people names pattern
-  names <- fi_people_names %>%
+  names <- jmisc::fi_people_names %>%
     dplyr::filter(!(name %in% leave_names)) %>%
     dplyr::pull(name) %>%
     append(remove_names)
