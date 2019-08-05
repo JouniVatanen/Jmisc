@@ -4,7 +4,7 @@
 \alias{desc_stat}
 \title{Create descriptive statistics table}
 \usage{
-desc_stat(data, .select, group.by.cols = NULL, with.idk = 99,
+desc_stat(data, .select, group_by_cols = NULL, with_idk = 99,
   .labels = c(total = "N"))
 }
 \arguments{
@@ -12,11 +12,11 @@ desc_stat(data, .select, group.by.cols = NULL, with.idk = 99,
 
 \item{.select}{Choose which columns you want to calculate distribution.}
 
-\item{group.by.cols}{Group by chosen columns. Defaul: NULL}
+\item{.labels}{Choose labels for table. Default: total = "N"}
 
 \item{with.idk}{Data includes I don't know values. You want to compute them in distributions but not in means. Default: 99.}
 
-\item{.labels}{Choose labels for table. Default: total = "N"}
+\item{group.by.cols}{Group by chosen columns. Defaul: NULL}
 }
 \description{
 Create descriptive statistics table

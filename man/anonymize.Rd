@@ -15,7 +15,7 @@ anonymize(x, algo = "crc32")
 NOT FINISHED!!! Create anonymized id .
 }
 \examples{
-anonymize(x, algo = "crc32")
+anonymize(0:10, algo = "crc32")
 }
 \keyword{anonymize}
 \keyword{data}
