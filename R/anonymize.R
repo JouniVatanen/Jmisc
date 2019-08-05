@@ -15,12 +15,15 @@
 # Afterwards anonymise the new variable.
 
 anonymize <- function(x, algo = "crc32"){
-  id <- paste0(Source, " | ", Date.time)
-  unq_hashes <- vapply(unique(x), function(object) digest(object, algo=algo), FUN.VALUE="", USE.NAMES=TRUE)
+  id <- paste0(source, " | ", date_time)
+  unq_hashes <- vapply(unique(x), function(object) {
+    digest::digest(object, algo = algo), FUN.VALUE = "", USE.NAMES = TRUE)
+  }
   unname(unq_hashes[x])
 }
-#cols.create.ID <- c("Source","Date.time")
-#z <- paste0(cols.create.ID, collapse = " | ")
+
+#cols_create_ID <- c("source","date_time")
+#z <- paste0(cols_create_id, collapse = " | ")
 
 # Original function
 # anonymize <- function(x, algo="crc32"){
@@ -28,4 +31,4 @@ anonymize <- function(x, algo = "crc32"){
 #  unname(unq_hashes[x])
 # }
 # cols_to_mask <- c("name","address","postal_code")
-# SURV_ORG[, cols_to_mask := lapply(.SD, anonymize), .SDcols=cols_to_mask, with=FALSE][]
+# SURV_ORG[, cols_to_mask := lapply(.SD, anonymize), .SDcols = cols_to_mask, with = FALSE][]

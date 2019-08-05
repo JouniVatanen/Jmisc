@@ -16,8 +16,8 @@ linear_model <- function(data, form = c("y ~ ."), k = 10) {
     dplyr::mutate(model = purrr::map(train, ~ lm(form, data = .)),
            tidy = purrr::map(model, tidy),
            glance = purrr::map(model, glance),
-           test.rmse = purrr::map2_dbl(model, test, rmse),
-           train.rmse = purrr::map2_dbl(model, train, rmse))
+           test_rmse = purrr::map2_dbl(model, test, rmse),
+           train_rmse = purrr::map2_dbl(model, train, rmse))
 
   # Calculate coefficients
   coeffs <- models %>%
@@ -31,15 +31,15 @@ linear_model <- function(data, form = c("y ~ ."), k = 10) {
   r2 <- models %>% tidyr::unnest(glance) %>% dplyr::pull(adj.r.squared) %>% mean
 
   # Calculate model accuracy test set
-  test.preds <- models %>%
+  test_preds <- models %>%
     tidyr::unnest(fitted = purrr::map2(model, test, ~ augment(.x, newdata = .y))) %>%
     mutate(.fitted = pmax(3, pmin(12, .fitted)),
            .resid = .fitted - y)
 
-  test.acc <- models %>% dplyr::select(test.rmse) %>% dplyr::pull %>% mean
+  test_acc <- models %>% dplyr::select(test_rmse) %>% dplyr::pull %>% mean
 
   # Plot residuals
-  test.res.plot <- test.preds %>%
+  test_res_plot <- test_preds %>%
     ggplot2::ggplot(aes(y, .resid)) +
     geom_hline(yintercept = 0) +
     geom_point() +
@@ -49,15 +49,15 @@ linear_model <- function(data, form = c("y ~ ."), k = 10) {
 
 
   # Calculate model accuracy train set
-  train.preds <- models %>%
+  train_preds <- models %>%
     tidyr::unnest(fitted = purrr::map2(model, train, ~ augment(.x, newdata = .y))) %>%
     dplyr::mutate(.fitted = pmax(3, pmin(12, .fitted)),
            .resid = .fitted - y)
 
-  train.acc <- models %>% dplyr::select(train.rmse) %>% dplyr::pull %>% mean
+  train_acc <- models %>% dplyr::select(train_rmse) %>% dplyr::pull %>% mean
 
   # Plot residuals
-  train.res.plot <- train.preds %>%
+  train_res_plot <- train_preds %>%
     ggplot2::ggplot(aes(y, .resid)) +
     geom_hline(yintercept = 0) +
     geom_point() +
@@ -68,8 +68,8 @@ linear_model <- function(data, form = c("y ~ ."), k = 10) {
   # Return results as a list
   list(coeffs = coeffs,
        r2 = r2,
-       test.acc = test.acc,
-       test.res.plot = test.res.plot,
-       train.acc = train.acc,
-       train.res.plot = train.res.plot)
+       test_acc = test_acc,
+       test_res_plot = test_res_plot,
+       train_acc = train_acc,
+       train_res_plot = train_res_plot)
 }

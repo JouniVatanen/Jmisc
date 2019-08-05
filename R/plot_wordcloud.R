@@ -15,6 +15,7 @@
 
 plot_wordcloud <- function(x, output = "./output/wordcloud.png") {
 
+
   # Create remove words
   remove_words <- c(
     "että", "kiitos", "moite", "ikä", "sitä", "sitä", "sen", "palaute",
