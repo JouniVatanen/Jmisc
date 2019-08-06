@@ -3,29 +3,38 @@ Title: Miscellaneous functions
 Version: 0.6.1
 Authors@R: person("Jouni", "Vatanen", email = "jounipvatanen@gmail.com", role = c("aut", "cre"))
 Description: Miscellaneous functions e.g. for CX and survey data. Intended for personal use and some functions are still on alpha version.
-Depends: R (>= 3.4.3)
+Depends: R (>= 3.2.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-  dplyr,
-  ggplot2,
-  modelr,
   broom,
-  tidyr,
-  purrr,
   ClustOfVar,
-  factoextra,
-  Hmisc,
-  pROC,
-  magrittr,
-  glue,
-  httr,
   data.table,
-  XML,
+  desctable,
+  digest,
+  dplyr,
+  factoextra,
+  ggplot2,
+  glue,
+  grid,
+  gridExtra,
+  Hmisc,
+  httr,
+  ISLR,
   janitor,
+  lubridate,
+  magrittr,
+  modelr,
+  pROC,
+  purrr,
+  rlang,
   stringi,
+  stringr,
+  tidyr,
   tm,
   wordcloud,
-  digest
+  XML
 RoxygenNote: 6.1.1
+Suggests: 
+    testthat

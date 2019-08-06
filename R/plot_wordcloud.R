@@ -5,13 +5,17 @@
 #' @param output Output path.
 #' @keywords plot, wordcloud
 #' @examples
-#' #' # Create a vector of month names
+#' # Create a vector of month names
 #' x <- c()
 #' for (i in 1:12) {
 #'  x <- append(x, rep(month.name[i], i * 2))
 #' }
 #' plot_wordcloud(x, "./wordcloud.png")
 #' @export
+#' @import tm
+#' @importFrom wordcloud wordcloud
+#' @importFrom graphics par
+#' @importFrom grDevices dev.off png
 
 plot_wordcloud <- function(x, output = "./output/wordcloud.png") {
 
@@ -22,8 +26,8 @@ plot_wordcloud <- function(x, output = "./output/wordcloud.png") {
     "fffd", "hei", "myös", "moi")
 
   # Stem and remove stopwords for further analyses
-  corpus <- tm::Corpus(tm::VectorSource(x))
-  dtm <- tm::TermDocumentMatrix(corpus, control = list(
+  corpus <- Corpus(VectorSource(x))
+  dtm <- TermDocumentMatrix(corpus, control = list(
     removePunctuation = TRUE,
     removeNumbers = TRUE,
     tolower = TRUE,
@@ -37,7 +41,7 @@ plot_wordcloud <- function(x, output = "./output/wordcloud.png") {
   # Save as a file
   png(output, width = 1280, height = 800, units = "px", res = 100)
   par(mar = rep(0, 4))
-  wordcloud::wordcloud(df$word, df$freq, min.freq = 1, max.words = 200,
-                       rot.per = 0, colors = jmisc::ilmarinen_cols())
+  wordcloud(df$word, df$freq, min.freq = 1, max.words = 200,
+            rot.per = 0, colors = ilmarinen_cols())
   dev.off()
 }

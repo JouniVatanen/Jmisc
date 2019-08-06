@@ -17,7 +17,9 @@ list_to_email(email = NULL, sep = "\\t", reverse = FALSE)
 This function helps you to save O365 type email addresses from list
 }
 \examples{
-list_to_email()
+names_list <- c("Matti meikäläinen", "Maija Meikalainen")
+writeClipboard(names_list)
+list_to_email(email = "gmail.com")
 }
 \keyword{email}
 \keyword{list}

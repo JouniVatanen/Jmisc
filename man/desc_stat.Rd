@@ -12,17 +12,17 @@ desc_stat(data, .select, group_by_cols = NULL, with_idk = 99,
 
 \item{.select}{Choose which columns you want to calculate distribution.}
 
+\item{group_by_cols}{Group by chosen columns. Defaul: NULL}
+
+\item{with_idk}{Data includes I don't know values. You want to compute them in distributions but not in means. Default: 99.}
+
 \item{.labels}{Choose labels for table. Default: total = "N"}
-
-\item{with.idk}{Data includes I don't know values. You want to compute them in distributions but not in means. Default: 99.}
-
-\item{group.by.cols}{Group by chosen columns. Defaul: NULL}
 }
 \description{
 Create descriptive statistics table
 }
 \examples{
-desc_stat(data, .select = c(1:10))
+desc_stat(mtcars, .select = c(2, 8:11), group_by_cols = "cyl")
 }
 \keyword{birth,}
 \keyword{date}

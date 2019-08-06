@@ -1,18 +1,22 @@
 #' Anonymize
 #'
-#' NOT FINISHED!!! Create anonymized id .
-#' @param data Choose the dataframe?.
+#' Create anonymized id. Note: function is still on alpha stage.
+#' TODO: create id variable from source and date_time
+#' TODO: salt aka add some noise characters to variable
+#'
+#' # Original function and its use
+#' anonymize <- function(x, algo="crc32"){
+#'  unq_hashes <- vapply(unique(x), function(object) digest(object, algo=algo), FUN.VALUE="", USE.NAMES=TRUE)
+#'  unname(unq_hashes[x])
+#' }
+#' cols_to_mask <- c("name", "address", "postal_code")
+#' SURV_ORG[, cols_to_mask := lapply(.SD, anonymize), .SDcols = cols_to_mask, with = FALSE][]
+#' @param x String to anonymize.
 #' @param algo Algorithm to anonymize id. Default: crc32.
 #' @keywords anonymize data
 #' @examples
 #' anonymize(0:10, algo = "crc32")
 #' @export
-
-# Function to create anonynomous id
-# Example of use SURV_ORG[, cols.create.ID := lapply(.SD, anonymize), .SDcols=cols_to_mask, with=FALSE][]
-# Note: does not work yet. Needs some work
-# Idea is to create a id variable from variables source and date_time and maybe salt it aka add some noise chars to variable
-# Afterwards anonymise the new variable.
 
 anonymize <- function(x, algo = "crc32"){
 
@@ -23,13 +27,5 @@ anonymize <- function(x, algo = "crc32"){
   unname(unq_hashes[x])
 }
 
-#cols_create_ID <- c("source","date_time")
+#cols_create_id <- c("source","date_time")
 #z <- paste0(cols_create_id, collapse = " | ")
-
-# Original function
-# anonymize <- function(x, algo="crc32"){
-#  unq_hashes <- vapply(unique(x), function(object) digest(object, algo=algo), FUN.VALUE="", USE.NAMES=TRUE)
-#  unname(unq_hashes[x])
-# }
-# cols_to_mask <- c("name", "address", "postal_code")
-# SURV_ORG[, cols_to_mask := lapply(.SD, anonymize), .SDcols = cols_to_mask, with = FALSE][]

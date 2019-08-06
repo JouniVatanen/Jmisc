@@ -17,6 +17,8 @@ df_to_txt(x, file = "", sep = "\\t", dec = ",", overwrite = FALSE,
 \item{dec}{Decimal limiter. Default: ","}
 
 \item{overwrite}{Overwrites the file, it it exists. Default: FALSE.}
+
+\item{...}{Pass other parameters to fwrite like na, append, col.names}
 }
 \description{
 Save any list like data.frame, data.table or matrix to a txt-file. Based on fwrite from data.table package.

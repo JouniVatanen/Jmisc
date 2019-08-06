@@ -6,13 +6,14 @@
 #' @examples
 #' calc_tol("00")
 #' @export
+#' @importFrom dplyr case_when
 
 calc_tol <- function(x) {
 
   # Stop if value is not character
   if (!is.character(x)) stop("Industry class has to be char of type 00-99")
 
-  output <- dplyr::case_when(
+  output <- case_when(
     x %in% c("01", "02", "03") ~ "A",
     x %in% c("04", "05", "06", "07", "08", "09")  ~ "B",
     x %in% c("10", "11", "12", "13", "14", "15", "16", "17", "18", "19",

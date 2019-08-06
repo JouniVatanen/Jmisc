@@ -2,34 +2,41 @@
 #'
 #' Make a custom dendrogram plot.
 #' @param data Choose the dataframe.
-#' @param cut.num Choose the number where to cut the number of clusters. Default: 5.
-#' @param clust.var Choose if you want to cluster variables. Default: TRUE.
+#' @param cut_num Choose the number where to cut the number of clusters. Default: 5.
+#' @param clust_var Choose if you want to cluster variables. Default: TRUE.
 #' @param horiz Plot horizontal (TRUE) or vertical (FALSE). Default: FALSE.
-#' @keywords dataframe
+#' @param labels_track_height Make extra space for variable names. Default: 120.
+#' @param main Title for the plot.
+#' @param ... Pass other parameters to fviz_dend like type, cex, ggtheme.
+#' @keywords data dendrogram cluster
 #' @examples
-#' plot_hclust(data, cut.num = 5)
+#' plot_hclust(mtcars, cut_num = 4, horiz = TRUE, labels_track_height = 1)
 #' @export
+#' @import dplyr
+#' @importFrom ClustOfVar hclustvar
+#' @importFrom factoextra fviz_dend
+#' @importFrom stats dist hclust
 
-plot_hclust <- function(data, cut.num = 5, clust.var = TRUE, horiz = FALSE,
+plot_hclust <- function(data, cut_num = 5, clust_var = TRUE, horiz = FALSE,
                         labels_track_height = 120, main = "", ...) {
 
-  # ClustofVar if clust.var = TRUE
-  if (clust.var) {
+  # ClustofVar if clust_var = TRUE
+  if (clust_var) {
 
     # Select numeric variables and NULL if no variables
-    var.quanti <- data %>%
+    var_quanti <- data %>%
       select_if(is.numeric)
 
     # Select non-numeric variables and convert them to factors and NULL if no variables
-    var.quali <- data %>%
+    var_quali <- data %>%
       select_if(Negate(is.numeric)) %>%
       mutate_all(as.factor)
 
-    if (is.null(dim(var.quanti)) | dim(var.quanti)[2] == 0) {var.quanti <- NULL}
-    if (is.null(dim(var.quali)) | dim(var.quali)[2] == 0) {var.quali <- NULL}
+    if (is.null(dim(var_quanti)) | dim(var_quanti)[2] == 0) {var_quanti <- NULL}
+    if (is.null(dim(var_quali)) | dim(var_quali)[2] == 0) {var_quali <- NULL}
 
     # Variable hierarchical cluster
-    hc <- ClustOfVar::hclustvar(X.quanti = var.quanti, X.quali = var.quali)
+    hc <- hclustvar(X.quanti = var_quanti, X.quali = var_quali)
 
   } else {
     # Else normal hierarchical cluster
@@ -37,13 +44,14 @@ plot_hclust <- function(data, cut.num = 5, clust.var = TRUE, horiz = FALSE,
   }
 
   # Choose custom colors, where rep_len matches number of clusters
-  colors <- rep_len(ilmarinen_cols(), cut.num)
+  colors <- rep_len(ilmarinen_cols(), cut_num)
 
   # Plot the clustering
-  plot <- factoextra::fviz_dend(
-      hc, k = cut.num, cex = 0.5, horiz = horiz, k_colors = colors,
+  plot <- fviz_dend(
+      hc, k = cut_num, cex = 0.5, horiz = horiz, k_colors = colors,
       color_labels_by_k = TRUE, rect = TRUE, rect_border = colors,
-      rect_fill = TRUE, labels_track_height = labels_track_height, main = main, ...) +
+      rect_fill = TRUE, labels_track_height = labels_track_height,
+      main = main, ...) +
     theme_void()
 
   return(plot)

@@ -29,6 +29,7 @@ ilmarinen_cols <- function(...) {
 #' @param reverse Boolean indicating whether the palette should be reversed
 #' @param ... Additional arguments to pass to colorRampPalette()
 #' @export
+#' @importFrom grDevices colorRampPalette
 
 ilmarinen_pal <- function(palette = "main", reverse = FALSE, ...) {
 

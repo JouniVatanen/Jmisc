@@ -1,10 +1,10 @@
-#' plot_ratio
+#' plot_ratio NOT YET FINISHED SO NOT INCLUDED IN PACKAGE
 #'
 #' GGally custom my_ratio plot for a large ... plot.
 #' @param
 #' @keywords GGally ggplot
-#' @examples
-#' @export
+#' @import ggplot GGally
+#' @importFrom plyr count
 
 my_ratio <- function(data, mapping, ...){
   ggplot(data = data, mapping = mapping)
@@ -12,7 +12,7 @@ my_ratio <- function(data, mapping, ...){
 
 ggally_ratio <- function(
   data,
-  mapping = do.call(ggplot2::aes_string, as.list(colnames(data)[1:2])),
+  mapping = do.call(aes_string, as.list(colnames(data)[1:2])),
   ...,
   floor = 0,
   ceiling = NULL
@@ -21,7 +21,7 @@ ggally_ratio <- function(
   # capture the original names
   xName <- mapping_string(mapping$x)
   yName <- mapping_string(mapping$y)
-  countData <- plyr::count(data, vars = c(xName, yName))
+  countData <- count(data, vars = c(xName, yName))
 
   # overwrite names so name clashes don"t happen
   colnames(countData)[1:2] <- c("x", "y")

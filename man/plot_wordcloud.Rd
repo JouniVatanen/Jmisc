@@ -15,7 +15,7 @@ plot_wordcloud(x, output = "./output/wordcloud.png")
 Make a custom wordcloud plot.
 }
 \examples{
-#' # Create a vector of month names
+# Create a vector of month names
 x <- c()
 for (i in 1:12) {
  x <- append(x, rep(month.name[i], i * 2))

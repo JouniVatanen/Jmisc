@@ -3,29 +3,40 @@
 #' Create a multiple custom bar plots. With purr::map you can create a list of barplots.
 #' @param data dataframe
 #' @param row select which row to plot. Default: 1:nrow(.)
-#' @param label select labels. Default: waiver()
+#' @param labels select labels. Default: waiver()
 #' @keywords plot ggplot2 multiplot
 #' @examples
-#' plot.basic <- data %>%
-#' select(1:4) %>%
-#' {map(list(1, 2, c(3:5)), function(x) multiplot_bars(., x, labels))}
-#' do.call("grid.arrange", c(plot.basic, ncol = 2))
+#' # Plot multiple bar plots to same grid
+#' library(gridExtra)
 #'
-#' plot_multibars(data, row = 3)
+#' plot_basic <- mtcars %>%
+#'   dplyr::group_by(cyl) %>%
+#'   dplyr::summarise_at(dplyr::vars(mpg, disp, hp, wt), ~mean(.)) %>%
+#'   tidyr::gather(2:ncol(.), key = "question", value = "values") %>%
+#'   tidyr::spread(cyl, values) %>%
+#'   {purrr::map(list(1, 2, 3), function(x) plot_multibars(., x))}
+#' do.call("grid.arrange", c(plot_basic, ncol = 2))
+#'
+#' # Plot a single bar plot
+#' plot_multibars(mtcars, row = 3)
 #' @export
+#' @import dplyr ggplot2
+#' @importFrom tidyr gather
+#' @importFrom purrr map
+#' @importFrom gridExtra grid.arrange
 
-plot_multibars <- function(data, row = 1:nrow(.), labels = waiver()) {
+plot_multibars <- function(data, row = 1:nrow(data), labels = waiver()) {
 
   data %>%
 
     # Choose which row to plot
-    dplyr::slice(row) %>%
+    slice(row) %>%
 
     # Gather many columns to ggplot format
-    tidyr::gather(2:ncol(.), key = "question", value = "values") %>%
+    gather(2:ncol(.), key = "question", value = "values") %>%
 
     # Plot data
-    ggplot2::ggplot(., aes(x = question, y = values, fill = Variables, label = round(values, 1))) +
+    ggplot(aes(x = question, y = values, fill = question, label = round(values, 1))) +
       geom_col(position = "dodge") +
       geom_text(position = position_dodge(width = 1), vjust = 0) +
 

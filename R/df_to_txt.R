@@ -6,6 +6,7 @@
 #' @param dec Decimal limiter. Default: ","
 #' @param overwrite Overwrites the file, it it exists. Default: FALSE.
 #' @param sep Separator. Default: TAB
+#' @param ... Pass other parameters to fwrite like na, append, col.names
 #' @keywords save txt
 #' @examples
 #' n <- c(1.1, 2.2, 3.3)
@@ -13,6 +14,7 @@
 #' x <- data.frame(n, s)
 #' df_to_txt(x, file = "example.txt")
 #' @export
+#' @importFrom data.table fwrite
 
 df_to_txt <- function(x, file = "", sep = "\t", dec = ",",
                       overwrite = FALSE, ...) {
@@ -21,6 +23,6 @@ df_to_txt <- function(x, file = "", sep = "\t", dec = ",",
   } else {
 
     # Write to the file with custom settings like sep, dec and encoding
-    data.table::fwrite(x = x, file = file, sep = sep, dec = dec)
+    fwrite(x = x, file = file, sep = sep, dec = dec, ...)
   }
 }

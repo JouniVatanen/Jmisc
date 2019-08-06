@@ -6,6 +6,8 @@
 #' @examples
 #' clean_people_names("Ari, Jouni, EsaJokutie 4, pikitie 7, 00500 Helsinki")
 #' @export
+#' @import dplyr
+#' @importFrom stringi stri_replace_all_regex stri_opts_regex
 
 clean_people_names <- function(x) {
 
@@ -27,15 +29,15 @@ clean_people_names <- function(x) {
 
   # Create people names pattern
   names <- jmisc::fi_people_names %>%
-    dplyr::filter(!(name %in% leave_names)) %>%
-    dplyr::pull(name) %>%
+    filter(!(name %in% leave_names)) %>%
+    pull(1) %>%
     append(remove_names)
   remove_pattern <- paste0("\\b(?:", paste(names, collapse = "|"), ")\\b ?")
 
   # Remove pattern from string
-  output <- stringi::stri_replace_all_regex(
+  output <- stri_replace_all_regex(
     x, remove_pattern, "**",
-    opts_regex = stringi::stri_opts_regex(case_insensitive = TRUE))
+    opts_regex = stri_opts_regex(case_insensitive = TRUE))
 
   return(output)
 }

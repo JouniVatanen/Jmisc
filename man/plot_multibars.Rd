@@ -4,25 +4,32 @@
 \alias{plot_multibars}
 \title{Multiple custom bar plots}
 \usage{
-plot_multibars(data, row = 1:nrow(.), labels = waiver())
+plot_multibars(data, row = 1:nrow(data), labels = waiver())
 }
 \arguments{
 \item{data}{dataframe}
 
 \item{row}{select which row to plot. Default: 1:nrow(.)}
 
-\item{label}{select labels. Default: waiver()}
+\item{labels}{select labels. Default: waiver()}
 }
 \description{
 Create a multiple custom bar plots. With purr::map you can create a list of barplots.
 }
 \examples{
-plot.basic <- data \%>\%
-select(1:4) \%>\%
-{map(list(1, 2, c(3:5)), function(x) multiplot_bars(., x, labels))}
-do.call("grid.arrange", c(plot.basic, ncol = 2))
+# Plot multiple bar plots to same grid
+library(gridExtra)
 
-plot_multibars(data, row = 3)
+plot_basic <- mtcars \%>\%
+  dplyr::group_by(cyl) \%>\%
+  dplyr::summarise_at(dplyr::vars(mpg, disp, hp, wt), ~mean(.)) \%>\%
+  tidyr::gather(2:ncol(.), key = "question", value = "values") \%>\%
+  tidyr::spread(cyl, values) \%>\%
+  {purrr::map(list(1, 2, 3), function(x) plot_multibars(., x))}
+do.call("grid.arrange", c(plot_basic, ncol = 2))
+
+# Plot a single bar plot
+plot_multibars(mtcars, row = 3)
 }
 \keyword{ggplot2}
 \keyword{multiplot}
