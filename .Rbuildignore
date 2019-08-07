@@ -1,5 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^jmisc.R$
+^stools.R$
 ^data-raw$
 ^R/___.*

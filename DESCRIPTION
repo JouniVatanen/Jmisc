@@ -1,8 +1,8 @@
-Package: jmisc
-Title: Miscellaneous functions
+Package: stools
+Title: Tools for CX and survey data
 Version: 0.6.1
 Authors@R: person("Jouni", "Vatanen", email = "jounipvatanen@gmail.com", role = c("aut", "cre"))
-Description: Miscellaneous functions e.g. for CX and survey data. Intended for personal use and some functions are still on alpha version.
+Description: Miscellaneous functions e.g. for CX and survey data. Also API functions for Questback Essentials survey tool..
 Depends: R (>= 3.2.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -36,5 +36,3 @@ Imports:
   wordcloud,
   XML
 RoxygenNote: 6.1.1
-Suggests: 
-    testthat
