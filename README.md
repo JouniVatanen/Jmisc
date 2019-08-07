@@ -1,2 +1,2 @@
-# Jmisc
+# stools
 Miscellaneous R functions
