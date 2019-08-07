@@ -5,22 +5,21 @@
 #' @param polychoric Not yet implemented. TRUE = use polychoric correlations.
 #' @keywords plot
 #' @examples
-#' plot_corr(mtcars, polychoric = FALSE)
+#' plot_corr(mtcars)
 #' @export
 #' @import dplyr ggplot2
 #' @importFrom tidyr gather
 #' @importFrom stats hclust as.dist cor
+#' @importFrom rlang .data
 
 plot_corr <- function(data, polychoric = FALSE) {
 
-  corr_m <- data %>%
+  # Shorten variable names to 30 characters
+  names(data) <- str_sub(names(data), 1, 30)
 
-    # Shorten variable names to 30 characters
-    rename_all(~str_sub(., 1, 30)) %>%
-
-    # Create correlation matrix
-    # Ifelse for polychoric correlations
-    cor(., use = "pairwise.complete.obs")
+  # Create correlation matrix
+  # TODO: if polychoric = TRUE, then calculate polychoric correlations
+  corr_m <- cor(data, use = "pairwise.complete.obs")
 
   # Reorder correlation matrix
   dd <- as.dist(1 - corr_m / 2)
@@ -31,15 +30,19 @@ plot_corr <- function(data, polychoric = FALSE) {
   output <- as.data.frame(corr_m) %>%
 
     # Mutate correlation matrix
-    mutate(Var1 = factor(row.names(.), levels = row.names(.))) %>%
-    gather(Var2, value, -Var1, na.rm = TRUE, factor_key = TRUE) %>%
+    mutate(Var1 = factor(row.names(corr_m), levels = row.names(corr_m))) %>%
+    gather(key = "Var2", value = "value", -.data$Var1,
+           na.rm = TRUE, factor_key = TRUE) %>%
 
     # Plot correlation matrix
-    ggplot(., aes(Var2, Var1, fill = value)) +
+    ggplot(aes(.data$Var2, .data$Var1, fill = .data$value)) +
       geom_tile(color = "white") +
-      scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0, limit = c(-1,1), space = "Lab") +
+      scale_fill_gradient2(
+        low = "blue", high = "red", mid = "white",
+        midpoint = 0, limit = c(-1,1), space = "Lab") +
       theme_minimal() +
-      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+      theme(
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
         axis.title.x = element_blank(),
         axis.title.y = element_blank()) +
       coord_fixed()

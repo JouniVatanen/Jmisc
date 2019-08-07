@@ -12,6 +12,7 @@ library(vroom)
 library(stringr)
 library(janitor)
 library(devtools)
+library(tibble)
 
 # Load postinumbers data
 fi_postnumbers_2016 <- vroom(
@@ -64,9 +65,44 @@ fi_people_names <- vroom(
   .name_repair = janitor::make_clean_names
     ) %>%
   # Turn n from character to integer
-  mutate_at(vars(n), ~(str_replace_all(., " ", "") %>% as.integer))
+  mutate_at(vars(n), ~(str_replace_all(., " ", "") %>% as.integer)) %>%
+  arrange(desc(n))
 
-# Save data to use in package: Jmisc
-use_data(fi_postnumbers_2016, overwrite = TRUE)
-use_data(fi_people_names, overwrite = TRUE)
-use_data(fi_industries_2008, overwrite = TRUE)
+# Create people names to remove
+fi_remove_names <- enframe(
+  c("Paka", "Paaja", "Hamarus", "Allan", "Roy", "Hitchman", "Wojtunik"),
+  name = NULL, value = "name")
+
+# Create people names to leave
+fi_leave_names <- c(
+  "Ilmarinen", "Olin", "Varma", "Toimi", "Onni", "Kela", "Aamu", "Elo", "Aina",
+  "Mainio", "Ensi", "Ihme", "Lähde", "Ruutu", "Ilman", "Mutta", "Pitkä", "Oja",
+  "Aihe", "Asia", "Voi", "oja", "von", "Pyy", "pyy", "Aho", "aho", "Jonne",
+  "Minne", "Tuli", "Uusi", "uusi", "Hankala", "And", "Viik", "Nord", "Väli",
+  "Tila", "Väli", "Ansio", "Koski", "Osku", "Iso", "Juuri", "Arvio", "Laskuja",
+  "Titta", "Ilo", "Ruotsi", "Ilmi", "Suo", "Ajan", "Laaja", "Vappu", "Peri",
+  "Vanha", "Esti", "Kesti", "Svensk", "kai")
+
+# Create filtered people names data
+fi_filtered_people_names <- fi_people_names %>%
+  filter(!name %in% fi_leave_names) %>%
+  select(name) %>%
+  bind_rows(fi_remove_names)
+
+# Create remove words data
+fi_remove_words <- enframe(
+  c("että", "kiitos", "moite", "ikä", "sitä", "sitä", "sen", "palaute", "fffd",
+  "hei", "myös", "moi"),
+  name = NULL, value = "word")
+
+# Create company abbreviations data
+fi_company_abbr <- enframe(
+  c("ry", "RY", "Oy", "OY", "oy", "OyJ", "Oyj", "oyj", "OYJ", "Ky", "KY", "AB",
+  "Ab", "ab", "säätiö", "Säätiö"),
+  name = NULL, value = "abbr")
+
+# Save data to use in package: jmisc
+use_data(fi_postnumbers_2016, fi_industries_2008, fi_people_names,
+         overwrite = TRUE)
+use_data(fi_filtered_people_names, fi_remove_words, fi_company_abbr,
+         internal = TRUE, overwrite = TRUE)

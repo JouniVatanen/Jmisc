@@ -15,6 +15,7 @@
 #' @importFrom tidyr unnest
 #' @importFrom stringr str_trim
 #' @importFrom pROC roc
+#' @importFrom rlang .data
 
 kfold_logit <- function(data, formula = "y ~ .", k = 10) {
 
@@ -24,41 +25,41 @@ kfold_logit <- function(data, formula = "y ~ .", k = 10) {
   # Create test and train set and n folds
   models <- crossv_kfold(data, k = k) %>%
     mutate(
-      model = map(train, ~ glm(formula, family = binomial("logit"), data = .)),
-      tidy = map(model, tidy),
-      glance = map(model, glance))
+      model = map(.data$train, ~ glm(formula, family = binomial("logit"), data = .)),
+      tidy = map(.data$model, tidy),
+      glance = map(.data$model, glance))
 
   # Calculate coefficients
   coeffs <- models %>%
-    unnest(tidy) %>%
-    select(.id, term, estimate, p.value) %>%
-    group_by(term) %>%
-    summarise(estimate = mean(estimate), p.value = mean(p.value)) %>%
-    arrange(p.value)
+    unnest(.data$tidy) %>%
+    select(.data$.id, .data$term, .data$estimate, .data$p.value) %>%
+    group_by(.data$term) %>%
+    summarise(estimate = mean(.data$estimate), p.value = mean(.data$p.value)) %>%
+    arrange(.data$p.value)
 
   # Calculate model accuracy test set
   test_preds <- models %>%
     unnest(
-      fitted = map2(model, test, ~augment(.x, newdata = .y)),
-      pred = map2(model, test, ~predict(.x, .y, type = "response")))
+      fitted = map2(.data$model, .data$test, ~augment(.x, newdata = .y)),
+      pred = map2(.data$model, .data$test, ~predict(.x, .y, type = "response")))
 
   test_acc <- test_preds %>%
-    group_by(.id) %>%
-    summarise(auc = roc(!! ensym(y), .fitted)$auc) %>%
-    select(auc) %>%
+    group_by(.data$.id) %>%
+    summarise(auc = roc(.data[[y]], .data$.fitted)$auc) %>%
+    select(.data$auc) %>%
     pull %>%
     mean
 
   # Calculate model accuracy from train set
   train_preds <- models %>%
     unnest(
-      fitted = map2(model, train, ~augment(.x, newdata = .y)),
-      pred = map2(model, train, ~predict(.x, .y, type = "response")))
+      fitted = map2(.data$model, .data$train, ~augment(.x, newdata = .y)),
+      pred = map2(.data$model, .data$train, ~predict(.x, .y, type = "response")))
 
   train_acc <- train_preds %>%
-    group_by(.id) %>%
-    summarise(auc = roc(!! ensym(y), .fitted)$auc) %>%
-    select(auc) %>%
+    group_by(.data$.id) %>%
+    summarise(auc = roc(.data[[y]], .data$.fitted)$auc) %>%
+    select(.data$auc) %>%
     pull %>%
     mean
 

@@ -19,19 +19,13 @@
 
 plot_wordcloud <- function(x, output = "./output/wordcloud.png") {
 
-
-  # Create remove words
-  remove_words <- c(
-    "että", "kiitos", "moite", "ikä", "sitä", "sitä", "sen", "palaute",
-    "fffd", "hei", "myös", "moi")
-
   # Stem and remove stopwords for further analyses
   corpus <- Corpus(VectorSource(x))
   dtm <- TermDocumentMatrix(corpus, control = list(
     removePunctuation = TRUE,
     removeNumbers = TRUE,
     tolower = TRUE,
-    stopwords = c(stopwords("finnish"), remove_words),
+    stopwords = c(stopwords("finnish"), pull(fi_remove_words)),
     stripWhitespace = TRUE)
     )
 

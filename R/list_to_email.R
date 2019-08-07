@@ -10,7 +10,7 @@
 #' writeClipboard(names_list)
 #' list_to_email(email = "gmail.com")
 #' @export
-#' @importFrom stringi stri_replace_all_regex
+#' @importFrom stringi stri_replace_all_regex stri_trans_general
 #' @importFrom dplyr mutate
 #' @importFrom utils read.table readClipboard write.table
 
@@ -19,11 +19,13 @@ list_to_email <- function(email = NULL, sep = "\t", reverse = FALSE) {
   # Works only on windows at this point
   if (.Platform$OS.type != "windows") stop("Currently only works on Windows")
 
+  clipboard <- tolower(readClipboard())
+
   # If email ending is not defined
   if (is.null(email)) {
 
     # Copy from Outlook like clipboard
-    source <- stri_replace_all_regex(tolower(readClipboard()),
+    source <- stri_replace_all_regex(clipboard,
       c(";", ">", " <"),
       c("\n", "", "\t"),
       vectorize_all = FALSE)
@@ -31,14 +33,14 @@ list_to_email <- function(email = NULL, sep = "\t", reverse = FALSE) {
     col_names <- c("name", "email")
 
   } else {
+
   # If email ending is defined
     # Copy from text and put
     source <- paste0(
       stri_replace_all_regex(
-        tolower(readClipboard()),
-        c("'", "å|ä", "ö", "é|è|ë|ê"),
-        c("" , "a"  , "o", "e"),
-        vectorize_all = FALSE),
+        stri_trans_general(clipboard, "latin-ascii"),
+        c("\\s"),
+        c(".")),
       "@",
       email)
 

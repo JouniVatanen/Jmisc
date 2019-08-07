@@ -25,6 +25,7 @@
 #' @importFrom purrr map
 #' @importFrom gridExtra grid.arrange
 
+
 plot_multibars <- function(data, row = 1:nrow(data), labels = waiver()) {
 
   data %>%
@@ -33,10 +34,11 @@ plot_multibars <- function(data, row = 1:nrow(data), labels = waiver()) {
     slice(row) %>%
 
     # Gather many columns to ggplot format
-    gather(2:ncol(.), key = "question", value = "values") %>%
+    gather(2:ncol(data), key = "question", value = "values") %>%
 
     # Plot data
-    ggplot(aes(x = question, y = values, fill = question, label = round(values, 1))) +
+    ggplot(aes(x = .data$question, y = .data$values, fill = .data$question,
+               label = round(.data$values, 1))) +
       geom_col(position = "dodge") +
       geom_text(position = position_dodge(width = 1), vjust = 0) +
 
@@ -48,7 +50,8 @@ plot_multibars <- function(data, row = 1:nrow(data), labels = waiver()) {
 
       # Choose theme
       theme_minimal() +
-      theme(axis.title.y = element_blank(),
+      theme(
+        axis.title.y = element_blank(),
         axis.title.x = element_blank(),
         legend.title = element_blank(),
         legend.position = "bottom",

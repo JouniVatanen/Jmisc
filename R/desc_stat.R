@@ -14,8 +14,12 @@
 #' @importFrom purrr reduce
 #' @importFrom desctable desctable
 #' @importFrom stringr str_replace_all
+#' @importFrom rlang .data
 
 desc_stat <- function(data, .select, group_by_cols = NULL, with_idk = 99, .labels = c(total = "N")){
+
+  # Need to bind dot to global variable so check() will pass
+  . <- NULL
 
   # Add total to the first of the vector
   group_by_cols <- append(group_by_cols, "total", after = 0)
@@ -31,10 +35,10 @@ desc_stat <- function(data, .select, group_by_cols = NULL, with_idk = 99, .label
       group_by_(group_by_cols[i]) %>%
       select(which(lapply(data, class) == "numeric"))
 
-    # If you want to include
+    # Remove with_idk numbers
     if (is.numeric(with_idk)) {
       data_num <- data_num %>%
-        mutate_all(funs(if_else(. == with_idk, NA_real_, .)))
+        mutate_all( ~if_else(. == with_idk, NA_real_, .))
     }
 
     data_fct <- data %>%
@@ -54,7 +58,7 @@ desc_stat <- function(data, .select, group_by_cols = NULL, with_idk = 99, .label
 
       # Factor data
       desc_fct <- data_fct %>%
-        group_indices(.) %in% j %>%
+        group_indices() %in% j %>%
         data_fct[., ] %>%
         ungroup() %>%
         desctable(
@@ -63,11 +67,11 @@ desc_stat <- function(data, .select, group_by_cols = NULL, with_idk = 99, .label
 
       names(desc_fct[[2]]) <- attr(data_fct, "labels")[j, ]
       desc_fct <- bind_cols(lapply(desc_fct, as.data.frame)) %>%
-        mutate(Variables = gsub("\\*","",Variables))
+        mutate(Variables = gsub("\\*","", .data$Variables))
 
       # Numeric data
       desc_num <- data_num %>%
-        group_indices(.) %in% j %>%
+        group_indices() %in% j %>%
         data_num[., ] %>%
         ungroup() %>%
         desctable(
@@ -105,8 +109,8 @@ desc_stat <- function(data, .select, group_by_cols = NULL, with_idk = 99, .label
 
   # Make final mutations to output like remove unnecessary characters and add N values to top
   output <- output %>%
-    mutate(Variables = str_replace_all(Variables, ".*:\\s", "")) %>%
-    mutate(Variables = str_replace_all(Variables, "\\.", " "))
+    mutate(Variables = str_replace_all(.data$Variables, ".*:\\s", "")) %>%
+    mutate(Variables = str_replace_all(.data$Variables, "\\.", " "))
 
   output[1,2:ncol(output)] <- N
 

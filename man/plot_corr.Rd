@@ -15,6 +15,6 @@ plot_corr(data, polychoric = FALSE)
 Make a custom correlation plot.
 }
 \examples{
-plot_corr(mtcars, polychoric = FALSE)
+plot_corr(mtcars)
 }
 \keyword{plot}

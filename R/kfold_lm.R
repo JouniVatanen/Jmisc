@@ -53,7 +53,7 @@ kfold_lm <- function(data, formula = "y ~ .", k = 10) {
   test_preds <- models %>%
     unnest(fitted = map2(.data$model, .data$test, ~augment(.x, newdata = .y))) %>%
     mutate(.fitted = pmax(3, pmin(12, .data$.fitted)), .resid = .data$.fitted - .data[[y]])
-  test_acc <- models %>% select(test_rmse) %>% pull %>% mean
+  test_acc <- models %>% select(.data$test_rmse) %>% pull %>% mean
 
   # Plot residuals
   test_res_plot <- test_preds %>%

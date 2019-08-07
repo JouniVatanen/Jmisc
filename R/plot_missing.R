@@ -18,15 +18,16 @@ plot_missing <- function(data, file = NULL) {
   names(data) <- substring(names(data), 1, 30)
 
   # Create missmap dataframe
+  data <- as.data.frame(is.na(data))
+
   plot <- data %>%
-    is.na %>%
-    as.data.frame %>%
-    mutate(Var1 = factor(rownames(.), levels = rownames(.))) %>%
-    gather(Var2, value, -Var1, na.rm = TRUE, factor_key = TRUE) %>%
+    mutate(Var1 = factor(rownames(data), levels = rownames(data))) %>%
+    gather(key = "Var2", value = "value", -.data$Var1,
+           na.rm = TRUE, factor_key = TRUE) %>%
 
   # Plot missing values
-    ggplot(aes(x = Var2, y = Var1)) +
-      geom_raster(aes(fill = value)) +
+    ggplot(aes(x = .data$Var2, y = .data$Var1)) +
+      geom_raster(aes(fill = .data$value)) +
       scale_fill_grey(name = '', labels = c('Present', 'Missing')) +
       theme_minimal() +
       theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +

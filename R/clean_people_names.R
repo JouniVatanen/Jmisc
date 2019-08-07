@@ -14,25 +14,9 @@ clean_people_names <- function(x) {
   # Warn if value is not character
   if (!is.character(x)) warning("Input is not character type")
 
-  # Remove and leave some names
-  remove_names <- c(
-    "Paka", "Paaja", "Hamarus", "Allan", "Roy", "Hitchman", "Wojtunik")
-
-  leave_names <- c(
-    "Ilmarinen", "Olin", "Varma", "Toimi", "Onni", "Kela", "Aamu", "Elo", "Aina",
-    "Mainio", "Ensi", "Ihme", "Lähde", "Ruutu", "Ilman", "Mutta", "Pitkä", "Oja",
-    "Aihe", "Asia", "Voi", "oja", "von", "Pyy", "pyy", "Aho", "aho", "Jonne",
-    "Minne", "Tuli", "Uusi", "uusi", "Hankala", "And", "Viik", "Nord", "Väli",
-    "Tila", "Väli", "Ansio", "Koski", "Osku", "Iso", "Juuri", "Arvio", "Laskuja",
-    "Titta", "Ilo", "Ruotsi", "Ilmi", "Suo", "Ajan", "Laaja", "Vappu", "Peri",
-    "Vanha", "Esti", "Kesti", "Svensk", "kai")
-
   # Create people names pattern
-  names <- jmisc::fi_people_names %>%
-    filter(!(name %in% leave_names)) %>%
-    pull(1) %>%
-    append(remove_names)
-  remove_pattern <- paste0("\\b(?:", paste(names, collapse = "|"), ")\\b ?")
+  names <- paste(pull(fi_filtered_people_names), collapse = "|")
+  remove_pattern <- paste0("\\b(?:", names, ")\\b ?")
 
   # Remove pattern from string
   output <- stri_replace_all_regex(
