@@ -1,3 +1,7 @@
-#' @useDynLib stools, .registration = TRUE
+#' @useDynLib stools
 #' @importFrom Rcpp sourceCpp
-#' NULL
+NULL
+
+.onUnload <- function (libpath) {
+  library.dynam.unload("stools", libpath)
+}
