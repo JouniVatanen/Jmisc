@@ -161,6 +161,65 @@ api_essentials <- function(soap_action, username, password, quest_id = NULL,
     return(body)
   }
 
+  # Function to load data
+  GetResponses <- function(username, password, quest_id, security_lock) {
+
+    xml <- xmlNode(
+      "s:Envelope", attrs = `xmlns:s`,
+      xmlNode(
+        "s:Body",
+        xmlNode(
+          soap_action, attrs = xmlns,
+          xmlNode(
+            "userInfo", attrs = `xmlns:i`,
+            xmlNode("Username", username),
+            xmlNode("Password", password)
+          ),
+          xmlNode(
+            "questInfo", attrs = `xmlns:i`,
+            xmlNode("QuestId", quest_id),
+            xmlNode("SecurityLock", security_lock)
+          ),
+          xmlNode("Delimiter", delimiter),
+          xmlNode(
+            "pagingInfo", attrs = `xmlns:i`,
+            xmlNode("PageSize", "10000"),
+            xmlNode("PageNo", "0"),
+            xmlNode("TotalCount", "1")
+          )
+        )
+      )
+    )
+    body <- saveXML(xml)
+    return(body)
+  }
+
+  # Function to get question names
+  GetQuestQuestions <- function(username, password, quest_id, security_lock) {
+
+    xml <- xmlNode(
+      "s:Envelope", attrs = `xmlns:s`,
+      xmlNode(
+        "s:Body",
+        xmlNode(
+          soap_action, attrs = xmlns,
+          xmlNode(
+            "userInfo", attrs = `xmlns:i`,
+            xmlNode("Username", username),
+            xmlNode("Password", password)
+          ),
+          xmlNode(
+            "questInfo", attrs = `xmlns:i`,
+            xmlNode("QuestId", quest_id),
+            xmlNode("SecurityLock", security_lock)
+          )
+        )
+      )
+    )
+    body <- saveXML(xml)
+    return(body)
+  }
+
   # Return correct XML depending on soap_action
   if (soap_action == "TestConnection") {
     body <- TestConnection(username, password)
@@ -169,6 +228,8 @@ api_essentials <- function(soap_action, username, password, quest_id = NULL,
   } else if (soap_action == "AddEmailInvitees") {
     body <- AddEmailInvitees(username, password, quest_id, security_lock, x,
                              send_duplicate)
+  } else if (soap_action == "GetResponses") {
+    body <- GetResponses(username, password, quest_id, security_lock)
   } else {
     stop(glue("Currently SOAP call: {soap_action} is not possible"))
   }
@@ -183,4 +244,42 @@ api_essentials <- function(soap_action, username, password, quest_id = NULL,
   } else {
     return(post)
   }
+}
+
+parse_responses <- function(xml) {
+
+  # Write results to file and delete unnecessary results
+  xml <- reader$value()
+  xml <- gsub('.*(<Responses>.*</Responses>).*', '\\1', xml)
+
+  # Modify XML file to data frame
+  output <- read_xml(xml) %>%
+    xml_find_all('.//Response') %>%
+    map_df(function(x) {
+      ResponseId  <- xml_find_all(x, './ResponseId')  %>% xml_text()
+      Email       <- xml_find_all(x, './Email')       %>% xml_text()
+      Start       <- xml_find_all(x, './Start')       %>% xml_text() %>% as.POSIXct(format = '%Y-%m-%dT%H:%M:%S')
+      Completed   <- xml_find_all(x, './Completed')   %>% xml_text() %>% as.POSIXct(format = '%Y-%m-%dT%H:%M:%S')
+      Answer      <- xml_find_all(x, './/Value')      %>% xml_text()
+      QuestionId  <- xml_find_all(x, './/QuestionId') %>% xml_text()
+      data_frame(ResponseId, Email, Start, Completed, Answer, QuestionId)
+    })
+  return(outpu)
+}
+
+parse_questions <- function(xml) {
+
+  # Write results to file and delete unnecessary results
+  xml <- reader$value()
+  xml <- gsub('.*(<GetQuestQuestionsResult.*</GetQuestQuestionsResult>).*', '\\1', xml)
+
+  # Modify XML file to data frame
+  output <- read_xml(xml) %>%
+    xml_find_all('//QuestQuestion') %>%
+    map_df(function(x) {
+      Title       <- xml_find_all(x, './/Title')      %>% xml_text()
+      QuestionId  <- xml_find_all(x, './/QuestionId') %>% xml_text()
+      data_frame(Title, QuestionId)
+    })
+  return(output)
 }
