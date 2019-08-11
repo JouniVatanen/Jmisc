@@ -18,7 +18,7 @@
 #' @importFrom readr write_excel_csv
 
 df_to_txt <- function(x, file = "", sep = "\t", dec = ",",
-                      overwrite = FALSE) {
+                      overwrite = FALSE, ...) {
   if (all(!overwrite, file.exists(file))) {
     stop("File exists already. If you want to overwrite, then change overwrite to TRUE.")
   } else {
@@ -27,6 +27,6 @@ df_to_txt <- function(x, file = "", sep = "\t", dec = ",",
     write_excel_csv(x[,0], file, delim = sep)
 
     # Write to the file with custom settings like sep, dec and encoding
-    fwrite(x, file, sep = sep, dec = dec, append = TRUE, ...)
+    fwrite(x = x, file = file, sep = sep, dec = dec, append = TRUE, ...)
   }
 }
