@@ -15,7 +15,7 @@ format_phone_num(x, prefix = "+358")
 Format phone number to a desired format..
 }
 \examples{
-format_phone_number("Matti 040 000 1234")
+format_phone_num("Matti 040 000 1234")
 }
 \keyword{clean,}
 \keyword{number}
