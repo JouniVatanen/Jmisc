@@ -9,15 +9,12 @@
 #' @param guess_max Choose maximum value to guess column type.
 #' @param col_types Choose col_types
 #' @keywords social security, birth, date
-#' @examples
-#' desc_stat(mtcars, .select = c(2, 8:11), group_by_cols = "cyl")
 #' @import dplyr vroom readxl writexl
 #' @importFrom data.table fread fwrite
 #' @importFrom rlang .data
 #' @importFrom fs dir_ls
-
-pattern <- "*.xlsx"
-path <- "./work"
+#' @importFrom purrr map_df
+#' @importFrom readxl read_excel
 
 combine_files <- function(
   pattern, path = ".", output = NULL, sheet = 1, na = c("", "-'"), guess_max = 1000,
@@ -59,7 +56,7 @@ combine_excel <- function(
   # Make a list by pattern like ".xlsx". Each filename is one object in a list.
   data <- list.files(path, pattern, full.names = TRUE) %>%
     as.list() %>%
-    map_df( ~ readxl::read_excel(
+    map_df( ~ read_excel(
       path = .x, sheet = sheet, skip = skip, na = na, col_names = col_names,
       guess_max = guess_max, col_types = col_types))
 

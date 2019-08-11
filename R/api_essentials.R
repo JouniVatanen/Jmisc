@@ -14,6 +14,8 @@
 #' @importFrom httr add_headers POST http_status
 #' @importFrom XML xmlNode saveXML
 #' @importFrom glue glue
+#' @importFrom xml2 xml_find_all xml_text
+#' @importFrom purrr map_df
 
 api_essentials <- function(soap_action, username, password, quest_id = NULL,
                            security_lock = NULL, x = NULL,
@@ -180,7 +182,7 @@ api_essentials <- function(soap_action, username, password, quest_id = NULL,
             xmlNode("QuestId", quest_id),
             xmlNode("SecurityLock", security_lock)
           ),
-          xmlNode("Delimiter", delimiter),
+          xmlNode("Delimiter", sep),
           xmlNode(
             "pagingInfo", attrs = `xmlns:i`,
             xmlNode("PageSize", "10000"),
@@ -249,7 +251,7 @@ api_essentials <- function(soap_action, username, password, quest_id = NULL,
 parse_responses <- function(xml) {
 
   # Write results to file and delete unnecessary results
-  xml <- reader$value()
+  #xml <- reader$value()
   xml <- gsub('.*(<Responses>.*</Responses>).*', '\\1', xml)
 
   # Modify XML file to data frame
@@ -264,13 +266,13 @@ parse_responses <- function(xml) {
       QuestionId  <- xml_find_all(x, './/QuestionId') %>% xml_text()
       data_frame(ResponseId, Email, Start, Completed, Answer, QuestionId)
     })
-  return(outpu)
+  return(output)
 }
 
 parse_questions <- function(xml) {
 
   # Write results to file and delete unnecessary results
-  xml <- reader$value()
+  #xml <- reader$value()
   xml <- gsub('.*(<GetQuestQuestionsResult.*</GetQuestQuestionsResult>).*', '\\1', xml)
 
   # Modify XML file to data frame

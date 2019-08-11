@@ -4,10 +4,10 @@
 \alias{calc_birth}
 \title{calc_birth}
 \usage{
-calc_birth(string)
+calc_birth(x)
 }
 \arguments{
-\item{string}{Choose string from which to calculate.}
+\item{x}{Choose string from which to calculate.}
 }
 \description{
 Calculate birth date from social security number and return POSIXct

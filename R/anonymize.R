@@ -17,12 +17,13 @@
 #' @examples
 #' anonymize(0:10, algo = "crc32")
 #' @export
+#' @importFrom digest digest
 
 anonymize <- function(x, algo = "crc32"){
 
   unq_hashes <- vapply(
     unique(x),
-    function(object) digest::digest(object, algo = algo),
+    function(object) digest(object, algo = algo),
     FUN.VALUE = "", USE.NAMES = TRUE)
   unname(unq_hashes[x])
 }

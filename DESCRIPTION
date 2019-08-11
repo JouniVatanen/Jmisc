@@ -16,6 +16,7 @@ Imports:
   digest,
   dplyr,
   factoextra,
+  fs,
   ggplot2,
   glue,
   grid,
@@ -30,11 +31,14 @@ Imports:
   pROC,
   purrr,
   Rcpp,
+  readxl,
   rlang,
   stringi,
-  stringr,
   tidyr,
   tm,
+  vroom,
   wordcloud,
-  XML
+  writexl,
+  XML,
+  xml2
 RoxygenNote: 6.1.1

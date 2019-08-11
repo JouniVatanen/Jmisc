@@ -6,6 +6,7 @@
 #' @examples
 #' clean_street_names("Jokutie 4, pikitie 7, 00500 Helsinki")
 #' @export
+#' @importFrom stringi stri_replace_all_regex
 
 clean_street_names <- function(x) {
 
@@ -16,7 +17,7 @@ clean_street_names <- function(x) {
   remove_pattern <- "\\w*(tie|katu|kuja)\\W+"
 
   # Remove pattern from string
-  output <- stringi::stri_replace_all_regex(x, remove_pattern, "**")
+  output <- stri_replace_all_regex(x, remove_pattern, "**")
 
   return(output)
 }

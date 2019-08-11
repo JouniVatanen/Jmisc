@@ -6,6 +6,7 @@
 #' @examples
 #' calc_nps(0)
 #' @export
+#' @importFrom dplyr case_when
 
 calc_nps <- function(var = NA) {
 
@@ -18,7 +19,7 @@ calc_nps <- function(var = NA) {
     val <- val - 1
   }
 
-  output <- dplyr::case_when(
+  output <- case_when(
     val %in% c(9:10) ~ 100,
     val %in% c(7:8)  ~ 0,
     val %in% c(0:6)  ~ -100,

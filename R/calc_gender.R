@@ -7,14 +7,14 @@
 #' calc_gender("123456-123S")
 #' @export
 #' @importFrom dplyr if_else
-#' @importFrom stringr str_sub
+#' @importFrom stringi stri_sub
 
 calc_gender <- function(string) {
   output <- if_else(
     is.na(string),
     NA_character_,
     if_else(
-      as.logical(as.numeric(str_sub(string, 10, 10)) %% 2),
+      as.logical(as.numeric(stri_sub(string, 10, 10)) %% 2),
       "M",
       "F"))
 

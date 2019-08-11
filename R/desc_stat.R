@@ -13,13 +13,14 @@
 #' @import dplyr
 #' @importFrom purrr reduce
 #' @importFrom desctable desctable
-#' @importFrom stringr str_replace_all
+#' @importFrom stringi stri_replace_all_regex
 #' @importFrom rlang .data
 
-desc_stat <- function(data, .select, group_by_cols = NULL, with_idk = 99, .labels = c(total = "N")){
+desc_stat <- function(data, .select, group_by_cols = NULL,
+                      with_idk = 99, .labels = c(total = "N")){
 
   # Need to bind dot to global variable so check() will pass
-  . <- NULL
+  #. <- NULL
 
   # Add total to the first of the vector
   group_by_cols <- append(group_by_cols, "total", after = 0)
@@ -38,7 +39,7 @@ desc_stat <- function(data, .select, group_by_cols = NULL, with_idk = 99, .label
     # Remove with_idk numbers
     if (is.numeric(with_idk)) {
       data_num <- data_num %>%
-        mutate_all( ~if_else(. == with_idk, NA_real_, .))
+        mutate_at(vars(-group_cols()), ~if_else(.x == with_idk, NA_real_, .x))
     }
 
     data_fct <- data %>%
@@ -109,8 +110,8 @@ desc_stat <- function(data, .select, group_by_cols = NULL, with_idk = 99, .label
 
   # Make final mutations to output like remove unnecessary characters and add N values to top
   output <- output %>%
-    mutate(Variables = str_replace_all(.data$Variables, ".*:\\s", "")) %>%
-    mutate(Variables = str_replace_all(.data$Variables, "\\.", " "))
+    mutate(Variables = stri_replace_all_regex(.data$Variables, ".*:\\s", "")) %>%
+    mutate(Variables = stri_replace_all_regex(.data$Variables, "\\.", " "))
 
   output[1,2:ncol(output)] <- N
 

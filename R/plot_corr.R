@@ -15,7 +15,7 @@
 plot_corr <- function(data, polychoric = FALSE) {
 
   # Shorten variable names to 30 characters
-  names(data) <- str_sub(names(data), 1, 30)
+  names(data) <- substring(names(data), 1, 30)
 
   # Create correlation matrix
   # TODO: if polychoric = TRUE, then calculate polychoric correlations

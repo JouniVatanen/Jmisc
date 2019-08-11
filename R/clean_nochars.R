@@ -6,6 +6,7 @@
 #' @examples
 #' clean_nochars("Jouni\nVatanen")
 #' @export
+#' @importFrom stringi stri_replace_all_regex
 
 clean_nochars <- function(x) {
 
@@ -16,7 +17,7 @@ clean_nochars <- function(x) {
   remove_pattern <- "[\r\n\t]"
 
   # Remove pattern from string
-  output <- stringi::stri_replace_all_regex(x, remove_pattern, " ")
+  output <- stri_replace_all_regex(x, remove_pattern, " ")
 
   return(output)
 }

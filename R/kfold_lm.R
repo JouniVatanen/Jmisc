@@ -13,13 +13,13 @@
 #' @importFrom purrr map map2_dbl map2
 #' @importFrom broom tidy glance augment
 #' @importFrom tidyr unnest
-#' @importFrom stringr str_trim
+#' @importFrom stringi stri_trim_both
 #' @importFrom rlang .data
 
 kfold_lm <- function(data, formula = "y ~ .", k = 10) {
 
   # Get predict variable from formula
-  y <- str_trim(unlist(strsplit(formula, split = "~"))[1])
+  y <- stri_trim_both(unlist(strsplit(formula, split = "~"))[1])
 
   # Names for lm plots
   name_x_axis <- "Summamuuttuja"
