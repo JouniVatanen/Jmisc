@@ -28,6 +28,7 @@ Imports:
   purrr,
   Rcpp,
   readxl,
+  readr,
   rlang,
   stringi,
   tidyr,
