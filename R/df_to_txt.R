@@ -1,12 +1,16 @@
 #' df_to_txt
 #'
-#' Save any list like data.frame, data.table or matrix to a txt-file. Based on fwrite from data.table package.
+#' Save any list like data.frame, data.table or matrix to a txt-file.
+#' Uses data.table::fwrite or vroom::vroom_write depending on decimal mark.
+#' If decimal mark is ., then uses faster vroom_write. Otherwise uses fwrite.
+#'
 #' @param x Any list like element e.g. data.frame and data.table.
 #' @param file Output file name. Default: to the console.
 #' @param dec Decimal limiter. Default: ","
 #' @param overwrite Overwrites the file, it it exists. Default: FALSE.
-#' @param sep Separator. Default: TAB
-#' @param ... Pass other parameters to fwrite like na, append, col.names
+#' @param sep Separator. Default: "\t"
+#' @param ... Pass other parameters to fwrite or vroom_write like na, append,
+#' col.names
 #' @keywords save txt
 #' @examples
 #' n <- c(1.1, 2.2, 3.3)
@@ -15,18 +19,25 @@
 #' df_to_txt(x, file = "example.txt")
 #' @export
 #' @importFrom data.table fwrite
-#' @importFrom readr write_excel_csv
+#' @importFrom vroom vroom_write
+#' @importFrom purrr map
 
 df_to_txt <- function(x, file = "", sep = "\t", dec = ",",
-                      overwrite = FALSE, ...) {
+                      overwrite = FALSE, encoding = "UTF-8", ...) {
   if (all(!overwrite, file.exists(file))) {
-    stop("File exists already. If you want to overwrite, then change overwrite to TRUE.")
+    stop("File exists. If you want to overwrite, change overwrite = TRUE.")
   } else {
 
-    # Write first line with readr in order to save in UTF-8
-    write_excel_csv(x[,0], file, delim = sep)
+    #  Change data encoding. Default is UTF-8.
+    x[] <- map(x, function(x) stri_encode(x, "", encoding))
 
     # Write to the file with custom settings like sep, dec and encoding
-    fwrite(x = x, file = file, sep = sep, dec = dec, append = TRUE, ...)
+    if (dec != ".") {
+      # Slower, but can handle decimal separator
+      fwrite(x, file, sep = sep, dec = dec, ...)
+    } else {
+      # Faster and is able to pack the file as well, if file name ends .gz
+      vroom_write(x, file, sep = sep, ...)
+    }
   }
 }
