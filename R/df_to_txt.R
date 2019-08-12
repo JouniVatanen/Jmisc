@@ -8,7 +8,7 @@
 #' @param file Output file name. Default: to the console.
 #' @param dec Decimal limiter. Default: ","
 #' @param overwrite Overwrites the file, it it exists. Default: FALSE.
-#' @param sep Separator. Default: "\t"
+#' @param sep Separator. Default: "tab"
 #' @param ... Pass other parameters to fwrite or vroom_write like na, append,
 #' col.names
 #' @keywords save txt
@@ -37,7 +37,7 @@ df_to_txt <- function(x, file = "", sep = "\t", dec = ",",
       fwrite(x, file, sep = sep, dec = dec, ...)
     } else {
       # Faster and is able to pack the file as well, if file name ends .gz
-      vroom_write(x, file, sep = sep, ...)
+      vroom_write(x, file, delim = sep, ...)
     }
   }
 }
