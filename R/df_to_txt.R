@@ -21,6 +21,8 @@
 #' @importFrom data.table fwrite
 #' @importFrom vroom vroom_write
 #' @importFrom purrr map
+#' @importFrom fs path path_ext path_ext_remove
+#' @importFrom R.utils gzip
 
 df_to_txt <- function(x, file = "", sep = "\t", dec = ",",
                       overwrite = FALSE, encoding = "UTF-8", ...) {
@@ -34,7 +36,13 @@ df_to_txt <- function(x, file = "", sep = "\t", dec = ",",
     # Write to the file with custom settings like sep, dec and encoding
     if (dec != ".") {
       # Slower, but can handle decimal separator
-      fwrite(x, file, sep = sep, dec = dec, ...)
+      if (path_ext(file) != "gz") {
+        fwrite(x, file, sep = sep, dec = dec, ...)
+      # Can also pack the file with R.utils::gzip
+      } else {
+        fwrite(x, path_ext_remove(file), sep = sep, dec = dec, ...)
+        gzip(path_ext_remove(file), file)
+      }
     } else {
       # Faster and is able to pack the file as well, if file name ends .gz
       vroom_write(x, file, delim = sep, ...)
