@@ -40,8 +40,9 @@ df_to_txt <- function(x, file = "", sep = "\t", dec = ",",
         fwrite(x, file, sep = sep, dec = dec, ...)
       # Can also pack the file with R.utils::gzip
       } else {
-        fwrite(x, path_ext_remove(file), sep = sep, dec = dec, ...)
-        gzip(path_ext_remove(file), file)
+        file <- path_ext_remove(file)
+        fwrite(x, file, sep = sep, dec = dec, ...)
+        gzip(file, remove = TRUE)
       }
     } else {
       # Faster and is able to pack the file as well, if file name ends .gz
