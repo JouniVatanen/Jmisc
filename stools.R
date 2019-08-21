@@ -1,9 +1,9 @@
 # Load required packages
-if (!require("checkpoint")) install.packages("checkpoint"); library(checkpoint)
+if (!require("checkpoint")) install.packages("checkpoint")
 
 # Use the date few weeks after R-3.6.1. was released
-checkpoint("2019-07-28", R.version = "3.6.1",
-           checkpointLocation = Sys.getenv("USERPROFILE"))
+checkpoint::checkpoint("2019-07-28", R.version = "3.6.1",
+                       checkpointLocation = Sys.getenv("USERPROFILE"))
 
 # Document and install package
 library(devtools)
