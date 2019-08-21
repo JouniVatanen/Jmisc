@@ -9,7 +9,6 @@
 #' @param dec Decimal limiter. Default: ","
 #' @param overwrite Overwrites the file, it it exists. Default: FALSE.
 #' @param sep Separator. Default: "tab"
-#' @param ... Pass other parameters to fwrite or vroom_write like na, append,
 #' col.names
 #' @keywords save txt
 #' @examples
@@ -25,7 +24,7 @@
 #' @importFrom R.utils gzip
 
 df_to_txt <- function(x, file = "", sep = "\t", dec = ",",
-                      overwrite = FALSE, encoding = "UTF-8", ...) {
+                      overwrite = FALSE, encoding = "UTF-8") {
   if (all(!overwrite, file.exists(file))) {
     stop("File exists. If you want to overwrite, change overwrite = TRUE.")
   } else {
@@ -37,16 +36,17 @@ df_to_txt <- function(x, file = "", sep = "\t", dec = ",",
     if (dec != ".") {
       # Slower, but can handle decimal separator
       if (path_ext(file) != "gz") {
-        fwrite(x, file, sep = sep, dec = dec, ...)
+        fwrite(x, file, sep = sep, dec = dec)
       # Can also pack the file with R.utils::gzip
       } else {
+        # Remove first .gz file extension
         file <- path_ext_remove(file)
-        fwrite(x, file, sep = sep, dec = dec, ...)
+        fwrite(x, file, sep = sep, dec = dec)
         gzip(file, remove = TRUE, overwrite = overwrite)
       }
     } else {
       # Faster and is able to pack the file as well, if file name ends .gz
-      vroom_write(x, file, delim = sep, ...)
+      vroom_write(x, file, delim = sep)
     }
   }
 }

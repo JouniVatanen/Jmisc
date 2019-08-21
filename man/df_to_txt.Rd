@@ -5,21 +5,19 @@
 \title{df_to_txt}
 \usage{
 df_to_txt(x, file = "", sep = "\\t", dec = ",", overwrite = FALSE,
-  encoding = "UTF-8", ...)
+  encoding = "UTF-8")
 }
 \arguments{
 \item{x}{Any list like element e.g. data.frame and data.table.}
 
 \item{file}{Output file name. Default: to the console.}
 
-\item{sep}{Separator. Default: "tab"}
+\item{sep}{Separator. Default: "tab"
+col.names}
 
 \item{dec}{Decimal limiter. Default: ","}
 
 \item{overwrite}{Overwrites the file, it it exists. Default: FALSE.}
-
-\item{...}{Pass other parameters to fwrite or vroom_write like na, append,
-col.names}
 }
 \description{
 Save any list like data.frame, data.table or matrix to a txt-file.
