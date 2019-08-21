@@ -9,6 +9,7 @@
 #' @param dec Decimal limiter. Default: ","
 #' @param overwrite Overwrites the file, it it exists. Default: FALSE.
 #' @param sep Separator. Default: "tab"
+#' @param ... Add parameters to fwrite or vroom_write.
 #' col.names
 #' @keywords save txt
 #' @examples
@@ -22,15 +23,17 @@
 #' @importFrom purrr map
 #' @importFrom fs path path_ext path_ext_remove
 #' @importFrom R.utils gzip
+#FIXME: @importFrom stringi stri_encode
 
 df_to_txt <- function(x, file = "", sep = "\t", dec = ",",
-                      overwrite = FALSE, encoding = "UTF-8") {
+                      overwrite = FALSE, encoding = "UTF-8", ...) {
   if (all(!overwrite, file.exists(file))) {
     stop("File exists. If you want to overwrite, change overwrite = TRUE.")
   } else {
 
-    #  Change data encoding. Default is UTF-8.
-    x[] <- map(x, function(x) stri_encode(x, "", encoding))
+    # Change data encoding. Default is UTF-8.
+    # FIXME: causes fwrite to ignore decimal mark
+    #x[] <- map(x, function(x) stri_encode(x, "", encoding))
 
     # Write to the file with custom settings like sep, dec and encoding
     if (dec != ".") {
