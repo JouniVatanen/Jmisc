@@ -7,7 +7,7 @@
 #' @param x Any list like element e.g. data.frame and data.table.
 #' @param file Output file name. Default: to the console.
 #' @param dec Decimal limiter. Default: ","
-#' @param overwrite Overwrites the file, it it exists. Default: FALSE.
+#' @param overwrite Overwrites the file, it it exists. Default: TRUE
 #' @param sep Separator. Default: "tab"
 #' @param ... Add parameters to fwrite or vroom_write.
 #' col.names
@@ -26,7 +26,7 @@
 #FIXME: @importFrom stringi stri_encode
 
 df_to_txt <- function(x, file = "", sep = "\t", dec = ",",
-                      overwrite = FALSE, encoding = "UTF-8", ...) {
+                      overwrite = TRUE, encoding = "UTF-8", ...) {
   if (all(!overwrite, file.exists(file))) {
     stop("File exists. If you want to overwrite, change overwrite = TRUE.")
   } else {

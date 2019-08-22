@@ -4,7 +4,7 @@
 \alias{df_to_txt}
 \title{df_to_txt}
 \usage{
-df_to_txt(x, file = "", sep = "\\t", dec = ",", overwrite = FALSE,
+df_to_txt(x, file = "", sep = "\\t", dec = ",", overwrite = TRUE,
   encoding = "UTF-8", ...)
 }
 \arguments{
@@ -16,7 +16,7 @@ df_to_txt(x, file = "", sep = "\\t", dec = ",", overwrite = FALSE,
 
 \item{dec}{Decimal limiter. Default: ","}
 
-\item{overwrite}{Overwrites the file, it it exists. Default: FALSE.}
+\item{overwrite}{Overwrites the file, it it exists. Default: TRUE}
 
 \item{...}{Add parameters to fwrite or vroom_write.
 col.names}
