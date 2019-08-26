@@ -5,8 +5,9 @@
 \title{plot_wordcloud}
 \usage{
 plot_wordcloud(x, output = "./wordcloud.png", scale = c(4, 0.5),
-  removePunctuation = TRUE, removeNumbers = TRUE,
-  stripWhitespace = TRUE, colors = ilmarinen_cols())
+  res = 100, fixed.asp = FALSE, removePunctuation = TRUE,
+  removeNumbers = TRUE, stripWhitespace = TRUE,
+  colors = ilmarinen_cols())
 }
 \arguments{
 \item{x}{Vector of sentences or words.}
@@ -14,6 +15,13 @@ plot_wordcloud(x, output = "./wordcloud.png", scale = c(4, 0.5),
 \item{output}{Output path.}
 
 \item{scale}{A vector of length 2 indicating the range of the size of the words.}
+
+\item{res}{The nominal resolution in ppi which will be recorded in the bitmap
+file, if a positive integer. Also used for units other than the default.
+If not specified, taken as 72 ppi to set the size of text and line widths.}
+
+\item{fixed.asp}{if TRUE, the aspect ratio is fixed. Variable aspect ratio
+only supported if rot.per==0}
 
 \item{removePunctuation}{Remove punctuation. Default: TRUE.}
 
