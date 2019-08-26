@@ -110,9 +110,9 @@ desc_stat <- function(data, .select, group_by_cols = NULL,
     reduce(left_join, by = "Variables")
 
   # Make final mutations to output like remove unnecessary characters and add N values to top
-  output <- output %>%
-    mutate(Variables = stri_replace_all_regex(.data$Variables, ".*:\\s", "")) %>%
-    mutate(Variables = stri_replace_all_regex(.data$Variables, "\\.", " "))
+  #output <- output %>%
+  #  mutate(Variables = stri_replace_all_regex(.data$Variables, ".*:\\s", "")) %>%
+  #  mutate(Variables = stri_replace_all_regex(.data$Variables, "\\.", " "))
 
   output[1,2:ncol(output)] <- N
 
