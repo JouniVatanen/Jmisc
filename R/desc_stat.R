@@ -20,7 +20,7 @@ desc_stat <- function(data, .select, group_by_cols = NULL,
                       with_idk = 99, .labels = c(total = "N")){
 
   # Need to bind dot to global variable so check() will pass
-  #. <- NULL
+  . <- NULL
 
   # Add total to the first of the vector
   group_by_cols <- append(group_by_cols, "total", after = 0)
@@ -55,6 +55,7 @@ desc_stat <- function(data, .select, group_by_cols = NULL,
     desc_list_grouped <- list()
 
     # Loop to get percentage and means for each group
+    # TODO: remove at least this for loop by something nicer
     for (j in 1:length(unique(group_indices(data_num)))) {
 
       # Factor data
@@ -66,7 +67,7 @@ desc_stat <- function(data, .select, group_by_cols = NULL,
           stats = list("Mean/ %" = is.factor ~ percent | (is.numeric ~ mean)),
           labels = .labels)
 
-      names(desc_fct[[2]]) <- attr(data_fct, "labels")[j, ]
+      names(desc_fct[[2]]) <- as.character(pull(group_keys(data_fct)[j,]))
       desc_fct <- bind_cols(lapply(desc_fct, as.data.frame)) %>%
         mutate(Variables = gsub("\\*","", .data$Variables))
 
@@ -79,7 +80,7 @@ desc_stat <- function(data, .select, group_by_cols = NULL,
           stats = list("Mean/ %" = is.factor ~ percent | (is.numeric ~ mean)),
           labels = .labels)
 
-      names(desc_num[[2]]) <- attr(data_num, "labels")[j,]
+      names(desc_num[[2]]) <- as.character(pull(group_keys(data_num)[j,]))
       desc_num <- bind_cols(lapply(desc_num, as.data.frame))
       desc_comb <- full_join(
         desc_fct,
