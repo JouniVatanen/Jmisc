@@ -4,20 +4,24 @@
 \alias{plot_wordcloud}
 \title{plot_wordcloud}
 \usage{
-plot_wordcloud(x, output = "./output/wordcloud.png",
+plot_wordcloud(x, output = "./wordcloud.png", scale = c(4, 0.5),
   removePunctuation = TRUE, removeNumbers = TRUE,
-  stripWhitespace = TRUE)
+  stripWhitespace = TRUE, colors = ilmarinen_cols())
 }
 \arguments{
 \item{x}{Vector of sentences or words.}
 
 \item{output}{Output path.}
 
+\item{scale}{A vector of length 2 indicating the range of the size of the words.}
+
 \item{removePunctuation}{Remove punctuation. Default: TRUE.}
 
 \item{removeNumbers}{Remove numbers. Default: TRUE.}
 
 \item{stripWhitespace}{Remove whitespace. Default: TRUE.}
+
+\item{colors}{Colors to use in wordcloud.}
 }
 \description{
 Make a custom wordcloud plot.
