@@ -90,7 +90,7 @@ fi_filtered_people_names <- fi_people_names %>%
 # Create remove words data
 fi_remove_words <- enframe(
   c("että", "kiitos", "moite", "ikä", "sitä", "sitä", "sen", "palaute", "fffd",
-  "hei", "myös", "moi"),
+  "hei", "myös", "moi", "terveisin"),
   name = NULL, value = "word")
 
 # Create company abbreviations data

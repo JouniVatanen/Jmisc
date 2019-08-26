@@ -4,12 +4,20 @@
 \alias{plot_wordcloud}
 \title{plot_wordcloud}
 \usage{
-plot_wordcloud(x, output = "./output/wordcloud.png")
+plot_wordcloud(x, output = "./output/wordcloud.png",
+  removePunctuation = TRUE, removeNumbers = TRUE,
+  stripWhitespace = TRUE)
 }
 \arguments{
 \item{x}{Vector of sentences or words.}
 
 \item{output}{Output path.}
+
+\item{removePunctuation}{Remove punctuation. Default: TRUE.}
+
+\item{removeNumbers}{Remove numbers. Default: TRUE.}
+
+\item{stripWhitespace}{Remove whitespace. Default: TRUE.}
 }
 \description{
 Make a custom wordcloud plot.

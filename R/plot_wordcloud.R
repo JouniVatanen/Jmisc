@@ -3,6 +3,9 @@
 #' Make a custom wordcloud plot.
 #' @param x Vector of sentences or words.
 #' @param output Output path.
+#' @param removePunctuation Remove punctuation. Default: TRUE.
+#' @param removeNumbers Remove numbers. Default: TRUE.
+#' @param stripWhitespace Remove whitespace. Default: TRUE.
 #' @keywords plot, wordcloud
 #' @examples
 #' # Create a vector of month names
@@ -17,16 +20,18 @@
 #' @importFrom graphics par
 #' @importFrom grDevices dev.off png
 
-plot_wordcloud <- function(x, output = "./output/wordcloud.png") {
+plot_wordcloud <- function(x, output = "./output/wordcloud.png",
+                           removePunctuation = TRUE, removeNumbers = TRUE,
+                           stripWhitespace = TRUE) {
 
   # Stem and remove stopwords for further analyses
   corpus <- Corpus(VectorSource(x))
   dtm <- TermDocumentMatrix(corpus, control = list(
-    removePunctuation = TRUE,
-    removeNumbers = TRUE,
+    removePunctuation = removePunctuation,
+    removeNumbers = removeNumbers,
     tolower = TRUE,
     stopwords = c(stopwords("finnish"), pull(fi_remove_words)),
-    stripWhitespace = TRUE)
+    stripWhitespace = stripWhitespace)
     )
 
   vec <- sort(rowSums(as.matrix(dtm)), decreasing = TRUE)
