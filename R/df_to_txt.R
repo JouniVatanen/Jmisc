@@ -39,6 +39,7 @@ df_to_txt <- function(x, file = "", sep = "\t", dec = ",",
     if (dec != ".") {
       # Slower, but can handle decimal separator
       if (path_ext(file) != "gz") {
+        # FIXME: Add bom option. Note is coming at some point to fwrite.
         fwrite(x, file, sep = sep, dec = dec)
       # Can also pack the file with R.utils::gzip
       } else {

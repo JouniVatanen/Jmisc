@@ -4,17 +4,31 @@
 \alias{format_num}
 \title{format_num}
 \usage{
-format_num(x)
+format_num(x, digits = 1, format = "f", dec = ",", flag = "", ...)
 }
 \arguments{
-\item{x}{Choose the variable to round to 1 decimal with , as a decimal mark.}
+\item{x}{an atomic numerical or character object, typically a vector of
+real numbers. Any class is discarded, with a warning.}
+
+\item{digits}{the desired number of digits after the decimal point
+(format = "f") or significant digits (format = "g", = "e" or = "fg").}
+
+\item{dec}{he character to be used to indicate the numeric decimal point.}
+
+\item{flag}{for formatC, a character string giving a format modifier as
+in Kernighan and Ritchie (1988, page 243) or the C+99 standard. For example
+"0" pads leading zeros; "-" does left adjustment;
+"+" ensures a sign in all cases, i.e., "+" for positive numbers}
+
+\item{...}{ass other parameters to formatC like width, big.mark, small.mark}
 }
 \description{
-format_num
+Formats numbers to the finnish standard.
 }
 \examples{
 x <- seq(0, 10, by = 0.01)
 format_num(x)
 }
 \keyword{format,}
-\keyword{numeric}
+\keyword{formatC}
+\keyword{numeric,}

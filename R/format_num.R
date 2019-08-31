@@ -1,16 +1,28 @@
 #' format_num
 #'
-#' @param x Choose the variable to round to 1 decimal with , as a decimal mark.
-#' @keywords format, numeric
+#' Formats numbers to the finnish standard.
+#' @param x an atomic numerical or character object, typically a vector of
+#' real numbers. Any class is discarded, with a warning.
+#' @param digits the desired number of digits after the decimal point
+#' (format = "f") or significant digits (format = "g", = "e" or = "fg").
+#' @param dec he character to be used to indicate the numeric decimal point.
+#' @param flag for formatC, a character string giving a format modifier as
+#' in Kernighan and Ritchie (1988, page 243) or the C+99 standard. For example
+#' "0" pads leading zeros; "-" does left adjustment;
+#' "+" ensures a sign in all cases, i.e., "+" for positive numbers
+#' @param ... ass other parameters to formatC like width, big.mark, small.mark
+#' @keywords format, numeric, formatC
 #' @examples
 #' x <- seq(0, 10, by = 0.01)
 #' format_num(x)
 #' @export
 
-format_num <- function(x) {
+format_num <- function(x, digits = 1, format = "f", dec = ",", flag = "", ...) {
 
-  # Trasform to numeric, round to 1 decimal, use comma as decimal mark
-  output <- format(round(as.numeric(x), 1), decimal.mark = ",")
+  # Transform to numeric, round to 1 decimal, use comma as decimal mark
+  x <- as.numeric(x)
+  output <- formatC(x, digits = digits, format = format,
+                    decimal.mark = dec, flag = flag, ...)
 
   return(output)
 }
