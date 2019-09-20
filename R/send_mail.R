@@ -68,7 +68,7 @@ send_mail <- function(to, subject = "", body = "", attachment = NULL,
 
   # Normalize path
   if (!is.null(attachment)) {
-    attachment <- path(attachment)
+    #attachment <- path(attachment)
     out_mail[["Attachments"]]$Add(attachment)
   }
 
