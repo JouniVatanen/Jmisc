@@ -21,6 +21,7 @@
 #' @export
 #' @import RDCOMClient
 #' @importFrom stringi stri_trim_both stri_replace_all_regex
+#' @importFrom fs path
 
 send_mail <- function(to, subject = "", body = "", attachment = NULL,
                       signature = TRUE, encoding = "UTF-8") {
@@ -67,7 +68,7 @@ send_mail <- function(to, subject = "", body = "", attachment = NULL,
 
   # Normalize path
   if (!is.null(attachment)) {
-    attachment <- normalizePath(attachment)
+    attachment <- path(attachment)
     out_mail[["Attachments"]]$Add(attachment)
   }
 
