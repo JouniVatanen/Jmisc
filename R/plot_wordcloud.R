@@ -28,6 +28,7 @@
 #' @importFrom grDevices dev.off png
 #' @importFrom dplyr pull
 
+
 plot_wordcloud <- function(x, output = "./wordcloud.png", scale = c(4, .5),
                            res = 100, fixed.asp = FALSE,
                            removePunctuation = TRUE, removeNumbers = TRUE,
@@ -51,5 +52,7 @@ plot_wordcloud <- function(x, output = "./wordcloud.png", scale = c(4, .5),
   par(mar = rep(0, 4))
   wordcloud(df$word, df$freq, scale = scale, min.freq = 1, max.words = 200,
             rot.per = 0, colors = colors, fixed.asp = fixed.asp)
-  dev.off()
+  # Close file
+  # Note: temp is needed to silent dev.off console output
+  temp <- dev.off()
 }
