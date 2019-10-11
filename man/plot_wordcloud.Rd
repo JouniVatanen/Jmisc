@@ -5,7 +5,7 @@
 \title{plot_wordcloud}
 \usage{
 plot_wordcloud(x, output = "./wordcloud.png", scale = c(4, 0.5),
-  width = 800, height = 800, units = "px", res = 100,
+  width = 12, height = 7, units = "in", res = 150,
   fixed.asp = FALSE, removePunctuation = TRUE, removeNumbers = TRUE,
   stripWhitespace = TRUE, colors = ilmarinen_cols())
 }
