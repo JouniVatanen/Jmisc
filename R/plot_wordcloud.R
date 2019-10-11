@@ -30,9 +30,10 @@
 
 
 plot_wordcloud <- function(x, output = "./wordcloud.png", scale = c(4, .5),
-                           res = 100, fixed.asp = FALSE,
-                           removePunctuation = TRUE, removeNumbers = TRUE,
-                           stripWhitespace = TRUE, colors = ilmarinen_cols()) {
+                           width = 800, height = 800, units = "px", res = 100,
+                           fixed.asp = FALSE, removePunctuation = TRUE,
+                           removeNumbers = TRUE, stripWhitespace = TRUE,
+                           colors = ilmarinen_cols()) {
 
   # Stem and remove stopwords for further analyses
   corpus <- Corpus(VectorSource(x))
@@ -48,7 +49,7 @@ plot_wordcloud <- function(x, output = "./wordcloud.png", scale = c(4, .5),
   df <- data.frame(word = names(vec), freq = vec)
 
   # Save as a file
-  png(output, width = 1280, height = 800, units = "px", res = res)
+  png(output, width = width, height = height, units = units, res = res)
   par(mar = rep(0, 4))
   wordcloud(df$word, df$freq, scale = scale, min.freq = 1, max.words = 200,
             rot.per = 0, colors = colors, fixed.asp = fixed.asp)

@@ -5,9 +5,9 @@
 \title{plot_wordcloud}
 \usage{
 plot_wordcloud(x, output = "./wordcloud.png", scale = c(4, 0.5),
-  res = 100, fixed.asp = FALSE, removePunctuation = TRUE,
-  removeNumbers = TRUE, stripWhitespace = TRUE,
-  colors = ilmarinen_cols())
+  width = 800, height = 800, units = "px", res = 100,
+  fixed.asp = FALSE, removePunctuation = TRUE, removeNumbers = TRUE,
+  stripWhitespace = TRUE, colors = ilmarinen_cols())
 }
 \arguments{
 \item{x}{Vector of sentences or words.}
