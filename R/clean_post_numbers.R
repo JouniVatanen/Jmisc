@@ -17,7 +17,7 @@ clean_post_numbers <- function(x) {
   remove_pattern <- "\\w*\\W*\\w*\\W+[0-9]{5}\\W+\\w*"
 
   # Remove pattern from string
-  output <- stri_replace_all_regex(x, remove_pattern, "** **")
+  output <- stri_replace_all_regex(x, remove_pattern, "*")
 
   return(output)
 }

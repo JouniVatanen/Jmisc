@@ -17,7 +17,7 @@ clean_ids <- function(x) {
   remove_pattern <- "([0-9, .+-]{7,})|([0-9,.+-]{5,}[A-z])"
 
   # Remove pattern from string
-  output <- stri_replace_all_regex(x, remove_pattern, "**")
+  output <- stri_replace_all_regex(x, remove_pattern, "*")
 
   return(output)
 }

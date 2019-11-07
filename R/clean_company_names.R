@@ -20,7 +20,7 @@ clean_company_names <- function(x) {
   remove_pattern <- paste("\\w*\\W*\\w*\\W*(", abbr, ")((\\W+\\w*)|$)")
 
   # Remove pattern from string
-  output <- stri_replace_all_regex(x, remove_pattern, "**")
+  output <- stri_replace_all_regex(x, remove_pattern, "*")
 
   return(output)
 }

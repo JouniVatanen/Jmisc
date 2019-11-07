@@ -17,7 +17,7 @@ clean_emails <- function(x) {
   remove_pattern <- "[A-z0-9_.]*@[A-z0-9_.-]+"
 
   # Remove pattern from string
-  output <- stri_replace_all_regex(x, remove_pattern, "**")
+  output <- stri_replace_all_regex(x, remove_pattern, "*")
 
   return(output)
 }

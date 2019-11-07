@@ -20,7 +20,7 @@ clean_people_names <- function(x) {
 
   # Remove pattern from string
   output <- stri_replace_all_regex(
-    x, remove_pattern, "**",
+    x, remove_pattern, "*",
     opts_regex = stri_opts_regex(case_insensitive = TRUE))
 
   return(output)

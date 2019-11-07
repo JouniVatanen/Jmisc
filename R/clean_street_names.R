@@ -17,7 +17,7 @@ clean_street_names <- function(x) {
   remove_pattern <- "\\w*(tie|katu|kuja)\\W+"
 
   # Remove pattern from string
-  output <- stri_replace_all_regex(x, remove_pattern, "**")
+  output <- stri_replace_all_regex(x, remove_pattern, "*")
 
   return(output)
 }

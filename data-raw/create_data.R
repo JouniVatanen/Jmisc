@@ -79,17 +79,18 @@ fi_leave_names <- c(
   "Minne", "Tuli", "Uusi", "uusi", "Hankala", "And", "Viik", "Nord", "Väli",
   "Tila", "Väli", "Ansio", "Koski", "Osku", "Iso", "Juuri", "Arvio", "Laskuja",
   "Titta", "Ilo", "Ruotsi", "Ilmi", "Suo", "Ajan", "Laaja", "Vappu", "Peri",
-  "Vanha", "Esti", "Kesti", "Svensk", "kai")
+  "Vanha", "Esti", "Kesti", "Svensk", "kai", "En", "en", "Ensi", "ensi")
 
 # Create filtered people names data
 fi_filtered_people_names <- fi_people_names %>%
   filter(!name %in% fi_leave_names) %>%
   select(name) %>%
-  bind_rows(fi_remove_names)
+  bind_rows(fi_remove_names) %>%
+  distinct()
 
 # Create remove words data
 fi_remove_words <- enframe(
-  c("että", "kiitos", "moite", "ikä", "sitä", "sitä", "sen", "palaute", "fffd",
+  c("että", "kiitos", "moite", "ikä", "sitä", "sen", "palaute", "fffd",
   "hei", "myös", "moi", "terveisin"),
   name = NULL, value = "word")
 
