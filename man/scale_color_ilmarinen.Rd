@@ -4,8 +4,7 @@
 \alias{scale_color_ilmarinen}
 \title{Color scale constructor for drsimonj colors}
 \usage{
-scale_color_ilmarinen(palette = "main", discrete = TRUE,
-  reverse = FALSE, ...)
+scale_color_ilmarinen(palette = "main", discrete = TRUE, reverse = FALSE, ...)
 }
 \arguments{
 \item{palette}{Character name of palette in drsimonj_palettes}

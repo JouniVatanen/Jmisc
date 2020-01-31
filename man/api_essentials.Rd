@@ -4,8 +4,16 @@
 \alias{api_essentials}
 \title{api_essentials}
 \usage{
-api_essentials(soap_action, username, password, quest_id = NULL,
-  security_lock = NULL, x = NULL, send_duplicate = TRUE, sep = ";")
+api_essentials(
+  soap_action,
+  username,
+  password,
+  quest_id = NULL,
+  security_lock = NULL,
+  x = NULL,
+  send_duplicate = TRUE,
+  sep = ";"
+)
 }
 \arguments{
 \item{soap_action}{API action: TestConnection / AddRespondentsData / AddEmailInvitees.}

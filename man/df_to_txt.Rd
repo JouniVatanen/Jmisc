@@ -4,8 +4,15 @@
 \alias{df_to_txt}
 \title{df_to_txt}
 \usage{
-df_to_txt(x, file = "", sep = "\\t", dec = ",", overwrite = TRUE,
-  encoding = "UTF-8", ...)
+df_to_txt(
+  x,
+  file = "",
+  sep = "\\t",
+  dec = ",",
+  overwrite = TRUE,
+  encoding = "UTF-8",
+  ...
+)
 }
 \arguments{
 \item{x}{Any list like element e.g. data.frame and data.table.}

@@ -1,8 +1,8 @@
 Package: stools
 Title: Tools for CX and survey data
-Version: 0.6.2
+Version: 0.6.3
 Authors@R: person("Jouni", "Vatanen", email = "jounipvatanen@gmail.com", role = c("aut", "cre"))
-Description: Miscellaneous functions e.g. for CX and survey data. Also API functions for Questback Essentials survey tool..
+Description: Miscellaneous functions e.g. for CX and survey data. Also API functions for Questback Essentials survey tool.
 Depends: R (>= 3.2.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -40,4 +40,6 @@ Imports:
   writexl,
   XML,
   xml2
-RoxygenNote: 6.1.1
+DevPackage:
+  omegahat/RDCOMClient
+RoxygenNote: 7.0.2

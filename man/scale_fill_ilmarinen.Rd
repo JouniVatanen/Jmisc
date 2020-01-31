@@ -4,8 +4,7 @@
 \alias{scale_fill_ilmarinen}
 \title{Fill scale constructor for Ilmarinen colors}
 \usage{
-scale_fill_ilmarinen(palette = "main", discrete = TRUE,
-  reverse = FALSE, ...)
+scale_fill_ilmarinen(palette = "main", discrete = TRUE, reverse = FALSE, ...)
 }
 \arguments{
 \item{palette}{Character name of palette in ilmarinen_palettes}

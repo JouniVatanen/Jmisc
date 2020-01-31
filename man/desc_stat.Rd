@@ -4,8 +4,13 @@
 \alias{desc_stat}
 \title{Create descriptive statistics table}
 \usage{
-desc_stat(data, .select, group_by_cols = NULL, with_idk = 99,
-  .labels = c(total = "N"))
+desc_stat(
+  data,
+  .select,
+  group_by_cols = NULL,
+  with_idk = 99,
+  .labels = c(total = "N")
+)
 }
 \arguments{
 \item{data}{Choose dataframe.}

@@ -4,8 +4,15 @@
 \alias{plot_hclust}
 \title{Custom dendrogram plot}
 \usage{
-plot_hclust(data, cut_num = 5, clust_var = TRUE, horiz = FALSE,
-  labels_track_height = 120, main = "", ...)
+plot_hclust(
+  data,
+  cut_num = 5,
+  clust_var = TRUE,
+  horiz = FALSE,
+  labels_track_height = 120,
+  main = "",
+  ...
+)
 }
 \arguments{
 \item{data}{Choose the dataframe.}

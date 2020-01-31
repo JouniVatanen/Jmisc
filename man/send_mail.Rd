@@ -4,8 +4,14 @@
 \alias{send_mail}
 \title{send_mail}
 \usage{
-send_mail(to, subject = "", body = "", attachment = NULL,
-  signature = TRUE, encoding = "UTF-8")
+send_mail(
+  to,
+  subject = "",
+  body = "",
+  attachment = NULL,
+  signature = TRUE,
+  encoding = "UTF-8"
+)
 }
 \arguments{
 \item{to}{email or a vector of emails.}

@@ -13,7 +13,7 @@ clean_nochars(x)
 Clean string from nochars: carriage return, new line and tab
 }
 \examples{
-clean_nochars("Jouni\\nVatanen")
+clean_nochars("Jouni\nVatanen")
 }
 \keyword{clean,}
 \keyword{line}
