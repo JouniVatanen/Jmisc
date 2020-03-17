@@ -1,8 +1,8 @@
 # Load required packages
 if (!require("checkpoint")) install.packages("checkpoint"); library(checkpoint)
 
-# Use the date few weeks after R-3.6.1. was released
-checkpoint("2019-07-28", R.version = "3.6.1",
+# Use the date few weeks after R-3.6.2. was released
+checkpoint("2019-12-30", R.version = "3.6.2",
            checkpointLocation = Sys.getenv("USERPROFILE"))
 
 # Load libraries
@@ -37,6 +37,33 @@ fi_postnumbers_2016 <- vroom::vroom(
     "kuntaryhman_nimi", "seutukunta", "seutukunnan_nimi", "suuralue",
     "suuralueen_nimi", "alue"
     ) %>%
+  distinct(postinumero, .keep_all = TRUE)
+
+# Load postinumbers data
+fi_postnumbers_2020 <- vroom::vroom(
+  "./data-raw/postnumbers_2020.txt", skip = 4,
+  col_types = vroom::cols(.default = vroom::col_character()),
+  .name_repair = janitor::make_clean_names
+  ) %>% {
+  # Shorten postnumbers to first three characters
+  bind_rows(
+    mutate(., postinumero = paste0(stri_sub(postinumeroalue, 1, 2), "0")) %>%
+      distinct(postinumero, .keep_all = TRUE),
+    mutate(., postinumero = stri_sub(postinumeroalue, 1, 3)))
+    } %>%
+  # Add new area variable by Maakunta
+  mutate_at(vars(maakunta), list(alue = ~case_when(
+    . %in% c("01", "05", "07", "08") ~ "Etelä-Suomi",
+    . %in% c("02", "04", "06", "13", "14", "15", "16") ~ "Länsi-Suomi",
+    . %in% c("09", "10", "11", "12") ~ "Itä-Suomi",
+    . %in% c("17", "18", "19") ~ "Pohjois-Suomi",
+    TRUE ~ "Tuntematon"))) %>%
+  # Select
+  select(
+    "postinumero", "maakunta", "maakunnan_nimi", "kuntaryhma",
+    "kuntaryhman_nimi", "seutukunta", "seutukunnan_nimi", "suuralue",
+    "suuralueen_nimi", "alue"
+  ) %>%
   distinct(postinumero, .keep_all = TRUE)
 
 # Load industries data
@@ -101,7 +128,7 @@ fi_company_abbr <- enframe(
   name = NULL, value = "abbr")
 
 # Save data to use in package: jmisc
-use_data(fi_postnumbers_2016, fi_industries_2008, fi_people_names,
-         overwrite = TRUE)
+use_data(fi_postnumbers_2016, fi_postnumbers_2020, fi_industries_2008,
+         fi_people_names, overwrite = TRUE)
 use_data(fi_filtered_people_names, fi_remove_words, fi_company_abbr,
          internal = TRUE, overwrite = TRUE)
