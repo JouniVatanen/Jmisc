@@ -1,8 +1,9 @@
 Package: stools
 Title: Tools for CX and survey data
-Version: 0.6.4
+Version: 0.6.5
 Authors@R: person("Jouni", "Vatanen", email = "jounipvatanen@gmail.com", role = c("aut", "cre"))
-Description: Miscellaneous functions e.g. for CX and survey data. Also API functions for Questback Essentials survey tool.
+Description: Miscellaneous functions e.g. for CX and survey data. Also API 
+functions for Questback Essentials survey tool and wrappers for DBI::dbWriteTable.
 Depends: R (>= 3.2.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -12,6 +13,7 @@ Imports:
   broom,
   ClustOfVar,
   data.table,
+  DBI,
   desctable,
   digest,
   dplyr,
@@ -34,6 +36,7 @@ Imports:
   R.utils,
   stringi,
   tidyr,
+  tidyselect,
   tm,
   vroom,
   wordcloud,
