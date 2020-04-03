@@ -106,7 +106,8 @@ fi_leave_names <- c(
   "Minne", "Tuli", "Uusi", "uusi", "Hankala", "And", "Viik", "Nord", "Väli",
   "Tila", "Väli", "Ansio", "Koski", "Osku", "Iso", "Juuri", "Arvio", "Laskuja",
   "Titta", "Ilo", "Ruotsi", "Ilmi", "Suo", "Ajan", "Laaja", "Vappu", "Peri",
-  "Vanha", "Esti", "Kesti", "Svensk", "kai", "En", "en", "Ensi", "ensi")
+  "Vanha", "Esti", "Kesti", "Svensk", "kai", "En", "en", "Ensi", "ensi", "ole",
+  "Olen")
 
 # Create filtered people names data
 fi_filtered_people_names <- fi_people_names %>%

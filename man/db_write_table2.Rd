@@ -17,7 +17,9 @@ db_write_table2(
   unique_cols = everything(),
   to_utf16 = TRUE,
   temporary = FALSE,
-  logging = TRUE
+  logging = TRUE,
+  batch_rows = 1000,
+  bulk = FALSE
 )
 }
 \arguments{
@@ -45,6 +47,10 @@ tidyselect styled helpers like starts_with(). Default: everything().}
 
 \item{to_utf16}{Convert to UTF-16LE, which is required for proper Microsoft
 SQL Server encoding.}
+
+\item{batch_rows}{Number of rows for a batch. Default: 1000. Suggestion: 10000.}
+
+\item{bulk}{Not yet implemented. Allows bulk insert using bcp.exe tool.}
 }
 \description{
 Write table to database

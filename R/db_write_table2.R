@@ -15,11 +15,13 @@
 #' tidyselect styled helpers like starts_with(). Default: everything().
 #' @param to_utf16 Convert to UTF-16LE, which is required for proper Microsoft
 #' SQL Server encoding.
+#' @param batch_rows Number of rows for a batch. Default: 1000. Suggestion: 10000.
+#' @param bulk Not yet implemented. Allows bulk insert using bcp.exe tool.
 #' @keywords write, sql, database
 #' @export
 #' @importFrom DBI dbDataType Id dbExistsTable dbRemoveTable dbCreateTable dbAppendTable
 #' @importFrom stringi stri_encode
-#' @importFrom dplyr mutate_if distinct
+#' @importFrom dplyr mutate_if distinct_at
 #' @importFrom data.table rbindlist
 #' @importFrom rlang enquo
 #' @import tidyselect
@@ -28,13 +30,25 @@
 db_write_table2 <- function(
   data, con, catalog, schema, table, fields = NULL, to_nvarchar = TRUE,
   overwrite = TRUE,  append = !overwrite, unique_cols = everything(),
-  to_utf16 = TRUE, temporary = FALSE, logging = TRUE) {
+  to_utf16 = TRUE, temporary = FALSE, logging = TRUE, batch_rows = 1000,
+  bulk = FALSE) {
 
+
+  # Choose the number of rows for a batch
+  options(odbc.batch_rows = batch_rows)
 
   # Stop if fields is not a named character vector or null
   if (!is_named_vector(fields, "character") & !is.null(fields)) {
     stop("Fields is not a named character vector or null.")
   }
+
+  # Warn if bcp.exe tool is not found and bulk = TRUE
+  if (bulk & Sys.which("bcp") == "") {
+    warning("bcp.exe tool is not found. Switching bulk to FALSE.")
+    bulk <- FALSE
+  }
+  # FIXME: Change bulk to FALSE until implemented.
+  bulk <- FALSE
 
   # Define table catalog and schema
   table_id <- Id(
@@ -85,8 +99,34 @@ db_write_table2 <- function(
   # create table
   dbCreateTable(con, table_id, fields_auto)
 
+  shell(paste(
+    "bcp.exe",
+    paste(catalog, schema, table, sep = "."),
+    "out", "c://temp//test.txt",
+    "-T"))
+
   # Append to table
-  dbAppendTable(con, table_id, data)
+  if (bulk) {
+    # If bulk, then write to table using bcp.exe tool
+    # Write data to tempfile
+    temp_file <- tempfile()
+    stools::write_csv_fi(data, temp_file)
+
+    # Use bulk tool in shell
+    # FIXME: bcp.exe command does not work! Some problem with connecting to server. Maybe sql server admin issue.
+    shell(paste(
+      "bcp.exe",
+      paste(catalog, schema, table, sep = "."),
+      "in", temp_file,
+      "-T"))
+
+    # Remove temp_file
+    unlink(temp_file)
+
+  } else {
+    # Else use dbAppendTable
+    dbAppendTable(con, table_id, data)
+  }
 
   # Check that all the rows were written and log number of rows
   if (logging) {
@@ -102,5 +142,4 @@ db_write_table2 <- function(
       cat(paste0("Uploaded ", db_count_rows, " rows to the database."))
     }
   }
-
 }
