@@ -33,8 +33,7 @@ db_write_table2 <- function(
   to_utf16 = TRUE, temporary = FALSE, logging = TRUE, batch_rows = 1000,
   bulk = FALSE) {
 
-
-  # Choose the number of rows for a batch
+  # Choose the number of rows for a batch e.g. 10000
   options(odbc.batch_rows = batch_rows)
 
   # Stop if fields is not a named character vector or null
@@ -98,12 +97,6 @@ db_write_table2 <- function(
 
   # create table
   dbCreateTable(con, table_id, fields_auto)
-
-  shell(paste(
-    "bcp.exe",
-    paste(catalog, schema, table, sep = "."),
-    "out", "c://temp//test.txt",
-    "-T"))
 
   # Append to table
   if (bulk) {
