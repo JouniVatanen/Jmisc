@@ -104,7 +104,9 @@ db_write_table2 <- function(
     # If bulk, then write to table using bcp.exe tool
     # Write data to tempfile
     temp_file <- tempfile()
-    stools::write_csv_fi(data, temp_file)
+
+    fwrite(data, temp_file, sep = "\t", eol = "\r\n",
+           quote = FALSE, col.names = FALSE, na = "")
 
     # Use bulk tool in shell
     shell(paste(
@@ -112,7 +114,9 @@ db_write_table2 <- function(
       paste(db_name, schema, table, sep = "."),
       "in", temp_file,
       "-T",
-      "-S", server_name))
+      "-S", server_name,
+      "-t \\t",
+      "-c"))
 
     # Remove temp_file
     unlink(temp_file)
