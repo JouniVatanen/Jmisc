@@ -85,12 +85,6 @@ db_write_table2 <- function(
     fields_auto[names(fields)] <- fields[!is.na(fields[names(fields_auto)])]
   }
 
-  # Convert character data to UTF-16LE
-  #https://stackoverflow.com/questions/48105277/writing-unicode-from-r-to-sql-server
-  data <- data %>%
-    mutate_if(is.factor, as.character) %>%
-    mutate_if(is.character, ~stri_encode(., to = "UTF-16LE", to_raw = TRUE))
-
   # Remove table if it exists
   if (dbExistsTable(con, table_id)) {
     dbRemoveTable(con, table_id)
@@ -116,13 +110,20 @@ db_write_table2 <- function(
       "-T",
       "-S", server_name,
       "-t \\t",
-      "-c"))
+      "-c",
+      "-C ACP"))
 
     # Remove temp_file
     unlink(temp_file)
 
   } else {
     # Else use dbAppendTable
+    # Convert character data to UTF-16LE
+    #https://stackoverflow.com/questions/48105277/writing-unicode-from-r-to-sql-server
+    data <- data %>%
+      mutate_if(is.factor, as.character) %>%
+      mutate_if(is.character, ~stri_encode(., to = "UTF-16LE", to_raw = TRUE))
+
     dbAppendTable(con, table_id, data)
   }
 
