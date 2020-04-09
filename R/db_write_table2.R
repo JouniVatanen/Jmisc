@@ -3,8 +3,7 @@
 #' Write table to database
 #' @param data Data.
 #' @param con Connection string.
-#' @param catalog Catalog name.
-#' @param schema Scema name.
+#' @param schema Schema name.
 #' @param table Table name.
 #' @param fields Named vector of column names and datatypes. If null, then
 #' automatic fetch by DBI::dbDataType.
@@ -19,7 +18,7 @@
 #' @param bulk Not yet implemented. Allows bulk insert using bcp.exe tool.
 #' @keywords write, sql, database
 #' @export
-#' @importFrom DBI dbDataType Id dbExistsTable dbRemoveTable dbCreateTable dbAppendTable
+#' @importFrom DBI dbGetInfo dbDataType Id dbExistsTable dbRemoveTable dbCreateTable dbAppendTable
 #' @importFrom stringi stri_encode
 #' @importFrom dplyr mutate_if distinct_at
 #' @importFrom data.table rbindlist
@@ -28,10 +27,14 @@
 
 # Write table to database
 db_write_table2 <- function(
-  data, con, catalog, schema, table, fields = NULL, to_nvarchar = TRUE,
+  data, con, schema, table, fields = NULL, to_nvarchar = TRUE,
   overwrite = TRUE,  append = !overwrite, unique_cols = everything(),
   to_utf16 = TRUE, temporary = FALSE, logging = TRUE, batch_rows = 1000,
   bulk = FALSE) {
+
+  # Servername
+  server_name <- dbGetInfo(con)$servername
+  db_name <- dbGetInfo(con)$dbname
 
   # Choose the number of rows for a batch e.g. 10000
   options(odbc.batch_rows = batch_rows)
@@ -46,12 +49,10 @@ db_write_table2 <- function(
     warning("bcp.exe tool is not found. Switching bulk to FALSE.")
     bulk <- FALSE
   }
-  # FIXME: Change bulk to FALSE until implemented.
-  bulk <- FALSE
 
   # Define table catalog and schema
   table_id <- Id(
-    catalog = catalog,
+    catalog = db_name,
     schema = schema,
     table = table)
 
@@ -60,7 +61,7 @@ db_write_table2 <- function(
 
     # Fetch old data
     data_old <- dbGetQuery(
-      con, paste0("SELECT * FROM ", paste(catalog, schema, table, sep = ".")))
+      con, paste0("SELECT * FROM ", paste(db_name, schema, table, sep = ".")))
 
     # Unite dataframes
     data_stacked <- rbindlist(list(data_old, data), fill = TRUE)
@@ -106,12 +107,12 @@ db_write_table2 <- function(
     stools::write_csv_fi(data, temp_file)
 
     # Use bulk tool in shell
-    # FIXME: bcp.exe command does not work! Some problem with connecting to server. Maybe sql server admin issue.
     shell(paste(
       "bcp.exe",
-      paste(catalog, schema, table, sep = "."),
+      paste(db_name, schema, table, sep = "."),
       "in", temp_file,
-      "-T"))
+      "-T",
+      "-S", server_name))
 
     # Remove temp_file
     unlink(temp_file)
@@ -126,7 +127,7 @@ db_write_table2 <- function(
     # Count rows in the database
     db_count_rows <- dbGetQuery(
       con,
-      paste0("SELECT count(*) FROM ", paste(catalog, schema, table, sep = ".")))
+      paste0("SELECT count(*) FROM ", paste(db_name, schema, table, sep = ".")))
 
     # Check if all the rows were loaded to database
     if (db_count_rows != nrow(data)) {

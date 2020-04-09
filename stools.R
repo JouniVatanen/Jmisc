@@ -1,3 +1,9 @@
+# Checkpoint installs packages
+if (!require("checkpoint")) install.packages("checkpoint")
+# use a date few weeks after R.version was released
+checkpoint::checkpoint("2019-12-30", R.version = "3.6.2",
+                       checkpointLocation = Sys.getenv("USERPROFILE"))
+
 # Document and install package
 if (!require(devtools)) install.packages("devtools")
 devtools::document()

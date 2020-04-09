@@ -7,7 +7,6 @@
 db_write_table2(
   data,
   con,
-  catalog,
   schema,
   table,
   fields = NULL,
@@ -27,9 +26,7 @@ db_write_table2(
 
 \item{con}{Connection string.}
 
-\item{catalog}{Catalog name.}
-
-\item{schema}{Scema name.}
+\item{schema}{Schema name.}
 
 \item{table}{Table name.}
 
