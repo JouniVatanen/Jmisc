@@ -21,7 +21,8 @@
 #' @importFrom DBI dbGetInfo dbDataType Id dbExistsTable dbRemoveTable dbCreateTable dbAppendTable
 #' @importFrom stringi stri_encode
 #' @importFrom dplyr mutate_if distinct_at
-#' @importFrom data.table rbindlist
+#' @importFrom data.table rbindlist fwrite
+#' @importFrom readr write_tsv
 #' @importFrom rlang enquo
 #' @import tidyselect
 
@@ -99,8 +100,13 @@ db_write_table2 <- function(
     # Write data to tempfile
     temp_file <- tempfile()
 
-    fwrite(data, temp_file, sep = "\t", eol = "\r\n",
-           quote = FALSE, col.names = FALSE, na = "")
+    # FIXME: fwrite sometimes do not write Encodings corretly
+    #fwrite(data, temp_file, sep = "\t", eol = "\r\n",
+    #       quote = FALSE, col.names = FALSE, na = "")
+
+    # TODO: check if write_tsv handles decimals and encodings correctly
+    write_tsv(data, temp_file, na = "",
+              quote_escape = FALSE, col_names = FALSE)
 
     # Use bulk tool in shell
     shell(paste(
