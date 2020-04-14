@@ -117,7 +117,8 @@ db_write_table2 <- function(
       "-S", server_name,
       "-t \\t",
       "-c",
-      "-C ACP"))
+      "-C ACP",
+      "-r \\n"))
 
     # Remove temp_file
     unlink(temp_file)
