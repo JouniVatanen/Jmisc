@@ -33,17 +33,16 @@ db_write_table2 <- function(
   to_utf16 = TRUE, temporary = FALSE, logging = TRUE, batch_rows = 1000,
   bulk = FALSE) {
 
-  # Servername
+  # Check arguments
+  stopifnot(
+    !is_named_vector(fields, "character") & !is.null(fields))
+
+  # Get server and database name from connection
   server_name <- dbGetInfo(con)$servername
   db_name <- dbGetInfo(con)$dbname
 
   # Choose the number of rows for a batch e.g. 10000
   options(odbc.batch_rows = batch_rows)
-
-  # Stop if fields is not a named character vector or null
-  if (!is_named_vector(fields, "character") & !is.null(fields)) {
-    stop("Fields is not a named character vector or null.")
-  }
 
   # Warn if bcp.exe tool is not found and bulk = TRUE
   if (bulk & Sys.which("bcp") == "") {
@@ -100,16 +99,27 @@ db_write_table2 <- function(
     # Write data to tempfile
     temp_file <- tempfile()
 
+    # Disable scientifc notation
+    scipen <- getOption("scipen")
+    outdec <- getOption("OutDec")
+    options(scipen = 999)
+    options(OutDec = ".")
+
     # FIXME: fwrite sometimes do not write Encodings corretly
-    #fwrite(data, temp_file, sep = "\t", eol = "\r\n",
-    #       quote = FALSE, col.names = FALSE, na = "")
+    fwrite(data, temp_file, sep = "\t", eol = "\r\n",
+           quote = FALSE, col.names = FALSE, na = "")
 
-    # TODO: check if write_tsv handles decimals and encodings correctly
-    write_tsv(data, temp_file, na = "",
-              quote_escape = FALSE, col_names = FALSE)
+    # FIXME: write_tsv does not write proper eol \r\n instead it is \n
+    #write_tsv(data, temp_file, na = "",
+    #          quote_escape = FALSE, col_names = FALSE)
 
-    # Use bulk tool in shell
-    shell(paste(
+    # Reset scientific notation to original state
+    options("scipen" = scipen)
+    options("OutDec" = outdec)
+
+    # Create bulk command
+    # FIXME: use \n as end of line option
+    cmd <- paste(
       "bcp.exe",
       paste(db_name, schema, table, sep = "."),
       "in", temp_file,
@@ -117,8 +127,11 @@ db_write_table2 <- function(
       "-S", server_name,
       "-t \\t",
       "-c",
-      "-C ACP",
-      "-r \\n"))
+      "-C ACP"
+      #,"-r \\n"
+    )
+    # Use bulk tool in shell
+    shell(cmd)
 
     # Remove temp_file
     unlink(temp_file)
