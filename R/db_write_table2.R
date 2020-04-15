@@ -35,7 +35,7 @@ db_write_table2 <- function(
 
   # Check arguments
   stopifnot(
-    !is_named_vector(fields, "character") & !is.null(fields))
+    is_named_vector(fields, "character") || is.null(fields))
 
   # Get server and database name from connection
   server_name <- dbGetInfo(con)$servername
