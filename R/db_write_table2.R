@@ -106,8 +106,9 @@ db_write_table2 <- function(
     options(OutDec = ".")
 
     # FIXME: fwrite sometimes do not write Encodings corretly
-    fwrite(data, temp_file, sep = "\t", eol = "\r\n",
-           quote = FALSE, col.names = FALSE, na = "")
+    # TODO: write.csv datetime removes second decimals
+    fwrite(data, temp_file, sep = "\t", eol = "\r\n", quote = FALSE,
+           col.names = FALSE, na = "", dateTimeAs = "write.csv")
 
     # FIXME: write_tsv does not write proper eol \r\n instead it is \n
     #write_tsv(data, temp_file, na = "",
