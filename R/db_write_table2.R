@@ -127,7 +127,9 @@ db_write_table2 <- function(
       "-S", server_name,
       "-t \\t",
       "-c",
-      "-C ACP"
+      "-C ACP",
+      "-a 65535",
+      "-k"
       #,"-r \\n"
     )
     # Use bulk tool in shell
