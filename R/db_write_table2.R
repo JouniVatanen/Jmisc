@@ -121,15 +121,16 @@ db_write_table2 <- function(
     # FIXME: use \n as end of line option
     cmd <- paste(
       "bcp.exe",
-      paste(db_name, schema, table, sep = "."),
-      "in", temp_file,
+      #paste(db_name, schema, table, sep = "."),
+      #"in", temp_file,
       "-T",
-      "-S", server_name,
+      #"-S", server_name,
       "-t \\t",
       "-c",
       "-C ACP",
       "-a 65535",
-      "-k"
+      "-k",
+      '-h "TABLOCK"'
       #,"-r \\n"
     )
     # Use bulk tool in shell
