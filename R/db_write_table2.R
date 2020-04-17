@@ -99,24 +99,14 @@ db_write_table2 <- function(
     # Write data to tempfile
     temp_file <- tempfile()
 
-    # Disable scientifc notation
-    scipen <- getOption("scipen")
-    outdec <- getOption("OutDec")
-    options(scipen = 999)
-    options(OutDec = ".")
+    # Convert characters to native encoding
+    data <- data %>%
+      mutate_if(is.factor, as.character) %>%
+      mutate_if(is.character, stri_enc_tonative)
 
-    # FIXME: fwrite sometimes do not write Encodings corretly
     # TODO: write.csv datetime removes second decimals
     fwrite(data, temp_file, sep = "\t", eol = "\r\n", quote = FALSE,
-           col.names = FALSE, na = "", dateTimeAs = "write.csv")
-
-    # FIXME: write_tsv does not write proper eol \r\n instead it is \n
-    #write_tsv(data, temp_file, na = "",
-    #          quote_escape = FALSE, col_names = FALSE)
-
-    # Reset scientific notation to original state
-    options("scipen" = scipen)
-    options("OutDec" = outdec)
+           col.names = FALSE, na = "", dateTimeAs = "write.csv", scipen = 999)
 
     # Create bulk command
     # FIXME: use \n as end of line option
@@ -152,6 +142,7 @@ db_write_table2 <- function(
   }
 
   # Check that all the rows were written and log number of rows
+  # TODO: If fail, then save data to temp file and show temp file location
   if (logging) {
     # Count rows in the database
     db_count_rows <- dbGetQuery(
@@ -160,7 +151,7 @@ db_write_table2 <- function(
 
     # Check if all the rows were loaded to database
     if (db_count_rows != nrow(data)) {
-      stop("The data was not loaded to the database!")
+      warning("The data was not loaded to the database!")
     } else {
       cat(paste0("Uploaded ", db_count_rows, " rows to the database."))
     }
