@@ -81,6 +81,7 @@ fi_industries_2008 <- vroom::vroom(
       tol_1 %in% c("A", "B") ~ "A+B",
       tol_1 %in% c("D", "E") ~ "D+E",
       tol_1 %in% c("J", "L", "M", "N") ~ "J+L+M+N",
+      tol_1 %in% c("K", "O", "P", "R", "S", "T") ~ "K+O+P+R+S+T",
       TRUE ~ tol_1)) %>%
   select(tol_0, tol_1, tol_1_name, tol_2, tol_2_name)
 
@@ -128,7 +129,7 @@ fi_company_abbr <- enframe(
   "Ab", "ab", "säätiö", "Säätiö"),
   name = NULL, value = "abbr")
 
-# Save data to use in package: jmisc
+# Save data to use in the package
 use_data(fi_postnumbers_2016, fi_postnumbers_2020, fi_industries_2008,
          fi_people_names, overwrite = TRUE)
 use_data(fi_filtered_people_names, fi_remove_words, fi_company_abbr,
