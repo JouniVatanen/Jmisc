@@ -4,13 +4,15 @@
 \name{fi_people_names}
 \alias{fi_people_names}
 \title{Finnish names}
-\format{A data frame with 34935 rows and 4 variables:
+\format{
+A data frame with 34935 rows and 4 variables:
 \describe{
   \item{name}{name of a person}
   \item{n}{popularity of the name}
   \item{gender}{Male = M, Female = F, NA in lastnames}
   \item{type}{Firstname = F, lastname = L}
-}}
+}
+}
 \usage{
 fi_people_names
 }

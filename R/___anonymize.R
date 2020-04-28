@@ -16,7 +16,6 @@
 #' @keywords anonymize data
 #' @examples
 #' anonymize(0:10, algo = "crc32")
-#' @export
 #' @importFrom digest digest
 
 anonymize <- function(x, algo = "crc32"){

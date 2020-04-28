@@ -1,7 +1,14 @@
+# What you need to do, for install() to work
+# 1. Install Rtools 4.0 and R 4.0.0
+# 2. Set ...\Rtools\usr\bin to your PATH e.g. with Powershell
+# https://stackoverflow.com/questions/714877/setting-windows-powershell-environment-variables
+# 3. Set ...\Rtools\mingw`$(WIN)\bin to your BINREF e.g. with Powershell
+# 4. Check RTOOLS40_HOME points to Rtools ...\Rtools directory at ..\R\etc\x64\Makeconf
+
 # Checkpoint installs packages
 if (!require("checkpoint")) install.packages("checkpoint")
 # use a date few weeks after R.version was released
-checkpoint::checkpoint("2019-12-30", R.version = "3.6.2",
+checkpoint::checkpoint("2020-04-26", R.version = "4.0.0",
                        checkpointLocation = Sys.getenv("USERPROFILE"))
 
 # Document and install package

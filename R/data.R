@@ -1,8 +1,8 @@
 #' Finnish postnumbers 2016
 #'
-#' Data from Posti about Finnish postnumbers and their metadata.
+#' Data from Tilastokeskus about Finnish postnumbers and their metadata.
 #' Data is from 2016. Data can be downloaded from:
-#' https://beta.posti.fi/fi/asiakastuki/postinumerotiedostot
+# https://www.stat.fi/tup/paavo/paavon_aineistokuvaukset.html
 #'
 #' @format A data frame with 939 rows and 10 variables:
 #' \describe{
@@ -18,6 +18,27 @@
 #'   \item{alue}{Area names divided by compass point}
 #' }
 "fi_postnumbers_2016"
+
+#' Finnish postnumbers 2020
+#'
+#' Data from Tilastokeskus about Finnish postnumbers and their metadata.
+#' Data is from 2020. Data can be downloaded from:
+#' https://www.stat.fi/tup/paavo/paavon_aineistokuvaukset.html
+#'
+#' @format A data frame with 939 rows and 10 variables:
+#' \describe{
+#'   \item{postinumero}{Postnumber depricated to first three characters}
+#'   \item{maakunta}{Area codes divided by province}
+#'   \item{maakunnan_nimi}{Area names divided by province}
+#'   \item{kuntaryhma}{Area codes divided by area type}
+#'   \item{kuntaryhman_nimi}{Area names divided by area type}
+#'   \item{seutukunta}{Area codes divided by great area}
+#'   \item{seutukunnan_nimi}{Area names divided by great area}
+#'   \item{suuralue}{Area codes divided by NUTS2}
+#'   \item{suuralueen_nimi}{Area names divided by NUTS2}
+#'   \item{alue}{Area names divided by compass point}
+#' }
+"fi_postnumbers_2020"
 
 #' Finnish names
 #'

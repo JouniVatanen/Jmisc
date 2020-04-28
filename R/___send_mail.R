@@ -18,7 +18,6 @@
 #'vai miten se oli"
 #'send_mail(to, subject, body)
 #'}
-#' @export
 #' @import RDCOMClient
 #' @importFrom stringi stri_trim_both stri_replace_all_regex
 #' @importFrom fs path
