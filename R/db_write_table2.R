@@ -19,7 +19,7 @@
 #' @keywords write, sql, database
 #' @export
 #' @importFrom DBI dbGetInfo dbDataType Id dbExistsTable dbRemoveTable dbCreateTable dbAppendTable
-#' @importFrom stringi stri_encode
+#' @importFrom stringi stri_encode stri_enc_tonative
 #' @importFrom dplyr mutate_if distinct_at
 #' @importFrom data.table rbindlist fwrite
 #' @importFrom readr write_tsv
@@ -100,6 +100,7 @@ db_write_table2 <- function(
     temp_file <- tempfile()
 
     # Convert characters to native encoding
+    # TODO: Cyrillics etc. are not encoded properly
     data <- data %>%
       mutate_if(is.factor, as.character) %>%
       mutate_if(is.character, stri_enc_tonative)
