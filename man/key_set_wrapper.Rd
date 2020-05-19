@@ -11,7 +11,7 @@ key_set_wrapper(service, username = NULL, keyring = NULL)
 
 \item{username}{Choose optional username.}
 
-\item{keyring}{Choose optional keyring.}
+\item{keyring}{Choose optional keyring for extra security.}
 }
 \description{
 If else conditions for keyring::key_set

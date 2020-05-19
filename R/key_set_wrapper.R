@@ -3,7 +3,7 @@
 #' If else conditions for keyring::key_set
 #' @param service Choose keyring service.
 #' @param username Choose optional username.
-#' @param keyring Choose optional keyring.
+#' @param keyring Choose optional keyring for extra security.
 #' @keywords keyring, wrapper
 #' @examples
 #' library(keyring)
@@ -11,6 +11,7 @@
 #' key_delete("test_keyring_20200101")
 #' @export
 #' @importFrom keyring key_set key_list
+#' @importFrom rstudioapi askForPassword
 
 key_set_wrapper <- function(service, username = NULL, keyring = NULL) {
 
@@ -18,10 +19,13 @@ key_set_wrapper <- function(service, username = NULL, keyring = NULL) {
   if (length(key_list(service)[[1]]) == 0) {
 
     # Set key and stop with an error message
-    key_set(service = service, username = username, keyring = keyring)
-    stop(paste0(
-      "Check parameter: '", service,
-      "' and save your password to keyring.",
-      " You can save by activating required key_set_wrapper functions."))
+    key_set_with_value(
+      service,
+      username,
+      askForPassword(
+        paste0(
+          "Please enter password/key to parameter: '", service, "'.",
+          "\nIt will be saved your personal keyring.")),
+      keyring)
   }
 }
