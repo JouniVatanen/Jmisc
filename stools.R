@@ -14,7 +14,7 @@ checkpoint::checkpoint("2020-04-26", R.version = "4.0.0",
 # Document and install package
 if (!require(devtools)) install.packages("devtools")
 devtools::document()
-devtools::install()
+devtools::install(upgrade = FALSE)
 
 # Commit changes and push the files to the github
 # 1. Commit changes shell "git add .;git commit -m 'comment'" OR Rstudio UI
