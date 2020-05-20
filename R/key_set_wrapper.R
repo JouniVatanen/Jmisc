@@ -10,7 +10,7 @@
 #' key_set_wrapper("test_keyring_20200101")
 #' key_delete("test_keyring_20200101")
 #' @export
-#' @importFrom keyring key_set key_list
+#' @importFrom keyring key_set_with_value key_list
 #' @importFrom rstudioapi askForPassword
 
 key_set_wrapper <- function(service, username = NULL, keyring = NULL) {
