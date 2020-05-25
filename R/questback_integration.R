@@ -6,7 +6,8 @@
 #' @param filename Filename to save the imported data.
 #' @param username Username for Questback Essentials.
 #' @param password Password for Questback Essentials.
-#' @param last_updated Hours since last updated. Default 12 hours.
+#' @param last_updated If time is less than chosen, then do not execute.
+#' Possible time choises are secs, mins, hours, days and weeks. Default is 12 hours.
 #' @param latest_days Not yet implemented, because IntegrationUtility demands
 #' dates to be in form YYYY-MM-DD.
 #' @keywords questback essentials, survey
@@ -16,7 +17,7 @@
 
 # Get responses from Questback Essentials using IntegrationUtility.exe
 qb_get_responses <- function(
-  quest_id, sid, filename, username, password, last_updated = 12,
+  quest_id, sid, filename, username, password, last_updated = "12 hours",
   latest_days = NULL) {
 
   # Ensure that IntegrationUtility.exe is found
@@ -24,13 +25,20 @@ qb_get_responses <- function(
     stop("IntegrationUtility.exe is not found. Add it to your PATH variable.")
   }
 
+  # Split last_updated to time unit and amount
+  time_amount <- as.numeric(strsplit(last_updated, " ")[[1]][1])
+  time_unit <- strsplit(last_updated, " ")[[1]][2]
+
   # Stop if not
-  stopifnot(is.null(latest_days))
+  stopifnot(
+    is.null(latest_days),
+    time_unit %in% c("secs", "mins", "hours", "days", "weeks"),
+    is.numeric(time_amount))
 
   # Calculate when the file was last updated
-  file_updated <- difftime(Sys.time(), file.info(filename)$mtime, units = "hours")
+  file_updated <- difftime(Sys.time(), file.info(filename)$mtime, units = time_unit)
 
-  if (!file.exists(filename) | (file_updated > last_updated)) {
+  if (!file.exists(filename) | (file_updated > time_amount)) {
     # Create cmd
     cmd <- sprintf(
       paste(

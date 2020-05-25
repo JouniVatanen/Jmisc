@@ -10,7 +10,7 @@ qb_get_responses(
   filename,
   username,
   password,
-  last_updated = 12,
+  last_updated = "12 hours",
   latest_days = NULL
 )
 }
@@ -25,7 +25,8 @@ qb_get_responses(
 
 \item{password}{Password for Questback Essentials.}
 
-\item{last_updated}{Hours since last updated. Default 12 hours.}
+\item{last_updated}{If time is less than chosen, then do not execute.
+Possible time choises are secs, mins, hours, days and weeks. Default is 12 hours.}
 
 \item{latest_days}{Not yet implemented, because IntegrationUtility demands
 dates to be in form YYYY-MM-DD.}
