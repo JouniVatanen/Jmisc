@@ -17,7 +17,7 @@
 
 # Get responses from Questback Essentials using IntegrationUtility.exe
 qb_get_responses <- function(
-  quest_id, sid, filename, username, password, last_updated = "12 hours",
+  filename, quest_id, sid, username, password, last_updated = "12 hours",
   latest_days = NULL) {
 
   # Ensure that IntegrationUtility.exe is found
