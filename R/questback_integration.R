@@ -100,9 +100,11 @@ qb_send_invitees <- function(
         "-SecurityLock:%s",
         "-TransferDirectory:%s",
         "-ImportDelimiter:semicolon",
-        "-AllowDuplicates:%s"),
+        "-Email:%s",
+        "-AllowDuplicates:%s",
+        "-SendEmail:true"),
       path_abs(filename), username, password, quest_id,
-      sid, path_abs(transfer_dir), allow_duplicate)
+      sid, path_abs(transfer_dir), email, allow_duplicate)
 
     # Activate the command
     shell(cmd)
