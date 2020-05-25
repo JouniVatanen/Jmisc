@@ -43,7 +43,7 @@ qb_get_responses <- function(
     cmd <- sprintf(
       paste(
         "IntegrationUtility.exe",
-        "-Command:ImportResponses",
+        "-Command:ExportResponses",
         "-ExportFile:%s",
         "-ExportFormat:csv",
         "-ExportDelimiter:tab",
