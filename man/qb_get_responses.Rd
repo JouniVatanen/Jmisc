@@ -5,9 +5,9 @@
 \title{qb_get_responses}
 \usage{
 qb_get_responses(
+  filename,
   quest_id,
   sid,
-  filename,
   username,
   password,
   last_updated = "12 hours",
@@ -15,11 +15,11 @@ qb_get_responses(
 )
 }
 \arguments{
+\item{filename}{Filename to save the imported data.}
+
 \item{quest_id}{Quest id from Questback Essentials.}
 
 \item{sid}{Quest security id from Questback Essentials.}
-
-\item{filename}{Filename to save the imported data.}
 
 \item{username}{Username for Questback Essentials.}
 

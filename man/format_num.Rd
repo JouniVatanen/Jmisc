@@ -11,7 +11,8 @@ format_num(x, digits = 1, format = "f", dec = ",", flag = "", ...)
 real numbers. Any class is discarded, with a warning.}
 
 \item{digits}{the desired number of digits after the decimal point
-(format = "f") or significant digits (format = "g", = "e" or = "fg").}
+(format = "f") or significant digits (format = "g", = "e" or = "fg"). If
+digits is negative, then round to numbers like tens, hundreds or thousands.}
 
 \item{dec}{he character to be used to indicate the numeric decimal point.}
 
@@ -30,5 +31,6 @@ x <- seq(0, 10, by = 0.01)
 format_num(x)
 }
 \keyword{format,}
-\keyword{formatC}
+\keyword{formatC,}
 \keyword{numeric,}
+\keyword{round}
