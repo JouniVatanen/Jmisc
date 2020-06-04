@@ -10,10 +10,10 @@ calc_birth(x)
 \item{x}{Choose string from which to calculate.}
 }
 \description{
-Calculate birth date from social security number and return POSIXct
+Calculate birth date from Finnish social security number and return POSIXct
 }
 \examples{
-calc_birth("123456-123S")
+calc_birth("121256-123S")
 }
 \keyword{birth,}
 \keyword{date}
