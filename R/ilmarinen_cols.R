@@ -39,6 +39,7 @@ ilmarinen_pal <- function(palette = "main", reverse = FALSE, ...) {
     `cool`  = ilmarinen_cols("dark blue", "blue", "light blue"),
     `hot`   = ilmarinen_cols("orange", "pink", "yellow"),
     `mixed` = ilmarinen_cols("light blue", "yellow", "pink"),
+    `1-5 scale` = ilmarinen_cols("light blue", "light blue", "yellow", "pink", "pink"),
     `all`   = ilmarinen_cols("dark blue", "pink", "light blue", "yellow", "orange", "blue", "grey")
   )
 
