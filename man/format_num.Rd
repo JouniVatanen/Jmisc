@@ -4,7 +4,15 @@
 \alias{format_num}
 \title{format_num}
 \usage{
-format_num(x, digits = 1, format = "f", dec = ",", flag = "", ...)
+format_num(
+  x,
+  digits = 1,
+  format = "f",
+  dec = ",",
+  flag = "",
+  big.mark = " ",
+  ...
+)
 }
 \arguments{
 \item{x}{an atomic numerical or character object, typically a vector of
@@ -21,7 +29,10 @@ in Kernighan and Ritchie (1988, page 243) or the C+99 standard. For example
 "0" pads leading zeros; "-" does left adjustment;
 "+" ensures a sign in all cases, i.e., "+" for positive numbers}
 
-\item{...}{ass other parameters to formatC like width, big.mark, small.mark}
+\item{big.mark}{used as mark between every big.interval decimals before
+the decimal point.}
+
+\item{...}{add other parameters to formatC like width and small.mark}
 }
 \description{
 Formats numbers to the finnish standard.

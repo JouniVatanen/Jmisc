@@ -11,26 +11,31 @@
 #' in Kernighan and Ritchie (1988, page 243) or the C+99 standard. For example
 #' "0" pads leading zeros; "-" does left adjustment;
 #' "+" ensures a sign in all cases, i.e., "+" for positive numbers
-#' @param ... ass other parameters to formatC like width, big.mark, small.mark
+#' @param big.mark used as mark between every big.interval decimals before
+#' the decimal point.
+#' @param ... add other parameters to formatC like width and small.mark
 #' @keywords format, numeric, formatC, round
 #' @examples
 #' x <- seq(0, 10, by = 0.01)
 #' format_num(x)
 #' @export
 
-format_num <- function(x, digits = 1, format = "f", dec = ",", flag = "", ...) {
+format_num <- function(x, digits = 1, format = "f", dec = ",",
+                       flag = "", big.mark = " ", ...) {
 
   # Transform to numeric, round to 1 decimal, use comma as decimal mark
   x <- as.numeric(x)
 
-  # Use formatC, if digits are 0 or positive
-  if (digits >= 0) {
-    output <- formatC(x, digits = digits, format = format,
-                      decimal.mark = dec, flag = flag, ...)
-  # Else use round
-  } else {
-      output <- round(x, digits = digits)
-    }
+  # Use first round, if digits is negative
+  if (digits < 0) {
+    x <- round(x, digits = digits)
+    digits <- 0
+  }
+
+  # Use formatC
+  output <- formatC(
+    x, digits = digits, format = format,
+    decimal.mark = dec, flag = flag, big.mark = big.mark, ...)
 
   return(output)
 }
