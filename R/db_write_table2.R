@@ -68,7 +68,7 @@ db_write_table2 <- function(
 
     # Choose distinct rows
     # Return unique rows comparing selected variables if null, then compare everyhing
-    data <- distinct_at(data_stacked, vars(!!!enquo(unique_cols)), .keep_all = TRUE)
+    data <- distinct_at(data_stacked, vars(!!enquo(unique_cols)), .keep_all = TRUE)
   }
 
   # Replace all varchar with nvarchar, if fields is missing
