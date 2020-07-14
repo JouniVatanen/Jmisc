@@ -8,8 +8,8 @@
 #' @param password Password for Questback Essentials.
 #' @param last_updated If time is less than chosen, then do not execute.
 #' Possible time choises are secs, mins, hours, days and weeks. Default is 12 hours.
-#' @param latest_days Not yet implemented, because IntegrationUtility demands
-#' dates to be in form YYYY-MM-DD.
+#' @param latest_days Inside the function changes the short date format to
+#' YYYY-MM-DD temporary.
 #' @keywords questback essentials, survey
 #' @export
 #' @importFrom fs path_abs
@@ -39,6 +39,7 @@ qb_get_responses <- function(
   file_updated <- difftime(Sys.time(), file.info(filename)$mtime, units = time_unit)
 
   if (!file.exists(filename) | (file_updated > time_amount)) {
+
     # Create cmd
     cmd <- sprintf(
       paste(
@@ -53,12 +54,31 @@ qb_get_responses <- function(
         "-Password:%s",
         "-QuestId:%s",
         "-SecurityLock:%s"),
-        # FIXME: Dates works only wih American style system settings e.g. 2020-01-30
-        #"-FromNDaysAgo:20"),
-      path_abs(filename), username, password, quest_id, sid)
+        path_abs(filename), username, password, quest_id, sid)
+
+
+    # If latest_days is not null then check that registry date parameter is correct
+    if (!is.null(latest_days)) {
+
+      # Original and temporary regional settings
+      v_reg_orig <- '"HKCU\\Control Panel\\International"'
+      v_reg_temp <- '"HKCU\\Control Panel\\International-Temp"'
+
+      # Backup old registry and change settings
+      shell(paste("reg copy", v_reg_orig, v_reg_temp, "/f"))
+      shell(paste("@REM reg query", v_reg_orig, "/v sShortDate"))
+      shell(paste("reg add", v_reg_orig, '/V sShortDate /T REG_SZ /D "yyyy-M-d" /F'))
+      # Add FromDaysAgo at the end of command
+      cmd <- paste0(cmd, " -FromNDaysAgo:", latest_days)
+    }
 
     # Activate the command
     shell(cmd)
+
+    # Change registry settings back to normal
+    if (!is.null(latest_days)) {
+      shell(paste("reg copy", v_reg_temp, v_reg_orig, "/f"))
+    }
   }
 }
 
