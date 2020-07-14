@@ -53,7 +53,8 @@ qb_get_responses <- function(
         "-UserName:%s",
         "-Password:%s",
         "-QuestId:%s",
-        "-SecurityLock:%s"),
+        "-SecurityLock:%s",
+        "-FromDate:2020-07-12"),
         path_abs(filename), username, password, quest_id, sid)
 
 
@@ -64,10 +65,13 @@ qb_get_responses <- function(
       v_reg_orig <- '"HKCU\\Control Panel\\International"'
       v_reg_temp <- '"HKCU\\Control Panel\\International-Temp"'
 
-      # Backup old registry and change settings
+      # Backup old registry and change regional settings to YYYY-MM-DD HH:mm:ss
       shell(paste("reg copy", v_reg_orig, v_reg_temp, "/f"))
       shell(paste("@REM reg query", v_reg_orig, "/v sShortDate"))
-      shell(paste("reg add", v_reg_orig, '/V sShortDate /T REG_SZ /D "yyyy-M-d" /F'))
+      shell(paste("reg add", v_reg_orig, '/V sShortDate /T REG_SZ /D "yyyy-MM-dd" /f'))
+      shell(paste("@REM reg query", v_reg_orig, "/v sTimeFormat"))
+      shell(paste("reg add", v_reg_orig, '/v sTimeFormat /T REG_SZ /D "HH:mm:ss" /f'))
+
       # Add FromDaysAgo at the end of command
       cmd <- paste0(cmd, " -FromNDaysAgo:", latest_days)
     }
