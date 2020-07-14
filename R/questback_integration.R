@@ -66,11 +66,13 @@ qb_get_responses <- function(
       v_reg_temp <- '"HKCU\\Control Panel\\International-Temp"'
 
       # Backup old registry and change regional settings to YYYY-MM-DD HH:mm:ss
+      sink("NUL")
       shell(paste("reg copy", v_reg_orig, v_reg_temp, "/f"))
       shell(paste("@REM reg query", v_reg_orig, "/v sShortDate"))
       shell(paste("reg add", v_reg_orig, '/V sShortDate /T REG_SZ /D "yyyy-MM-dd" /f'))
       shell(paste("@REM reg query", v_reg_orig, "/v sTimeFormat"))
       shell(paste("reg add", v_reg_orig, '/v sTimeFormat /T REG_SZ /D "HH:mm:ss" /f'))
+      sink()
 
       # Add FromDaysAgo at the end of command
       cmd <- paste0(cmd, " -FromNDaysAgo:", latest_days)
@@ -81,7 +83,9 @@ qb_get_responses <- function(
 
     # Change registry settings back to normal
     if (!is.null(latest_days)) {
+      sink("NUL")
       shell(paste("reg copy", v_reg_temp, v_reg_orig, "/f"))
+      sink()
     }
   }
 }
