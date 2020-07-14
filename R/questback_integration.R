@@ -31,7 +31,7 @@ qb_get_responses <- function(
 
   # Stop if not
   stopifnot(
-    is.null(latest_days),
+    is.null(latest_days) | is.integer(latest_days),
     time_unit %in% c("secs", "mins", "hours", "days", "weeks"),
     is.numeric(time_amount))
 
