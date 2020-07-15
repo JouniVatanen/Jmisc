@@ -12,8 +12,7 @@ qb_get_responses(
   password,
   last_updated = "12 hours",
   latest_days = NULL,
-  from_date = NULL,
-  overwrite = TRUE
+  from_date = NULL
 )
 }
 \arguments{
@@ -34,8 +33,6 @@ Possible time choises are secs, mins, hours, days and weeks. Default is 12 hours
 
 \item{from_date}{What is the latest datetime you get the data from. In the
 form YYYY-MM-DD or YYYY-MM-DD HH:mm:ss}
-
-\item{overwrite}{Overwrite file. Default TRUE.}
 }
 \description{
 Get responses to a survey from Questback Essentials.

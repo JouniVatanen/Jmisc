@@ -11,7 +11,6 @@
 #' @param latest_days From how many days you get the data.
 #' @param from_date What is the latest datetime you get the data from. In the
 #' form YYYY-MM-DD or YYYY-MM-DD HH:mm:ss
-#' @param overwrite Overwrite file. Default TRUE. Not yet implemented.
 #' @keywords questback essentials, survey
 #' @export
 #' @importFrom fs path_abs
@@ -20,7 +19,7 @@
 # Get responses from Questback Essentials using IntegrationUtility.exe
 qb_get_responses <- function(
   filename, quest_id, sid, username, password, last_updated = "12 hours",
-  latest_days = NULL, from_date = NULL, overwrite = TRUE) {
+  latest_days = NULL, from_date = NULL) {
 
   # Ensure that IntegrationUtility.exe is found
   if (Sys.which("IntegrationUtility") == "") {
@@ -32,12 +31,12 @@ qb_get_responses <- function(
   time_unit <- strsplit(last_updated, " ")[[1]][2]
 
   # Change latest_days to integer
-  latest_days <- as.integer(latest_days)
+  latest_days_int <- as.integer(latest_days)
 
   # Stop if not
   # TODO: Check that from_date is correct form
   stopifnot(
-    is.null(latest_days) | is.integer(latest_days),
+    is.null(latest_days) | is.integer(latest_days_int),
     time_unit %in% c("secs", "mins", "hours", "days", "weeks"),
     is.numeric(time_amount))
 
@@ -78,7 +77,7 @@ qb_get_responses <- function(
 
       # Add FromDaysAgo or FromDate at the end of command
       if (!is.null(latest_days)) {
-        cmd <- paste0(cmd, " -FromNDaysAgo:", latest_days)
+        cmd <- paste0(cmd, " -FromNDaysAgo:", latest_days_int)
       } else {
         cmd <- paste0(cmd, " -FromDate:", '"', from_date, '"')
       }
@@ -88,7 +87,7 @@ qb_get_responses <- function(
     shell(cmd)
 
     # Change registry settings back to normal
-    if (!is.null(latest_days)) {
+    if (!is.null(from_date) | !is.null(latest_days)) {
       shell(paste("reg copy", v_reg_temp, v_reg_orig, "/f"))
     }
   }
