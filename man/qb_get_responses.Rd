@@ -11,7 +11,9 @@ qb_get_responses(
   username,
   password,
   last_updated = "12 hours",
-  latest_days = NULL
+  latest_days = NULL,
+  from_date = NULL,
+  overwrite = TRUE
 )
 }
 \arguments{
@@ -28,8 +30,12 @@ qb_get_responses(
 \item{last_updated}{If time is less than chosen, then do not execute.
 Possible time choises are secs, mins, hours, days and weeks. Default is 12 hours.}
 
-\item{latest_days}{Not yet implemented, because IntegrationUtility demands
-dates to be in form YYYY-MM-DD.}
+\item{latest_days}{From how many days you get the data.}
+
+\item{from_date}{What is the latest datetime you get the data from. In the
+form YYYY-MM-DD or YYYY-MM-DD HH:mm:ss}
+
+\item{overwrite}{Overwrite file. Default TRUE.}
 }
 \description{
 Get responses to a survey from Questback Essentials.

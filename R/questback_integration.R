@@ -8,8 +8,10 @@
 #' @param password Password for Questback Essentials.
 #' @param last_updated If time is less than chosen, then do not execute.
 #' Possible time choises are secs, mins, hours, days and weeks. Default is 12 hours.
-#' @param latest_days Inside the function changes the short date format to
-#' YYYY-MM-DD temporary.
+#' @param latest_days From how many days you get the data.
+#' @param from_date What is the latest datetime you get the data from. In the
+#' form YYYY-MM-DD or YYYY-MM-DD HH:mm:ss
+#' @param overwrite Overwrite file. Default TRUE. Not yet implemented.
 #' @keywords questback essentials, survey
 #' @export
 #' @importFrom fs path_abs
@@ -18,7 +20,7 @@
 # Get responses from Questback Essentials using IntegrationUtility.exe
 qb_get_responses <- function(
   filename, quest_id, sid, username, password, last_updated = "12 hours",
-  latest_days = NULL) {
+  latest_days = NULL, from_date = NULL, overwrite = TRUE) {
 
   # Ensure that IntegrationUtility.exe is found
   if (Sys.which("IntegrationUtility") == "") {
@@ -29,7 +31,11 @@ qb_get_responses <- function(
   time_amount <- as.numeric(strsplit(last_updated, " ")[[1]][1])
   time_unit <- strsplit(last_updated, " ")[[1]][2]
 
+  # Change latest_days to integer
+  latest_days <- as.integer(latest_days)
+
   # Stop if not
+  # TODO: Check that from_date is correct form
   stopifnot(
     is.null(latest_days) | is.integer(latest_days),
     time_unit %in% c("secs", "mins", "hours", "days", "weeks"),
@@ -53,29 +59,29 @@ qb_get_responses <- function(
         "-UserName:%s",
         "-Password:%s",
         "-QuestId:%s",
-        "-SecurityLock:%s",
-        "-FromDate:2020-07-12"),
+        "-SecurityLock:%s"),
         path_abs(filename), username, password, quest_id, sid)
 
-
     # If latest_days is not null then check that registry date parameter is correct
-    if (!is.null(latest_days)) {
+    if (!is.null(from_date) | !is.null(latest_days)) {
 
       # Original and temporary regional settings
       v_reg_orig <- '"HKCU\\Control Panel\\International"'
       v_reg_temp <- '"HKCU\\Control Panel\\International-Temp"'
 
       # Backup old registry and change regional settings to YYYY-MM-DD HH:mm:ss
-      sink("NUL")
       shell(paste("reg copy", v_reg_orig, v_reg_temp, "/f"))
       shell(paste("@REM reg query", v_reg_orig, "/v sShortDate"))
       shell(paste("reg add", v_reg_orig, '/V sShortDate /T REG_SZ /D "yyyy-MM-dd" /f'))
       shell(paste("@REM reg query", v_reg_orig, "/v sTimeFormat"))
       shell(paste("reg add", v_reg_orig, '/v sTimeFormat /T REG_SZ /D "HH:mm:ss" /f'))
-      sink()
 
-      # Add FromDaysAgo at the end of command
-      cmd <- paste0(cmd, " -FromNDaysAgo:", latest_days)
+      # Add FromDaysAgo or FromDate at the end of command
+      if (!is.null(latest_days)) {
+        cmd <- paste0(cmd, " -FromNDaysAgo:", latest_days)
+      } else {
+        cmd <- paste0(cmd, " -FromDate:", '"', from_date, '"')
+      }
     }
 
     # Activate the command
@@ -83,9 +89,7 @@ qb_get_responses <- function(
 
     # Change registry settings back to normal
     if (!is.null(latest_days)) {
-      sink("NUL")
       shell(paste("reg copy", v_reg_temp, v_reg_orig, "/f"))
-      sink()
     }
   }
 }
