@@ -9,8 +9,10 @@
 #' @param last_updated If time is less than chosen, then do not execute.
 #' Possible time choises are secs, mins, hours, days and weeks. Default is 12 hours.
 #' @param latest_days From how many days you get the data.
-#' @param from_date What is the latest datetime you get the data from. In the
-#' form YYYY-MM-DD or YYYY-MM-DD HH:mm:ss
+#' @param from_date First datetime to get the data. In the form YYYY-MM-DD or
+#' YYYY-MM-DD HH:mm:ss
+#' @param to_date Last datetime to get the data. In the form YYYY-MM-DD or
+#' YYYY-MM-DD HH:mm:ss
 #' @keywords questback essentials, survey
 #' @export
 #' @importFrom fs path_abs
@@ -19,7 +21,7 @@
 # Get responses from Questback Essentials using IntegrationUtility.exe
 qb_get_responses <- function(
   filename, quest_id, sid, username, password, last_updated = "12 hours",
-  latest_days = NULL, from_date = NULL) {
+  latest_days = NULL, from_date = NULL, to_date = NULL) {
 
   # Ensure that IntegrationUtility.exe is found
   if (Sys.which("IntegrationUtility") == "") {
@@ -34,9 +36,10 @@ qb_get_responses <- function(
   latest_days_int <- as.integer(latest_days)
 
   # Stop if not
-  # TODO: Check that from_date is correct form
   stopifnot(
     is.null(latest_days) | is.integer(latest_days_int),
+    is.null(from_date) | is.POSIXct(from_date),
+    is.null(to_date) | is.POSIXct(to_date),
     time_unit %in% c("secs", "mins", "hours", "days", "weeks"),
     is.numeric(time_amount))
 
@@ -62,7 +65,7 @@ qb_get_responses <- function(
         path_abs(filename), username, password, quest_id, sid)
 
     # If latest_days is not null then check that registry date parameter is correct
-    if (!is.null(from_date) | !is.null(latest_days)) {
+    if (!is.null(from_date) | !is.null(latest_days) | !is.null(to_date)) {
 
       # Original and temporary regional settings
       v_reg_orig <- '"HKCU\\Control Panel\\International"'
@@ -78,8 +81,12 @@ qb_get_responses <- function(
       # Add FromDaysAgo or FromDate at the end of command
       if (!is.null(latest_days)) {
         cmd <- paste0(cmd, " -FromNDaysAgo:", latest_days_int)
-      } else {
+      } else if (!is.null(from_date)) {
         cmd <- paste0(cmd, " -FromDate:", '"', from_date, '"')
+      }
+      # Add ToDate at the end of command
+      if (!is.null(to_date)) {
+        cmd <- paste0(cmd, " -ToDate:", '"', to_date, '"')
       }
     }
 
@@ -87,7 +94,7 @@ qb_get_responses <- function(
     shell(cmd)
 
     # Change registry settings back to normal
-    if (!is.null(from_date) | !is.null(latest_days)) {
+    if (!is.null(from_date) | !is.null(latest_days) | !is.null(to_date)) {
       shell(paste("reg copy", v_reg_temp, v_reg_orig, "/f"))
     }
   }

@@ -12,7 +12,8 @@ qb_get_responses(
   password,
   last_updated = "12 hours",
   latest_days = NULL,
-  from_date = NULL
+  from_date = NULL,
+  to_date = NULL
 )
 }
 \arguments{
@@ -31,8 +32,11 @@ Possible time choises are secs, mins, hours, days and weeks. Default is 12 hours
 
 \item{latest_days}{From how many days you get the data.}
 
-\item{from_date}{What is the latest datetime you get the data from. In the
-form YYYY-MM-DD or YYYY-MM-DD HH:mm:ss}
+\item{from_date}{First datetime to get the data. In the form YYYY-MM-DD or
+YYYY-MM-DD HH:mm:ss}
+
+\item{to_date}{Last datetime to get the data. In the form YYYY-MM-DD or
+YYYY-MM-DD HH:mm:ss}
 }
 \description{
 Get responses to a survey from Questback Essentials.
