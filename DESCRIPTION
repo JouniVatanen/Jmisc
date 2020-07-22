@@ -1,6 +1,6 @@
 Package: stools
 Title: Tools for CX and survey data
-Version: 0.6.18
+Version: 0.6.19
 Authors@R: person("Jouni", "Vatanen", email = "jounipvatanen@gmail.com", role = c("aut", "cre"))
 Description: Miscellaneous functions e.g. for CX and survey data. Also API functions for Questback Essentials survey tool and wrappers for DBI::dbWriteTable.
 Depends: R (>= 3.2.0)
@@ -27,6 +27,7 @@ Imports:
   magrittr,
   mailR,
   modelr,
+  odbc,
   pROC,
   purrr,
   Rcpp,
