@@ -30,5 +30,5 @@ db_get_query <- function(
   }
 
   # Return query with params if defined
-  dbGetQuery(con, sql, params = params)
+  DBI::dbGetQuery(con, sql)
 }
