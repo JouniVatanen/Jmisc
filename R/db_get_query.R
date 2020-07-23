@@ -2,12 +2,13 @@
 #'
 #' Get query results and close connection safely
 
-#' @param sql sql query or sql file
-#' @param drv driver for database e.g. odbc()
-#' @param ... connection parameters like dns or server, username and password
+#' @param sql Sql query or sql file
+#' @param drv Driver for database e.g. odbc()
+#' @param ... Connection parameters like dns or server, username and password
 #' also extra parameters like encoding.
-#' @param params a list of parameters to replace question marks in sql query
-#' @keywords DBI, odbc, database
+#' @param params List of parameters to replace question marks in sql query.
+#' Default NULL
+#' @keywords DBI, odbc, database, dbGetQuery
 #' @export
 #' @importFrom odbc odbc
 #' @importFrom fs path_ext
@@ -29,6 +30,13 @@ db_get_query <- function(
     sql <- glue_collapse(read_lines(sql), "\n")
   }
 
-  # Return query with params if defined
-  DBI::dbGetQuery(con, sql)
+  # Return query with params, if defined
+  if (!is.null(params)) {
+    dbGetQuery(con, sql, params = params)
+  } else {
+    # Return query without params
+    dbGetQuery(con, sql)
+  }
+
+
 }

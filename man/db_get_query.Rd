@@ -7,18 +7,20 @@
 db_get_query(sql, drv = odbc::odbc(), ..., params = NULL)
 }
 \arguments{
-\item{sql}{sql query or sql file}
+\item{sql}{Sql query or sql file}
 
-\item{drv}{driver for database e.g. odbc()}
+\item{drv}{Driver for database e.g. odbc()}
 
-\item{...}{connection parameters like dns or server, username and password
+\item{...}{Connection parameters like dns or server, username and password
 also extra parameters like encoding.}
 
-\item{params}{a list of parameters to replace question marks in sql query}
+\item{params}{List of parameters to replace question marks in sql query.
+Default NULL}
 }
 \description{
 Get query results and close connection safely
 }
 \keyword{DBI,}
-\keyword{database}
+\keyword{database,}
+\keyword{dbGetQuery}
 \keyword{odbc,}
