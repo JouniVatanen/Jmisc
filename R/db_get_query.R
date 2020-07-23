@@ -3,8 +3,8 @@
 #' Get query results and close connection safely
 
 #' @param sql Sql query or sql file
-#' @param drv Driver for database e.g. odbc()
-#' @param ... Connection parameters like dns or server, username and password
+#' @param drv Driver for database. Default odbc::odbc().
+#' @param ... Connection parameters like dsn or server, username and password
 #' also extra parameters like encoding.
 #' @param params List of parameters to replace question marks in sql query.
 #' Default NULL
@@ -16,8 +16,7 @@
 #' @importFrom glue glue_collapse
 #' @import DBI
 
-db_get_query <- function(
-  sql, drv = odbc::odbc(), ..., params = NULL) {
+db_get_query <- function(sql, drv = odbc::odbc(), ..., params = NULL) {
 
   # Create connection
   con <- dbConnect(drv = drv, ...)
@@ -25,9 +24,14 @@ db_get_query <- function(
   # Disconnect on exit
   on.exit(dbDisconnect(con))
 
-  # If sql is sql file, then parse the file to sql
-  if (tolower(path_ext(sql)) == "sql") {
+  # Check if sql is valid
+  if (str_detect(tolower(sql), "select.*from")) {
+    sql <- sql
+  } else if (tolower(path_ext(sql)) == "sql") {
+    # If sql is sql file, then parse the file to sql
     sql <- glue_collapse(read_lines(sql), "\n")
+  } else {
+    stop("Check your sql query!")
   }
 
   # Return query with params, if defined
