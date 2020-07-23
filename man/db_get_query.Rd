@@ -4,18 +4,17 @@
 \alias{db_get_query}
 \title{db_get_query}
 \usage{
-db_get_query(sql, dsn = NULL, encoding = "utf-8", locale = locale())
+db_get_query(sql, drv = odbc::odbc(), ..., params = NULL)
 }
 \arguments{
 \item{sql}{sql query or sql file}
 
-\item{dsn}{if NULL then use password etc.}
+\item{drv}{driver for database e.g. odbc()}
 
-\item{encoding}{database encoding}
+\item{...}{connection parameters like dns or server, username and password
+also extra parameters like encoding.}
 
-\item{locale}{locale settings for sql file}
-
-\item{x}{Choose string from which to calculate.}
+\item{params}{a list of parameters to replace question marks in sql query}
 }
 \description{
 Get query results and close connection safely

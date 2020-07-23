@@ -1,32 +1,37 @@
 #' db_get_query
 #'
 #' Get query results and close connection safely
-#' @param x Choose string from which to calculate.
+
 #' @param sql sql query or sql file
-#' @param dsn if NULL then use password etc.
-#' @param encoding database encoding
-#' @param locale locale settings for sql file
+#' @param drv driver for database e.g. odbc()
+#' @param ... connection parameters like dns or server, username and password
+#' also extra parameters like encoding.
+#' @param params a list of parameters to replace question marks in sql query
 #' @keywords DBI, odbc, database
 #' @export
 #' @importFrom odbc odbc
+#' @importFrom fs path_ext
+#' @importFrom readr read_lines
+#' @importFrom glue glue_collapse
 #' @import DBI
 
 db_get_query <- function(
-  sql, dsn = NULL, encoding = "utf-8", locale = locale()) {
+  sql, drv = odbc::odbc(), ..., params = NULL) {
 
   # Create connection
-  con <- dbConnect(odbc::odbc(), dsn = dsn, encoding = encoding)
+  con <- dbConnect(drv = drv, ...)
 
   # Disconnect on exit
   on.exit(dbDisconnect(con))
 
-  # Read sql file
-  sql <- sql %>%
-    read_lines(locale = locale) %>%
-    glue_collapse("\n")
+  # If sql is sql file, then parse the file to sql
+  if (tolower(path_ext(sql)) == "sql") {
+    sql <- read_lines() %>%
+      glue_collapse("\n")
+  }
 
-  # Get data from EetuStage with parameters
-  query <- dbGetQuery(con, sql)
+  # Get query with
+  query <- dbGetQuery(con, sql, params = params)
 
   return(query)
 }
