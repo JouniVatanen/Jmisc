@@ -24,8 +24,9 @@ db_get_query <- function(sql, drv = odbc::odbc(), ..., params = NULL) {
   # Disconnect on exit
   on.exit(dbDisconnect(con))
 
-  # Check if sql is valid
-  if (str_detect(tolower(sql), "select.*from")) {
+  # Check if sql is valid by select and from keywords
+  # TODO: better validation
+  if (str_detect(tolower(sql), "select") & str_detect(tolower(sql), "from")) {
     sql <- sql
   } else if (tolower(path_ext(sql)) == "sql") {
     # If sql is sql file, then parse the file to sql
