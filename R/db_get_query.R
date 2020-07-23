@@ -26,12 +26,9 @@ db_get_query <- function(
 
   # If sql is sql file, then parse the file to sql
   if (tolower(path_ext(sql)) == "sql") {
-    sql <- read_lines() %>%
-      glue_collapse("\n")
+    sql <- glue_collapse(read_lines(sql), "\n")
   }
 
-  # Get query with
-  query <- dbGetQuery(con, sql, params = params)
-
-  return(query)
+  # Return query with params if defined
+  dbGetQuery(con, sql, params = params)
 }
