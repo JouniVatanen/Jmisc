@@ -1,13 +1,12 @@
-#' send_error_toast
+#' send_toast
 #'
-#' Send error toast.
-#' @param text Text of the toast. Default: This is a toast
-#' @param title Title of the toast. Default: Alert!
-#' @keywords toast, error
+#' Send toast.
+#' @param text Text of the toast.
+#' @param title Title of the toast.
+#' @keywords toast
 #' @examples
 #' \dontrun{
-#'send_error_toast("Something went wrong")
-#'stop("Error")
+#'send_toast("You got toast")
 #'}
 #' @export
 
@@ -33,9 +32,22 @@ send_toast <- function(text, title) {
   system(paste('powershell.exe -command', ps_script))
 }
 
+#' send_error_toast
+#'
+#' Send error toast.
+#' @param text Text of the toast. Default: This is a toast
+#' @param title Title of the toast. Default: Alert!
+#' @keywords toast, error
+#' @examples
+#' \dontrun{
+#'send_error_toast("Something went wrong")
+#'stop("Error")
+#'}
+#' @export
+
 # Send toast on error
 send_error_toast <- function(
-  text = "This is a toast with error:", title = "Alert!", e = NULL) {
+  text = "This is a toast with error:", title = "Alert!") {
 
   # Return option with send_error_toast function
   return(options(error = function() {

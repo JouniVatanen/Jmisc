@@ -1,23 +1,22 @@
-#' send_error_mail
+#' send_mail
 #'
-#' Send error email.
+#' Send email.
 #' @param to email or a vector of emails.
 #' @param subject of an email.
 #' @param body of en email.
 #' @param user user of sender's email account
 #' @param password password of sender's email account
 #' @param smtp smtp. If NULL, then gmail.
-#' @keywords email, error
+#' @keywords email
 #' @examples
 #' \dontrun{
 #'to <- "address@email.com"
-#'subject <- "You have error"
+#'subject <- "You have mail"
 #'body <- "Hi,
-#'you received an error. Check your logs."
+#'you received a mail.."
 #'user <- "erroraddress@email.com"
 #'password <- "1234567"
-#'send_error_mail(to, subject, body, user, password)
-#'stop("Error")
+#'send_mail(to, subject, body, user, password)
 #'}
 #' @importFrom mailR send.mail
 #' @export
@@ -39,6 +38,29 @@ send_mail <- function(
       passwd = password),
     authenticate = TRUE, send = TRUE)
 }
+
+#' send_error_mail
+#'
+#' Send email on error.
+#' @param to email or a vector of emails.
+#' @param subject of an email.
+#' @param body of en email.
+#' @param user user of sender's email account
+#' @param password password of sender's email account
+#' @param smtp smtp. If NULL, then gmail.
+#' @keywords email, error
+#' @examples
+#' \dontrun{
+#'to <- "address@email.com"
+#'subject <- "You have error"
+#'body <- "Hi,
+#'you received an error. Check your logs."
+#'user <- "erroraddress@email.com"
+#'password <- "1234567"
+#'send_error_mail(to, subject, body, user, password)
+#'stop("Error")
+#'}
+#' @export
 
 # Send error mail
 send_error_mail <- function(to, subject, body, user, password, smtp = NULL) {

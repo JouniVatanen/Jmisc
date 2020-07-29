@@ -2,23 +2,21 @@
 % Please edit documentation in R/send_error_toast.R
 \name{send_toast}
 \alias{send_toast}
-\title{send_error_toast}
+\title{send_toast}
 \usage{
 send_toast(text, title)
 }
 \arguments{
-\item{text}{Text of the toast. Default: This is a toast}
+\item{text}{Text of the toast.}
 
-\item{title}{Title of the toast. Default: Alert!}
+\item{title}{Title of the toast.}
 }
 \description{
-Send error toast.
+Send toast.
 }
 \examples{
 \dontrun{
-send_error_toast("Something went wrong")
-stop("Error")
+send_toast("You got toast")
 }
 }
-\keyword{error}
-\keyword{toast,}
+\keyword{toast}
