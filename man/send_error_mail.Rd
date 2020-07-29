@@ -4,20 +4,20 @@
 \alias{send_error_mail}
 \title{send_error_mail}
 \usage{
-send_error_mail(to, subject, body, user, password, smtp = NULL)
+send_error_mail(to, user, password, smtp = NULL)
 }
 \arguments{
 \item{to}{email or a vector of emails.}
-
-\item{subject}{of an email.}
-
-\item{body}{of en email.}
 
 \item{user}{user of sender's email account}
 
 \item{password}{password of sender's email account}
 
 \item{smtp}{smtp. If NULL, then gmail.}
+
+\item{subject}{of an email.}
+
+\item{body}{of en email.}
 }
 \description{
 Send email on error.
