@@ -22,8 +22,9 @@
 #' @importFrom mailR send.mail
 #' @export
 
-send_error_mail <- function(to, subject = "", body = "",
-                            user, password, smtp = NULL) {
+# Send mail
+send_mail <- function(
+  to, subject = "", body = "", user, password, smtp = NULL) {
 
   # Create gmail setting, if smtp is missing
   if (is.null(smtp)) {
@@ -32,15 +33,21 @@ send_error_mail <- function(to, subject = "", body = "",
     ssl <- TRUE
     }
 
-  # Send email
-  send_mail <- function() {
-    send.mail(
-      from = user, to = to, subject = subject, body = body, smtp = list(
-        host.name = host.name, port = port, ssl = ssl, user.name = user,
-        passwd = password),
-      authenticate = TRUE, send = TRUE)
-    }
+  send.mail(
+    from = user, to = to, subject = subject, body = body, smtp = list(
+      host.name = host.name, port = port, ssl = ssl, user.name = user,
+      passwd = password),
+    authenticate = TRUE, send = TRUE)
+}
 
-  # Return option with send_mail function
-  return(options(error = function() send_mail()))
+# Send error mail
+send_error_mail <- function(to, subject, body, user, password, smtp = NULL) {
+  options(error = function() {
+    send_mail(
+      to = to, subject = "Alert!",
+      body = paste(
+        "R command failed in path:", getwd(),
+        "and with error message:", geterrmessage()),
+      user = user, password = password, smtp = smtp)
+    })
 }
