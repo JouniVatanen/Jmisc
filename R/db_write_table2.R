@@ -82,7 +82,7 @@ db_write_table2 <- function(
   # Replace some datatypes, if fields is not null
   if (!is.null(fields)) {
     # Replace fields_auto values by fields values, where names match
-    fields_auto[names(fields)] <- fields[!is.na(fields[names(fields_auto)])]
+    fields_auto[names(fields)] <- fields
   }
 
   # Remove table if it exists
