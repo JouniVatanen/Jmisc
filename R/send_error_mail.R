@@ -19,6 +19,7 @@
 #'send_error_mail(to, subject, body, user, password)
 #'stop("Error")
 #'}
+#' @importFrom mailR send.mail
 #' @export
 
 # Send error mail

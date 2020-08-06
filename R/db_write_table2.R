@@ -96,6 +96,24 @@ db_write_table2 <- function(
   # Append to table
   if (bulk) {
     # If bulk, then write to table using bcp.exe tool
+    # TODO: Absoute path?
+    format_file <- tempfile()
+
+    # Write format file
+    cmd_format <- paste(
+      "bcp.exe",
+      paste(db_name, schema, table, sep = "."),
+      "format nul",
+      "-c",
+      "-f", format_file,
+      "-t \\t",
+      "-T",
+      "-S", server_name)
+
+    shell(cmd_format)
+
+    # TODO: Use format file in bcp write
+
     # Write data to tempfile
     temp_file <- tempfile()
 
@@ -115,6 +133,7 @@ db_write_table2 <- function(
       "bcp.exe",
       paste(db_name, schema, table, sep = "."),
       "in", temp_file,
+      "-f", format_file,
       "-T",
       "-S", server_name,
       "-t \\t",
