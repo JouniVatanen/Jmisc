@@ -25,7 +25,6 @@ Imports:
   ISLR,
   lubridate,
   magrittr,
-  mailR,
   modelr,
   odbc,
   pROC,
@@ -45,4 +44,4 @@ Imports:
   writexl,
   XML,
   xml2
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1

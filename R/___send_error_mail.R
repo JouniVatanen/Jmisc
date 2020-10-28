@@ -20,7 +20,7 @@
 #'stop("Error")
 #'}
 #' @importFrom mailR send.mail
-#' @export
+
 
 # Send error mail
 send_error_mail <- function(to, user, password, smtp = NULL) {

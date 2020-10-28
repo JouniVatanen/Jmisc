@@ -133,7 +133,7 @@ db_write_table2 <- function(
       "bcp.exe",
       paste(db_name, schema, table, sep = "."),
       "in", temp_file,
-      "-f", format_file,
+      #"-f", format_file,
       "-T",
       "-S", server_name,
       "-t \\t",
