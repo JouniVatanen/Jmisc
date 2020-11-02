@@ -40,11 +40,13 @@ ilmarinen_pal <- function(palette = "main", reverse = FALSE, ...) {
 
   # Ilmarinen palettes
   ilmarinen_palettes <- list(
-    `main`  = ilmarinen_cols("dark blue", "red", "blue", "yellow", "green", "purple", "grey"),
+    `main`  = ilmarinen_cols("dark blue", "blue", "red"),
     `main2`  = ilmarinen_cols("dark blue", "blue", "yellow", "red"),
     `cool`  = ilmarinen_cols("dark blue", "blue", "light blue"),
     `hot`   = ilmarinen_cols("red", "light red", "yellow"),
-    `1-5 scale` = ilmarinen_cols("green", "light green", "yellow", "light red", "red", "grey")
+    `scale5` = ilmarinen_cols("green", "light green", "yellow", "light red", "red"),
+    `scale5+` = ilmarinen_cols("green", "light green", "yellow", "light red", "red", "grey"),
+    `all`  = ilmarinen_cols("dark blue", "blue", "red", "yellow", "green", "purple", "grey"),
   )
 
 
@@ -53,6 +55,8 @@ ilmarinen_pal <- function(palette = "main", reverse = FALSE, ...) {
   if (reverse) pal <- rev(pal)
   colorRampPalette(pal, ...)
 }
+
+colorRamp(pal)()
 
 #' Color scale constructor for Ilmarinen colors
 #'
