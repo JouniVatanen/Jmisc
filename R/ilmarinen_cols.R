@@ -8,12 +8,17 @@ ilmarinen_cols <- function(...) {
   # Ilmarinen corporate colors
   ilmarinen_colors <- c(
     `dark blue` = "#00274B",
-    `pink` = "#F37B8A",
-    `light blue` = "#84D2DF",
-    `yellow` = "#FFE180",
-    `orange` = "#DE6328",
-    `blue` = "#3A8DA9",
-    `grey` = "#A6A6A6")
+    `pink` = "#F37B8A", #outdated
+    `light blue` = "#84D2DF", # outdated
+    `yellow` = "#FACC25",
+    `orange` = "#DE6328", # outdated
+    `blue` = "#078299",
+    `grey` = "#A6A6A6",
+    `red` = "#D83B51",
+    `green` = "#438453",
+    `light green` = "#D9E6DD",
+    `light red` = "#F7D8DC",
+    `purple` = "#9A639F")
 
   cols <- c(...)
 
@@ -35,12 +40,13 @@ ilmarinen_pal <- function(palette = "main", reverse = FALSE, ...) {
 
   # Ilmarinen palettes
   ilmarinen_palettes <- list(
-    `main`  = ilmarinen_cols("dark blue", "yellow", "pink", "light blue"),
-    `cool`  = ilmarinen_cols("dark blue", "blue", "light blue"),
-    `hot`   = ilmarinen_cols("orange", "pink", "yellow"),
-    `mixed` = ilmarinen_cols("light blue", "yellow", "pink"),
-    `1-5 scale` = ilmarinen_cols("light blue", "light blue", "yellow", "pink", "pink"),
-    `all`   = ilmarinen_cols("dark blue", "pink", "light blue", "yellow", "orange", "blue", "grey")
+    `main`  = ilmarinen_cols("dark blue", "blue", "red", "light blue"),
+    `main2`  = ilmarinen_cols("dark blue", "red"),
+    `main3`  = ilmarinen_cols("dark blue", "blue", "red"),
+    `cool`  = ilmarinen_cols("dark blue", "blue", "green"),
+    `hot`   = ilmarinen_cols("red", "light red", "yellow"),
+    `1-5 scale` = ilmarinen_cols("green", "light green", "yellow", "light red", "red"),
+    `all`   = ilmarinen_cols("dark blue", "red", "blue", "yellow", "green", "purple", "grey")
   )
 
 
