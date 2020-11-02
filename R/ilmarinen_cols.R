@@ -56,8 +56,6 @@ ilmarinen_pal <- function(palette = "main", reverse = FALSE, ...) {
   colorRampPalette(pal, ...)
 }
 
-colorRamp(pal)()
-
 #' Color scale constructor for Ilmarinen colors
 #'
 #' @param palette Character name of palette in drsimonj_palettes
