@@ -9,7 +9,7 @@ ilmarinen_cols <- function(...) {
   ilmarinen_colors <- c(
     `dark blue` = "#00274B",
     `pink` = "#F37B8A", #outdated
-    `light blue` = "#84D2DF", # outdated
+    `light blue` = "#CDE6EB",
     `yellow` = "#FACC25",
     `orange` = "#DE6328", # outdated
     `blue` = "#078299",
@@ -40,13 +40,11 @@ ilmarinen_pal <- function(palette = "main", reverse = FALSE, ...) {
 
   # Ilmarinen palettes
   ilmarinen_palettes <- list(
-    `main`  = ilmarinen_cols("dark blue", "blue", "red", "light blue"),
-    `main2`  = ilmarinen_cols("dark blue", "red"),
-    `main3`  = ilmarinen_cols("dark blue", "blue", "red"),
-    `cool`  = ilmarinen_cols("dark blue", "blue", "green"),
+    `main`  = ilmarinen_cols("dark blue", "red", "blue", "yellow", "green", "purple", "grey"),
+    `main2`  = ilmarinen_cols("dark blue", "blue", "yellow", "red"),
+    `cool`  = ilmarinen_cols("dark blue", "blue", "light blue"),
     `hot`   = ilmarinen_cols("red", "light red", "yellow"),
-    `1-5 scale` = ilmarinen_cols("green", "light green", "yellow", "light red", "red"),
-    `all`   = ilmarinen_cols("dark blue", "red", "blue", "yellow", "green", "purple", "grey")
+    `1-5 scale` = ilmarinen_cols("green", "light green", "yellow", "light red", "red", "grey"),
   )
 
 
@@ -56,7 +54,7 @@ ilmarinen_pal <- function(palette = "main", reverse = FALSE, ...) {
   colorRampPalette(pal, ...)
 }
 
-#' Color scale constructor for drsimonj colors
+#' Color scale constructor for Ilmarinen colors
 #'
 #' @param palette Character name of palette in drsimonj_palettes
 #' @param discrete Boolean indicating whether color aesthetic is discrete or not
