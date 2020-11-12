@@ -44,9 +44,9 @@ ilmarinen_pal <- function(palette = "main", reverse = FALSE, ...) {
     `main2`  = ilmarinen_cols("dark blue", "blue", "yellow", "red"),
     `cool`  = ilmarinen_cols("dark blue", "blue", "light blue"),
     `hot`   = ilmarinen_cols("red", "light red", "yellow"),
-    `likert3` = ilmarinen_cols("green", "green", "yellow", "red", "red"),
-    `likert5` = ilmarinen_cols("green", "light green", "yellow", "light red", "red"),
-    `likert5+` = ilmarinen_cols("green", "light green", "yellow", "light red", "red", "grey"),
+    `likert3` = ilmarinen_cols("blue", "blue", "yellow", "red", "red"),
+    `likert5` = ilmarinen_cols("blue", "light blue", "yellow", "light red", "red"),
+    `likert5+` = ilmarinen_cols("blue", "light blue", "yellow", "light red", "red", "grey"),
     `all`  = ilmarinen_cols("dark blue", "blue", "red", "yellow", "green", "purple", "grey")
   )
 
