@@ -18,6 +18,7 @@ ilmarinen_cols <- function(...) {
     `green` = "#438453",
     `light green` = "#D9E6DD",
     `light red` = "#F7D8DC",
+    `semi red` = "#E88997",
     `purple` = "#9A639F")
 
   cols <- c(...)
@@ -43,10 +44,10 @@ ilmarinen_pal <- function(palette = "main", reverse = FALSE, ...) {
     `main`  = ilmarinen_cols("dark blue", "blue", "red"),
     `main2`  = ilmarinen_cols("dark blue", "blue", "yellow", "red"),
     `cool`  = ilmarinen_cols("dark blue", "blue", "light blue"),
-    `hot`   = ilmarinen_cols("red", "light red", "yellow"),
+    `hot`   = ilmarinen_cols("red", "semi red", "light red"),
     `likert3` = ilmarinen_cols("blue", "blue", "yellow", "red", "red"),
-    `likert5` = ilmarinen_cols("blue", "light blue", "yellow", "light red", "red"),
-    `likert5+` = ilmarinen_cols("blue", "light blue", "yellow", "light red", "red", "grey"),
+    `likert5` = ilmarinen_cols("blue", "light blue", "yellow", "semi red", "red"),
+    `likert5+` = ilmarinen_cols("blue", "light blue", "yellow", "semi red", "red", "grey"),
     `all`  = ilmarinen_cols("dark blue", "blue", "red", "yellow", "green", "purple", "grey")
   )
 
